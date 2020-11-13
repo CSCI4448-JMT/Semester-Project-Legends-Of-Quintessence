@@ -34,8 +34,9 @@ public class LegendsOfQuintessence extends SimpleApplication {
         app.start();
     }
 
-    private Node draggables;
-    
+    private DragController dragController;
+            
+
     @Override
     public void simpleInitApp() {
         initKeys();
@@ -61,10 +62,9 @@ public class LegendsOfQuintessence extends SimpleApplication {
         mat.setColor("Ambient", color);
         mat.setColor("Diffuse", color);
         geom.setMaterial(mat);
-
-        draggables = new Node("Draggables");
-        rootNode.attachChild(draggables);
-        draggables.attachChild(geom);
+        
+        dragController = new DragController(this.inputManager, this.cam, this.rootNode);
+        dragController.addDraggable(geom);
     }
 
 
@@ -81,44 +81,16 @@ public class LegendsOfQuintessence extends SimpleApplication {
         
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("LeftClick") && keyPressed) {
-                CollisionResults results = new CollisionResults();
-
-                Vector2f click2d = inputManager.getCursorPosition().clone();
-                Vector3f click3d = cam.getWorldCoordinates(click2d, 0f).clone();
-                Vector3f dir = cam.getWorldCoordinates(
-                    click2d, 1f).subtractLocal(click3d).normalizeLocal();
-
-                Ray ray = new Ray(click3d, dir);
-                draggables.collideWith(ray, results);
-
-                // get closest spatial and snap to cursor
-                if (results.size() > 0) {
-                    CollisionResult closest = results.getClosestCollision();
-                    snapToCursor(closest.getGeometry());
-                }
-                
+                dragController.drag();
             } else if (name.equals("LeftClick") && !keyPressed) {
-                unsnapFromCursor();
+                dragController.drop();
             }
-          
         }
     };
     
-    
-    protected Spatial snapped_item = null;
-    protected void snapToCursor(Spatial item) {
-        snapped_item = item;        
-        snapped_item.move(0,0,1);
-    }
-    protected void unsnapFromCursor() {
-        if (snapped_item != null) {
-            snapped_item.move(0,0,-1);
-        }
-        snapped_item = null;
-    }
-    
     @Override
     public void simpleUpdate(float tpf) {
+        Spatial snapped_item = dragController.getDragged();
         
         if (snapped_item != null) {
             Vector3f item_location = snapped_item.getLocalTranslation().subtract(cam.getLocation());
