@@ -33,13 +33,27 @@ public class LegendsOfQuintessence extends SimpleApplication {
         LegendsOfQuintessence app = new LegendsOfQuintessence();
         app.start();
     }
-
-    private DragController dragController;
             
-
     @Override
     public void simpleInitApp() {
-        initKeys();
+        initScene();
+       
+        DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
+       
+     
+        Spatial card = makeCard(0,0,0);
+        Spatial card2 = makeCard(4.5f,0,0);
+        
+        rootNode.attachChild(card);
+        rootNode.attachChild(card2);
+        
+        card.addControl(new DragControl(dragController));
+        card2.addControl(new DragControl(dragController));
+    }
+
+    private void initScene() {
+        flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
+        inputManager.setCursorVisible(true); // show cursor
         
         cam.setLocation(new Vector3f(0f, 0f, 30f));
         
@@ -51,18 +65,8 @@ public class LegendsOfQuintessence extends SimpleApplication {
         AmbientLight al = new AmbientLight();
         al.setColor(ColorRGBA.White.mult(0.5f));
         rootNode.addLight(al);
-        
-        dragController = new DragController(this.inputManager, this.cam, this.rootNode);
-        
-        Spatial card = makeCard(0,0,0);
-        Spatial card2 = makeCard(-2,0,0);
-        
-        rootNode.attachChild(card);
-        rootNode.attachChild(card2);
-        
-        card.addControl(new DraggableControl(dragController));
-        //card2.addControl(new DraggableControl(dragController));
     }
+ 
 
     private Spatial makeCard(float x, float y, float z) {
         Box b = new Box(2, 3, 0.5f);
@@ -70,7 +74,7 @@ public class LegendsOfQuintessence extends SimpleApplication {
 
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
         mat.setBoolean("UseMaterialColors", true);
-        ColorRGBA color = new ColorRGBA(0.0f, 0.6f, 0.8f,1);
+        ColorRGBA color = ColorRGBA.randomColor();
         
         mat.setColor("Ambient", color);
         mat.setColor("Diffuse", color);
@@ -81,26 +85,6 @@ public class LegendsOfQuintessence extends SimpleApplication {
         return geom;
     }
     
-
-    private void initKeys() {
-        flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
-        inputManager.setCursorVisible(true); // show cursor
-        
-        inputManager.addMapping("LeftClick", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        inputManager.addListener(clickListener, "LeftClick");
-    }
- 
-
-    private ActionListener clickListener = new ActionListener() {
-        
-        public void onAction(String name, boolean keyPressed, float tpf) {
-            if (name.equals("LeftClick") && keyPressed) {
-                dragController.drag();
-            } else if (name.equals("LeftClick") && !keyPressed) {
-                dragController.drop();
-            }
-        }
-    };
     
     @Override
     public void simpleUpdate(float tpf) {
