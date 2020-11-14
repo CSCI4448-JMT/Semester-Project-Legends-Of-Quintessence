@@ -22,8 +22,8 @@ import java.util.Map;
 
 /** Manages drag controls (and associated spatials), and global drag and drop functionality.
  *  Usage:
- *      - Add new DragControlManager to Game app (after that, no need to call any methods on manager!).
- *      - Construct DragControls (with reference to that manager) and add to any Spatial.
+ *      - Add new DragControlManager to Game app (after that, NO need to call any methods on manager).
+ *      - Construct new DragControls (with reference to the manager) and add to any Spatial.
  *      - Spatial will be draggable, and DragControl can be used for customization/restriction.
  */
 public class DragControlManager {
@@ -32,9 +32,9 @@ public class DragControlManager {
     private Node rootNode;              // parent node (usually root node of game)
     
     private Map<DragControl,Spatial> controls; // map of registered DraggableControls to Spatials
-    private Node draggables;                        // parent node to hold draggable Spatials as children
+    private Node draggables;                   // parent node to hold draggable Spatials as children
     
-    private Spatial dragged_spatial;                // spatial currently being dragged by cursor
+    private Spatial dragged_spatial;           // spatial currently being dragged by cursor
     
     DragControlManager(InputManager im, Camera cam, Node rn) {
         this.inputManager = im;

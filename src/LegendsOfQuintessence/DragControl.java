@@ -18,8 +18,8 @@ import com.jme3.scene.control.AbstractControl;
  *  Usage:
  *      - construct new control with reference to a DragControlManager
  *      - add control to any Spatial, and call the following methods;
- *          - setDraggable(boolean) to turn on or turn off draggability
- *          - MORE FUNCTIONALITY TO COME...
+ *          (1) setDraggable(boolean) to turn on or turn off draggability
+ *          (2) MORE FUNCTIONALITY TO COME...
  */
 public class DragControl extends AbstractControl {
 
@@ -51,8 +51,23 @@ public class DragControl extends AbstractControl {
         spatial.setLocalTranslation(click3d);
     }
 
-    // ---------- SETTERS / GETTERS ------------
+    // ------------- SETTERS / GETTERS -------------- //
     
+    
+    // turn on (or off) draggability of the spatial
+    public void setDraggable(boolean b) {
+        draggable = b;
+    }
+    
+    public boolean isDraggable() {
+        return draggable;
+    }
+    
+    public Spatial getSpatial() {
+        return spatial;
+    }
+    
+    // do NOT call setSpatial (game engine will do this)
     @Override
     public void setSpatial(Spatial spatial) {
         super.setSpatial(spatial);
@@ -63,19 +78,6 @@ public class DragControl extends AbstractControl {
             dragControlManager.remove(this);
         }
     }
-    
-    public Spatial getSpatial() {
-        return spatial;
-    }
-    
-    public void setDraggable(boolean b) {
-        draggable = b;
-    }
-    
-    public boolean isDraggable() {
-        return draggable;
-    }
-    
     
     // --------- IGNORE. Method for advanced users. ---------------
     @Override
