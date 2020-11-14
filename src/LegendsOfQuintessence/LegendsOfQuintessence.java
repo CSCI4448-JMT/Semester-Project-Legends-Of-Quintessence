@@ -52,15 +52,16 @@ public class LegendsOfQuintessence extends SimpleApplication {
         al.setColor(ColorRGBA.White.mult(0.5f));
         rootNode.addLight(al);
         
-        
         dragController = new DragController(this.inputManager, this.cam, this.rootNode);
         
         Spatial card = makeCard(0,0,0);
         Spatial card2 = makeCard(-2,0,0);
         
+        rootNode.attachChild(card);
+        rootNode.attachChild(card2);
         
-        dragController.addDraggable(card);
-        dragController.addDraggable(card2);
+        card.addControl(new DraggableControl(dragController));
+        //card2.addControl(new DraggableControl(dragController));
     }
 
     private Spatial makeCard(float x, float y, float z) {
@@ -103,7 +104,6 @@ public class LegendsOfQuintessence extends SimpleApplication {
     
     @Override
     public void simpleUpdate(float tpf) {
-        dragController.update();
     }
 
     @Override

@@ -26,8 +26,10 @@ public class DragController {
     private InputManager inputManager;
     private Camera cam;
     private Node rootNode;
+    
     private Node draggables; 
     private Spatial dragged_item;
+    
     
     DragController(InputManager im, Camera cam, Node rn) {
         this.inputManager = im;
@@ -38,26 +40,16 @@ public class DragController {
         rootNode.attachChild(draggables);
     }
     
-    public void update() {        
-        if (dragged_item != null) {
-            Vector3f item_location = dragged_item.getLocalTranslation().subtract(cam.getLocation());
-            Vector3f projection = item_location.project(cam.getDirection());
-            float z_view = cam.getViewToProjectionZ(projection.length());
-
-            Vector2f click2d = inputManager.getCursorPosition().clone();  
-            Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
-
-            dragged_item.setLocalTranslation(click3d);
-        }
-    }
-    
-    public void addDraggable(Spatial item) {
+    public void registerDraggable(Spatial item) {
+        // make item child of draggable node
         item.removeFromParent();
         draggables.attachChild(item);
     }
     
-    public Spatial getDragged() {
-        return this.dragged_item;
+    public void removeDraggable(Spatial item) {
+        // make item child of draggable node
+        item.removeFromParent();
+        rootNode.attachChild(item);
     }
     
     public void drag() {
@@ -82,16 +74,30 @@ public class DragController {
         unsnapFromCursor();
     }
     
+    // --------- GETTERS & SETTERS ------------ //
+    
+    public InputManager getInputManager() {
+        return inputManager;
+    }
+    
+    public Camera getCamera() {
+        return cam;
+    }
+    
+    
     // ----------- HELPER METHODS ------------- //
     
     protected void snapToCursor(Spatial item) {
         dragged_item = item;        
         dragged_item.move(0,0,1);
+        
+        dragged_item.getControl(DraggableControl.class).setEnabled(true);
     }
     
     protected void unsnapFromCursor() {
         if (dragged_item != null) {
             dragged_item.move(0,0,-1);
+            dragged_item.getControl(DraggableControl.class).setEnabled(false);
         }
         dragged_item = null;
     }
