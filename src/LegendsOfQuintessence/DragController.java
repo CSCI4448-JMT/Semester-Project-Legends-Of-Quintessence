@@ -8,6 +8,9 @@ package LegendsOfQuintessence;
 import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.InputManager;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -33,8 +36,19 @@ public class DragController {
         this.draggables = new Node("Draggables");
         
         rootNode.attachChild(draggables);
-        
-        inputManager.setCursorVisible(true);
+    }
+    
+    public void update() {        
+        if (dragged_item != null) {
+            Vector3f item_location = dragged_item.getLocalTranslation().subtract(cam.getLocation());
+            Vector3f projection = item_location.project(cam.getDirection());
+            float z_view = cam.getViewToProjectionZ(projection.length());
+
+            Vector2f click2d = inputManager.getCursorPosition().clone();  
+            Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
+
+            dragged_item.setLocalTranslation(click3d);
+        }
     }
     
     public void addDraggable(Spatial item) {
