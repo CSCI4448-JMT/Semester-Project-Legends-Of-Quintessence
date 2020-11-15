@@ -33,12 +33,27 @@ public class LegendsOfQuintessence extends SimpleApplication {
         LegendsOfQuintessence app = new LegendsOfQuintessence();
         app.start();
     }
-
-    private Node draggables;
-    
+            
     @Override
     public void simpleInitApp() {
-        initKeys();
+        initScene();
+       
+        DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
+       
+     
+        Spatial card = makeCard(0,0,0);
+        Spatial card2 = makeCard(4.5f,0,0);
+        
+        rootNode.attachChild(card);
+        rootNode.attachChild(card2);
+        
+        card.addControl(new DragControl(dragController));
+        card2.addControl(new DragControl(dragController));
+    }
+
+    private void initScene() {
+        flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
+        inputManager.setCursorVisible(true); // show cursor
         
         cam.setLocation(new Vector3f(0f, 0f, 30f));
         
@@ -50,86 +65,29 @@ public class LegendsOfQuintessence extends SimpleApplication {
         AmbientLight al = new AmbientLight();
         al.setColor(ColorRGBA.White.mult(0.5f));
         rootNode.addLight(al);
-        
+    }
+ 
+
+    private Spatial makeCard(float x, float y, float z) {
         Box b = new Box(2, 3, 0.5f);
         Geometry geom = new Geometry("Box", b);
 
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
         mat.setBoolean("UseMaterialColors", true);
-        ColorRGBA color = new ColorRGBA(0.0f, 0.6f, 0.8f,1);
+        ColorRGBA color = ColorRGBA.randomColor();
         
         mat.setColor("Ambient", color);
         mat.setColor("Diffuse", color);
         geom.setMaterial(mat);
-
-        draggables = new Node("Draggables");
-        rootNode.attachChild(draggables);
-        draggables.attachChild(geom);
-    }
-
-
-    private void initKeys() {
-        flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
-        inputManager.setCursorVisible(true); // show cursor
         
-        inputManager.addMapping("LeftClick", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        inputManager.addListener(actionListener, "LeftClick");
-    }
- 
-
-    private ActionListener actionListener = new ActionListener() {
+        geom.setLocalTranslation(x,y,z);
         
-        public void onAction(String name, boolean keyPressed, float tpf) {
-            if (name.equals("LeftClick") && keyPressed) {
-                CollisionResults results = new CollisionResults();
-
-                Vector2f click2d = inputManager.getCursorPosition().clone();
-                Vector3f click3d = cam.getWorldCoordinates(click2d, 0f).clone();
-                Vector3f dir = cam.getWorldCoordinates(
-                    click2d, 1f).subtractLocal(click3d).normalizeLocal();
-
-                Ray ray = new Ray(click3d, dir);
-                draggables.collideWith(ray, results);
-
-                // get closest spatial and snap to cursor
-                if (results.size() > 0) {
-                    CollisionResult closest = results.getClosestCollision();
-                    snapToCursor(closest.getGeometry());
-                }
-                
-            } else if (name.equals("LeftClick") && !keyPressed) {
-                unsnapFromCursor();
-            }
-          
-        }
-    };
-    
-    
-    protected Spatial snapped_item = null;
-    protected void snapToCursor(Spatial item) {
-        snapped_item = item;        
-        snapped_item.move(0,0,1);
+        return geom;
     }
-    protected void unsnapFromCursor() {
-        if (snapped_item != null) {
-            snapped_item.move(0,0,-1);
-        }
-        snapped_item = null;
-    }
+    
     
     @Override
     public void simpleUpdate(float tpf) {
-        
-        if (snapped_item != null) {
-            Vector3f item_location = snapped_item.getLocalTranslation().subtract(cam.getLocation());
-            Vector3f projection = item_location.project(cam.getDirection());//.normalizeLocal());
-            float z_view = cam.getViewToProjectionZ(projection.length());
-
-            Vector2f click2d = inputManager.getCursorPosition().clone();  
-            Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
-
-            snapped_item.setLocalTranslation(click3d);
-        }
     }
 
     @Override
