@@ -13,6 +13,8 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
+import java.util.ArrayList;
+import java.util.List;
 
 /** A custom control that can be used for draggability.
  *  Usage:
@@ -24,11 +26,13 @@ import com.jme3.scene.control.AbstractControl;
 public class DragControl extends AbstractControl {
 
     DragControlManager dragControlManager;
-    private boolean draggable = true;
-    
+    private boolean draggable;
+    List<Spatial> droppables;
  
     public DragControl(DragControlManager dc){
         dragControlManager = dc;
+        draggable = true;
+        droppables = new ArrayList();
     }
    
     /* controlUpdate() is 
@@ -61,6 +65,15 @@ public class DragControl extends AbstractControl {
     
     public boolean isDraggable() {
         return draggable;
+    }
+    
+    // add Spatial that the dragged item can snap to
+    public void addDroppable(Spatial item) {
+        droppables.add(item);
+    }
+    
+    public List<Spatial> getDroppables() {
+        return droppables;
     }
     
     public Spatial getSpatial() {

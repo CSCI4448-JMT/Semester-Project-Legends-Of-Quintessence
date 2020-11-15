@@ -42,13 +42,14 @@ public class LegendsOfQuintessence extends SimpleApplication {
        
      
         Spatial card = makeCard(0,0,0);
-        Spatial card2 = makeCard(4.5f,0,0);
+        Spatial slot = makeSlot(4.5f,0,0);
         
         rootNode.attachChild(card);
-        rootNode.attachChild(card2);
+        rootNode.attachChild(slot);
         
-        card.addControl(new DragControl(dragController));
-        card2.addControl(new DragControl(dragController));
+        DragControl c = new DragControl(dragController);
+        c.addDroppable(slot);
+        card.addControl(c);
     }
 
     private void initScene() {
@@ -67,7 +68,7 @@ public class LegendsOfQuintessence extends SimpleApplication {
         rootNode.addLight(al);
     }
  
-
+    // USE FOR TESTING ONLY
     private Spatial makeCard(float x, float y, float z) {
         Box b = new Box(2, 3, 0.5f);
         Geometry geom = new Geometry("Box", b);
@@ -84,6 +85,25 @@ public class LegendsOfQuintessence extends SimpleApplication {
         
         return geom;
     }
+    
+    // USE FOR TESTING ONLY
+    private Spatial makeSlot(float x, float y, float z) {
+        Box b = new Box(2, 3, 0.01f);
+        Geometry geom = new Geometry("Box", b);
+
+        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        mat.setBoolean("UseMaterialColors", true);
+        ColorRGBA color = ColorRGBA.randomColor();
+        
+        mat.setColor("Ambient", color);
+        mat.setColor("Diffuse", color);
+        geom.setMaterial(mat);
+        
+        geom.setLocalTranslation(x,y,z);
+        
+        return geom;
+    }
+    
     
     
     @Override

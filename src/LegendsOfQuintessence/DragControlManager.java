@@ -5,6 +5,7 @@
  */
 package LegendsOfQuintessence;
 
+import com.jme3.bounding.BoundingBox;
 import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.InputManager;
@@ -18,6 +19,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /** Manages drag controls (and associated spatials), and global drag and drop functionality.
@@ -98,6 +100,8 @@ public class DragControlManager {
     
     private void drop() {
         unsnapFromCursor();
+        snapToDroppable();
+        dragged_spatial = null;
     }
     
     // set Spatial as child of draggable node
@@ -128,9 +132,25 @@ public class DragControlManager {
             dragged_spatial.setLocalTranslation(location.getX(), location.getY(), 0);
             dragged_spatial.getControl(DragControl.class).setEnabled(false);
         }
-        dragged_spatial = null;
     }
 
+    private void snapToDroppable() {
+        if (dragged_spatial != null) {
+            List<Spatial> droppables = dragged_spatial.getControl(DragControl.class).getDroppables();
+
+            for (Spatial item : droppables) {
+                CollisionResults results = new CollisionResults();
+                dragged_spatial.collideWith((BoundingBox) item.getWorldBound(), results);
+
+                if (results.size() > 0) {
+                    Vector3f location = item.getLocalTranslation();
+                    dragged_spatial.setLocalTranslation(location);
+                    break;
+                }
+            }
+        }
+    }
+    
     // --------- GETTERS & SETTERS --------- //
     
     public InputManager getInputManager() {
