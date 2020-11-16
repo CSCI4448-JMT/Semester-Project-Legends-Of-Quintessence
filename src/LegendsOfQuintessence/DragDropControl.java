@@ -39,7 +39,7 @@ public class DragDropControl extends AbstractControl {
     }
     
     public boolean isDraggable() {
-        return dragControl.isDraggable();
+        return dragControl.isDraggable() && dropControl.isDropped();
     }
     
     public void setDraggable(boolean bool) {

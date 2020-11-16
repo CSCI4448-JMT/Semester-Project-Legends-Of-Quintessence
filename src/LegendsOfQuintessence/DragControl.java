@@ -31,7 +31,7 @@ public class DragControl {
 
     DragControlManager dragControlManager;
     Spatial spatial;
-    
+
     private boolean enabled = false;
     private boolean draggable = true;   // whether spatial can be dragged by cursor
     

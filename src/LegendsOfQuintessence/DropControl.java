@@ -35,6 +35,7 @@ public class DropControl {
     private Vector3f final_pos;
     
     private boolean enabled = false;
+    private boolean dropped = true;
     private boolean animated = true;
     private boolean snapback = true;    
 
@@ -57,8 +58,9 @@ public class DropControl {
             Vector3f current_pos = spatial.getLocalTranslation().clone();  
             Vector3f dir = final_pos.subtract(current_pos);
 
-            if (dir.length() < 0.01f || !animated) {
-                spatial.setLocalTranslation(final_pos);
+            if (dir.length() < 0.05f || !animated) {
+                spatial.setLocalTranslation(final_pos);  
+                dropped = true;
                 setEnabled(false);
             } else {
                 spatial.setLocalTranslation(current_pos.add(dir.normalizeLocal().mult(20*tpf)));
@@ -112,6 +114,8 @@ public class DropControl {
         } else {
             final_pos = spatial.getLocalTranslation();
         }
+        
+        dropped = false;
         setEnabled(true);
     }
     
@@ -130,5 +134,9 @@ public class DropControl {
     
     private void setEnabled(boolean bool) {
         enabled = bool;
+    }
+    
+    public boolean isDropped() {
+        return dropped;
     }
 }
