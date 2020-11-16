@@ -67,7 +67,7 @@ public class DragControlManager {
         addDraggable(control.getSpatial());
         
         control.setDraggable(true);
-        control.setEnabled(false);
+        control.setEnabled(true);
     }
     
     public void remove(DragControl control) {
@@ -100,7 +100,6 @@ public class DragControlManager {
     
     private void drop() {
         unsnapFromCursor();
-        snapToDroppable();
         dragged_spatial = null;
     }
     
@@ -122,7 +121,7 @@ public class DragControlManager {
         
         Vector3f location = dragged_spatial.getLocalTranslation();
         dragged_spatial.setLocalTranslation(location.getX(), location.getY(), 2);
-        dragged_spatial.getControl(DragControl.class).setEnabled(true);
+        dragged_spatial.getControl(DragControl.class).setDrag(true);
     }
     
     // set Spatial to stop following the cursor
@@ -130,26 +129,12 @@ public class DragControlManager {
         if (dragged_spatial != null) {
             Vector3f location = dragged_spatial.getLocalTranslation();
             dragged_spatial.setLocalTranslation(location.getX(), location.getY(), 0);
-            dragged_spatial.getControl(DragControl.class).setEnabled(false);
+            dragged_spatial.getControl(DragControl.class).setDrag(false);
+            dragged_spatial.getControl(DragControl.class).snapToDroppable();
         }
     }
 
-    private void snapToDroppable() {
-        if (dragged_spatial != null) {
-            List<Spatial> droppables = dragged_spatial.getControl(DragControl.class).getDroppables();
-
-            for (Spatial item : droppables) {
-                CollisionResults results = new CollisionResults();
-                dragged_spatial.collideWith((BoundingBox) item.getWorldBound(), results);
-
-                if (results.size() > 0) {
-                    Vector3f location = item.getLocalTranslation();
-                    dragged_spatial.setLocalTranslation(location);
-                    break;
-                }
-            }
-        }
-    }
+    
     
     // --------- GETTERS & SETTERS --------- //
     

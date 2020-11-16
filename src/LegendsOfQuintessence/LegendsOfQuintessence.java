@@ -34,16 +34,17 @@ public class LegendsOfQuintessence extends SimpleApplication {
         app.start();
     }
             
+    protected Spatial card;
+
     @Override
     public void simpleInitApp() {
         initScene();
        
         DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
        
-     
-        Spatial card = makeCard(0,0,0);
         Spatial slot = makeSlot(4.5f,0,0);
-        
+        card = card = makeCard(0,0,0);
+                
         rootNode.attachChild(card);
         rootNode.attachChild(slot);
         

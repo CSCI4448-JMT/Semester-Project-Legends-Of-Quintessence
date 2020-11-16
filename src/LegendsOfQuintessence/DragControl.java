@@ -5,6 +5,8 @@
  */
 package LegendsOfQuintessence;
 
+import com.jme3.bounding.BoundingBox;
+import com.jme3.collision.CollisionResults;
 import com.jme3.input.InputManager;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -20,18 +22,24 @@ import java.util.List;
  *  Usage:
  *      - construct new control with reference to a DragControlManager
  *      - add control to any Spatial, and call the following methods;
- *          (1) setDraggable(boolean) to turn on or turn off draggability
- *          (2) MORE FUNCTIONALITY TO COME...
+ *          (1) setDraggable(boolean) to turn on or turn off draggability for the spatial
+ *          (2) addDroppable(Spatial) to add Spatials that the spatial can snap to upon collision
+ *          (3) ...
  */
 public class DragControl extends AbstractControl {
 
     DragControlManager dragControlManager;
-    private boolean draggable;
+    
     List<Spatial> droppables;
- 
+    
+    private boolean draggable = true;   // spatial can be dragged by cursor
+    private boolean drag = false;       // spatial is being dragged
+    private boolean drop = false;       // spatial has dropped
+    
+    private Vector3f final_location; // spatial's final location
+    
     public DragControl(DragControlManager dc){
         dragControlManager = dc;
-        draggable = true;
         droppables = new ArrayList();
     }
    
@@ -42,17 +50,56 @@ public class DragControl extends AbstractControl {
     */
     @Override
     protected void controlUpdate(float tpf) {
-        InputManager inputManager = dragControlManager.getInputManager();
-        Camera cam = dragControlManager.getCamera();
+        if (drag) {
+            InputManager inputManager = dragControlManager.getInputManager();
+            Camera cam = dragControlManager.getCamera();
+
+            Vector3f item_location = spatial.getLocalTranslation().subtract(cam.getLocation());
+            Vector3f projection = item_location.project(cam.getDirection());
+            float z_view = cam.getViewToProjectionZ(projection.length());
+
+            Vector2f click2d = inputManager.getCursorPosition().clone();  
+            Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
+
+            spatial.setLocalTranslation(click3d);
+        }
         
-        Vector3f item_location = spatial.getLocalTranslation().subtract(cam.getLocation());
-        Vector3f projection = item_location.project(cam.getDirection());
-        float z_view = cam.getViewToProjectionZ(projection.length());
+        if (drop) {
+            animateMoveTo(final_location, tpf);
+        }
+    }
 
-        Vector2f click2d = inputManager.getCursorPosition().clone();  
-        Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
+    
+    public void animateMoveTo(Vector3f new_location, float tpf) {
+        Vector3f current_location = spatial.getLocalTranslation();  
+        Vector3f dir = new_location.subtract(current_location);
+        
+        if (dir.length() < 0.001f) {
+            spatial.setLocalTranslation(new_location);
+            drop = false;
+        } else {
+            spatial.setLocalTranslation(current_location.add(dir.normalizeLocal().mult(10*tpf)));
+        }
+    }
+    
+    // set Spatial to snap to one of the desired Spatials upon collision
+    public void snapToDroppable() {
+        List<Spatial> droppables = spatial.getControl(DragControl.class).getDroppables();
 
-        spatial.setLocalTranslation(click3d);
+        for (Spatial item : droppables) {
+            CollisionResults results = new CollisionResults();
+            spatial.collideWith((BoundingBox) item.getWorldBound(), results);
+
+            if (results.size() > 0) {
+                Vector3f location = item.getLocalTranslation();
+                final_location = location;
+                drop = true;
+                
+                // ?? notify droppable
+                
+                break;
+            }
+        }
     }
 
     // ------------- SETTERS / GETTERS -------------- //
@@ -79,6 +126,11 @@ public class DragControl extends AbstractControl {
     public Spatial getSpatial() {
         return spatial;
     }
+    
+    public void setDrag(boolean b) {
+        drag = b;
+    }
+
     
     // do NOT call setSpatial (game engine will do this)
     @Override
