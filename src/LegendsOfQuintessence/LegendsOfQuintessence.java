@@ -46,17 +46,18 @@ public class LegendsOfQuintessence extends SimpleApplication {
         Spatial slot2 = makeSlot(0,0,0);
         Spatial slot3 = makeSlot(-6f,0,0);
         
-        card = card = makeCard(0,-6,0);
+        card = makeCard(0,-6,0);
+        Node board = new Node();
                 
         rootNode.attachChild(card);
-        rootNode.attachChild(slot1);
-        rootNode.attachChild(slot2);
-        rootNode.attachChild(slot3);
+        rootNode.attachChild(board);
+        
+        board.attachChild(slot1);
+        board.attachChild(slot2);
+        board.attachChild(slot3);
         
         DragDropControl c = new DragDropControl(dragController);
-        c.addDroppable(slot1);
-        c.addDroppable(slot2);
-        c.addDroppable(slot3);
+        c.addDroppable(board);
 
         c.setSpatial(card);
     }

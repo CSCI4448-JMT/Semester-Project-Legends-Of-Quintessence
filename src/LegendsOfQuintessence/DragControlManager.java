@@ -47,7 +47,6 @@ public class DragControlManager {
         this.draggables = new Node("Draggables");
         this.rootNode.attachChild(draggables);
         
-        // setup for click detection
         ActionListener clickListener = new ActionListener() {
             @Override
             public void onAction(String name, boolean keyPressed, float tpf) {
@@ -62,25 +61,12 @@ public class DragControlManager {
         inputManager.addListener(clickListener, "LeftClick");
     }
     
-    public void register(DragDropControl control) {
-        controls.put(control, control.getSpatial());
-        addDraggable(control.getSpatial());
-    }
-    
-    public void remove(DragDropControl control) {
-        removeDraggable(controls.get(control));
-        controls.remove(control);
-    }
-    
-    // --------------------- HELPER METHODS ---------------------- //
-    
     private void drag() {
         CollisionResults results = new CollisionResults();
 
         Vector2f click2d = inputManager.getCursorPosition().clone();
         Vector3f click3d = cam.getWorldCoordinates(click2d, 0f).clone();
-        Vector3f dir = cam.getWorldCoordinates(
-            click2d, 1f).subtractLocal(click3d).normalizeLocal();
+        Vector3f dir = cam.getWorldCoordinates(click2d, 1f).subtractLocal(click3d).normalizeLocal();
 
         Ray ray = new Ray(click3d, dir);
         draggables.collideWith(ray, results);
@@ -91,6 +77,7 @@ public class DragControlManager {
             
             if (closest.getGeometry().getControl(DragControl.class).isDraggable()) {
                 dragged_spatial = closest.getGeometry();
+                dragged_spatial.getControl(DropControl.class).snapToCursor();
                 dragged_spatial.getControl(DragControl.class).snapToCursor();
             }
         }
@@ -102,6 +89,18 @@ public class DragControlManager {
             dragged_spatial.getControl(DropControl.class).unsnapFromCursor();
         }
         dragged_spatial = null;
+    }
+    
+    // ---------- REGISTRATION METHODS ----------- //
+
+    public void register(DragDropControl control) {
+        controls.put(control, control.getSpatial());
+        addDraggable(control.getSpatial());
+    }
+    
+    public void remove(DragDropControl control) {
+        removeDraggable(controls.get(control));
+        controls.remove(control);
     }
     
     // set Spatial as child of draggable node

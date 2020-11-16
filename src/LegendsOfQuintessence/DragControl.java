@@ -30,14 +30,14 @@ public class DragControl extends AbstractControl {
 
     DragControlManager dragControlManager;
     
-    private boolean draggable = true;   // spatial can be dragged by cursor
-    private boolean drag = false;       // spatial is being dragged
+    private boolean draggable = true;   // whether spatial can be dragged by cursor
+    private boolean drag = false;       // whether spatial is being dragged
     
     public DragControl(DragControlManager dc){
         dragControlManager = dc;
     }
    
-    // when control enabled, update position of spatial to track cursor
+    // the update loop - when enabled, update the position of spatial to track mouse cursor
     @Override
     protected void controlUpdate(float tpf) {
         InputManager inputManager = dragControlManager.getInputManager();
@@ -52,14 +52,18 @@ public class DragControl extends AbstractControl {
 
         spatial.setLocalTranslation(click3d);
     }
-
+    
+    // the command to make the spatial track the mouse cursor
     public void snapToCursor() {
+        // make spatial pop out
         Vector3f location = spatial.getLocalTranslation();        
-        spatial.setLocalTranslation(location.getX(), location.getY(), 2);
+        spatial.setLocalTranslation(location.getX(), location.getY(), 2); 
         
+        // enable update loop
         setEnabled(true);
     }
     
+    // the command to make the spatial stop following the cursor
     public void unsnapFromCursor() {
         setEnabled(false);
     }

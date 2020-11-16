@@ -7,6 +7,7 @@ package LegendsOfQuintessence;
 
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 
@@ -34,7 +35,7 @@ public class DragDropControl {
         dragControl.setDraggable(bool);
     }
     
-    public void addDroppable(Spatial item) {
+    public void addDroppable(Node item) {
         dropControl.addDroppable(item);
     }
     
