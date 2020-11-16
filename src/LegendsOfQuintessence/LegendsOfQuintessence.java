@@ -69,8 +69,8 @@ public class LegendsOfQuintessence extends SimpleApplication {
         c2.addDropContainer(slot2);
         c2.addDropContainer(slot3);
 
-        c.setSpatial(card);
-        c2.setSpatial(card2);
+        card.addControl(c);
+        card2.addControl(c2);
     }
 
     private void initScene() {

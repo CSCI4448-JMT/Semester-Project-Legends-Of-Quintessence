@@ -27,31 +27,33 @@ import java.util.List;
  *          (3) ...
  *  @author JMT
  */
-public class DragControl extends AbstractControl {
+public class DragControl {
 
     DragControlManager dragControlManager;
+    Spatial spatial;
     
+    private boolean enabled = false;
     private boolean draggable = true;   // whether spatial can be dragged by cursor
-    private boolean drag = false;       // whether spatial is being dragged
     
     public DragControl(DragControlManager dc){
         dragControlManager = dc;
     }
    
     // the update loop - when enabled, update the position of spatial to track mouse cursor
-    @Override
-    protected void controlUpdate(float tpf) {
-        InputManager inputManager = dragControlManager.getInputManager();
-        Camera cam = dragControlManager.getCamera();
+    public void update(float tpf) {
+        if (enabled) {
+            InputManager inputManager = dragControlManager.getInputManager();
+            Camera cam = dragControlManager.getCamera();
 
-        Vector3f item_location = spatial.getLocalTranslation().subtract(cam.getLocation());
-        Vector3f projection = item_location.project(cam.getDirection());
-        float z_view = cam.getViewToProjectionZ(projection.length());
+            Vector3f item_location = spatial.getLocalTranslation().subtract(cam.getLocation());
+            Vector3f projection = item_location.project(cam.getDirection());
+            float z_view = cam.getViewToProjectionZ(projection.length());
 
-        Vector2f click2d = inputManager.getCursorPosition().clone();  
-        Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
+            Vector2f click2d = inputManager.getCursorPosition().clone();  
+            Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
 
-        spatial.setLocalTranslation(click3d);
+            spatial.setLocalTranslation(click3d);
+        }
     }
     
     // the command to make the spatial track the mouse cursor
@@ -72,6 +74,9 @@ public class DragControl extends AbstractControl {
     
     // ------------- SETTERS / GETTERS -------------- //
     
+    private void setEnabled(boolean bool) {
+        enabled = bool;
+    }
     
     // turn on (or off) draggability of the spatial
     public void setDraggable(boolean b) {
@@ -82,9 +87,10 @@ public class DragControl extends AbstractControl {
         return draggable;
     }
     
-    // --------- IGNORE. Method for advanced users. ---------------
-    @Override
-    protected void controlRender(RenderManager rm, ViewPort vp) {}
+    public void setSpatial(Spatial spatial) {
+        this.spatial = spatial;
+    }
+    
 }
 
 

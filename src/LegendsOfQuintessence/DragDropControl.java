@@ -15,7 +15,7 @@ import com.jme3.scene.control.AbstractControl;
  * 
  * @author JMT
  */
-public class DragDropControl {
+public class DragDropControl extends AbstractControl {
     DragControlManager dragControlManager;
     DragControl dragControl;
     DropControl dropControl;
@@ -26,9 +26,10 @@ public class DragDropControl {
         dragControlManager = dc;
         dragControl = new DragControl(dc);
         dropControl = new DropControl(dc);
-        
-        dragControl.setEnabled(false);
-        dropControl.setEnabled(false);
+    }
+
+    public boolean isDraggable() {
+        return dragControl.isDraggable();
     }
     
     public void setDraggable(boolean bool) {
@@ -39,33 +40,51 @@ public class DragDropControl {
         dropControl.addDropContainer(container);
     }
     
+    @Override
     public void setSpatial(Spatial spatial) {
-        this.spatial = spatial;
+        super.setSpatial(spatial);
         
         if (spatial != null) { 
-            spatial.addControl(dragControl);
-            spatial.addControl(dropControl);
-            
             dragControlManager.register(this);
         } else {
             dragControlManager.remove(this);
         }
+        
+        dragControl.setSpatial(spatial);
+        dropControl.setSpatial(spatial);
     }
     
-    public Spatial getSpatial() {
-        return spatial;
-    }
     
     public void setDragControl(DragControl dc) {
-        spatial.removeControl(dragControl);
+        dragControl.setSpatial(null);
         dragControl = dc;
-        spatial.addControl(dc);
+        dragControl.setSpatial(spatial);
     }
     
     public void setDropControl(DropControl dc) {
-        spatial.removeControl(dropControl);
+        dropControl.setSpatial(null);
         dropControl = dc;
-        spatial.addControl(dc);
+        dropControl.setSpatial(spatial);
     }
+
+    public void snapToCursor() {
+        dragControl.snapToCursor();
+        dropControl.snapToCursor();
+    }
+    
+    public void unsnapFromCursor() {
+        dropControl.unsnapFromCursor();
+        dragControl.unsnapFromCursor();
+    }
+    
+    @Override
+    protected void controlUpdate(float tpf) {
+        dragControl.update(tpf);
+        dropControl.update(tpf);
+    }
+
+    // IGNORE.
+    @Override
+    protected void controlRender(RenderManager rm, ViewPort vp) {}
     
 }

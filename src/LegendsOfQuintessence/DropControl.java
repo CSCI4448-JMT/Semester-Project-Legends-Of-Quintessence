@@ -23,16 +23,18 @@ import java.util.Map;
  *
  * @author JMT
  */
-public class DropControl extends AbstractControl {
+public class DropControl {
 
     private DragControlManager dragControlManager;
-
+    private Spatial spatial;
+    
     private List<DropContainer> drop_containers;
     private DropContainer current_drop_container;
     
     private Vector3f start_pos;
     private Vector3f final_pos;
     
+    private boolean enabled = false;
     private boolean animated = true;
     private boolean snapback = true;    
 
@@ -43,16 +45,17 @@ public class DropControl extends AbstractControl {
     }
     
     // the update loop - when enabled, move the spatial to the final position
-    @Override
-    protected void controlUpdate(float tpf) {
-        Vector3f current_pos = spatial.getLocalTranslation();  
-        Vector3f dir = final_pos.subtract(current_pos);
-        
-        if (dir.length() < 0.01f || !animated) {
-            spatial.setLocalTranslation(final_pos);
-            setEnabled(false);
-        } else {
-            spatial.setLocalTranslation(current_pos.add(dir.normalizeLocal().mult(20*tpf)));
+    public void update(float tpf) {
+        if (enabled) {
+            Vector3f current_pos = spatial.getLocalTranslation();  
+            Vector3f dir = final_pos.subtract(current_pos);
+
+            if (dir.length() < 0.01f || !animated) {
+                spatial.setLocalTranslation(final_pos);
+                setEnabled(false);
+            } else {
+                spatial.setLocalTranslation(current_pos.add(dir.normalizeLocal().mult(20*tpf)));
+            }
         }
     }
     
@@ -110,18 +113,15 @@ public class DropControl extends AbstractControl {
         drop_containers.add(container);
     }
     
-    @Override
     public void setSpatial(Spatial spatial) {
-        super.setSpatial(spatial);
+        this.spatial = spatial;
         
         if (spatial != null) { 
             start_pos = spatial.getLocalTranslation().clone();
         }
     }
     
-    
-    // IGNORE. Method for advanced users.
-    @Override
-    protected void controlRender(RenderManager rm, ViewPort vp) {}
-    
+    private void setEnabled(boolean bool) {
+        enabled = bool;
+    }
 }

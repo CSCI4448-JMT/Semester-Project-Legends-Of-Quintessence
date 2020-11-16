@@ -77,18 +77,16 @@ public class DragControlManager {
         if (results.size() > 0) {
             CollisionResult closest = results.getClosestCollision();
             
-            if (closest.getGeometry().getControl(DragControl.class).isDraggable()) {
+            if (closest.getGeometry().getControl(DragDropControl.class).isDraggable()) {
                 dragged_spatial = closest.getGeometry();
-                dragged_spatial.getControl(DropControl.class).snapToCursor();
-                dragged_spatial.getControl(DragControl.class).snapToCursor();
+                dragged_spatial.getControl(DragDropControl.class).snapToCursor();
             }
         }
     }
     
     private void drop() {
         if (dragged_spatial != null) {
-            dragged_spatial.getControl(DragControl.class).unsnapFromCursor();
-            dragged_spatial.getControl(DropControl.class).unsnapFromCursor();
+            dragged_spatial.getControl(DragDropControl.class).unsnapFromCursor();
         }
         dragged_spatial = null;
     }
