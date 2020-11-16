@@ -6,6 +6,7 @@
 package LegendsOfQuintessence;
 
 import com.jme3.bounding.BoundingBox;
+import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
@@ -24,7 +25,7 @@ public class DropControl extends AbstractControl {
 
     private DragControlManager dragControlManager;
 
-    private Node droppables;
+    private List<Spatial> droppables;
     private Vector3f start_pos;
     private Vector3f final_pos;
     
@@ -34,8 +35,7 @@ public class DropControl extends AbstractControl {
 
     DropControl(DragControlManager dc) {
         dragControlManager = dc;
-        droppables = new Node();
-        dragControlManager.getRootNode().attachChild(droppables);
+        droppables = new ArrayList();
     }
     
     // the update loop - when enabled, move the spatial to the final position
@@ -59,10 +59,18 @@ public class DropControl extends AbstractControl {
     public void unsnapFromCursor() {
         Vector3f location = spatial.getLocalTranslation();
         spatial.setLocalTranslation(location.getX(), location.getY(), 0);
-        
         CollisionResults results = new CollisionResults();
-        droppables.collideWith((BoundingBox) spatial.getWorldBound(), results);
-
+        
+        for (Spatial container : droppables) {    
+            CollisionResults local_results = new CollisionResults();
+            
+            container.collideWith((BoundingBox) spatial.getWorldBound(), local_results);
+            if (local_results.size() > 0) {
+                CollisionResult result = local_results.getClosestCollision();
+                results.addCollision(result);
+            }
+        } 
+        
         if (results.size() > 0) {
             final_pos = results.getClosestCollision().getGeometry().getLocalTranslation();
         } else if (snapback) {
@@ -70,14 +78,12 @@ public class DropControl extends AbstractControl {
         } else {
             final_pos = spatial.getLocalTranslation();
         }
-        
         setEnabled(true);
     }
     
     // add Spatial that the dragged item can snap to
-    public void addDroppable(Node item) {
-        item.removeFromParent();
-        droppables.attachChild(item);
+    public void addDroppable(Spatial item) {
+        droppables.add(item);
     }
     
    

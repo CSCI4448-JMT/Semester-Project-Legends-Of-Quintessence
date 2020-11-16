@@ -51,13 +51,15 @@ public class LegendsOfQuintessence extends SimpleApplication {
                 
         rootNode.attachChild(card);
         rootNode.attachChild(board);
-        
         board.attachChild(slot1);
         board.attachChild(slot2);
         board.attachChild(slot3);
         
+        
         DragDropControl c = new DragDropControl(dragController);
-        c.addDroppable(board);
+        c.addDroppable(slot1);
+        c.addDroppable(slot2);
+        c.addDroppable(slot3);
 
         c.setSpatial(card);
     }
