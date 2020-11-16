@@ -68,8 +68,8 @@ public class DragDropControl extends AbstractControl {
     }
 
     public void snapToCursor() {
-        dragControl.snapToCursor();
         dropControl.snapToCursor();
+        dragControl.snapToCursor();
     }
     
     public void unsnapFromCursor() {

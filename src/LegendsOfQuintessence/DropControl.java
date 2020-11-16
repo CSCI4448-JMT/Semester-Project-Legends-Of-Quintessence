@@ -47,7 +47,7 @@ public class DropControl {
     // the update loop - when enabled, move the spatial to the final position
     public void update(float tpf) {
         if (enabled) {
-            Vector3f current_pos = spatial.getLocalTranslation();  
+            Vector3f current_pos = spatial.getLocalTranslation().clone();  
             Vector3f dir = final_pos.subtract(current_pos);
 
             if (dir.length() < 0.01f || !animated) {
