@@ -80,7 +80,7 @@ public class DropControl {
                 dropped = true;
                 setEnabled(false);
             } else {
-                spatial.setLocalTranslation(current_pos.add(dir.normalizeLocal().mult(20*tpf)));
+                spatial.setLocalTranslation(current_pos.add(dir.mult(20*tpf)));
             }
         }
     }
