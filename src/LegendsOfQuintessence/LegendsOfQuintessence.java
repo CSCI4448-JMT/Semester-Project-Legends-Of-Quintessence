@@ -35,7 +35,8 @@ public class LegendsOfQuintessence extends SimpleApplication {
     }
             
     protected Spatial card;
-
+    protected Spatial card2;
+    
     @Override
     public void simpleInitApp() {
         initScene();
@@ -47,9 +48,11 @@ public class LegendsOfQuintessence extends SimpleApplication {
         DropContainer slot3 = makeSlot(-6f,0,0);
         
         card = makeCard(0,-6,0);
+        card2 = makeCard(6,-6,0);
         Node board = new Node();
                 
         rootNode.attachChild(card);
+        rootNode.attachChild(card2);
         rootNode.attachChild(board);
         board.attachChild(slot1);
         board.attachChild(slot2);
@@ -61,7 +64,13 @@ public class LegendsOfQuintessence extends SimpleApplication {
         c.addDropContainer(slot2);
         c.addDropContainer(slot3);
 
+        DragDropControl c2 = new DragDropControl(dragController);
+        c2.addDropContainer(slot1);
+        c2.addDropContainer(slot2);
+        c2.addDropContainer(slot3);
+
         c.setSpatial(card);
+        c2.setSpatial(card2);
     }
 
     private void initScene() {

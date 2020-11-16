@@ -15,7 +15,9 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.AbstractControl;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -26,6 +28,8 @@ public class DropControl extends AbstractControl {
     private DragControlManager dragControlManager;
 
     private List<DropContainer> drop_containers;
+    private DropContainer current_drop_container;
+    
     private Vector3f start_pos;
     private Vector3f final_pos;
     
@@ -59,6 +63,8 @@ public class DropControl extends AbstractControl {
     public void unsnapFromCursor() {
         Vector3f location = spatial.getLocalTranslation();
         spatial.setLocalTranslation(location.getX(), location.getY(), 0);
+        
+        Map<CollisionResult, DropContainer> resultMap = new HashMap();
         CollisionResults results = new CollisionResults();
         
         for (DropContainer container : drop_containers) { 
@@ -69,11 +75,28 @@ public class DropControl extends AbstractControl {
             if (local_results.size() > 0) {
                 CollisionResult result = local_results.getClosestCollision();
                 results.addCollision(result);
+                resultMap.put(result, container);
             }
         } 
         
         if (results.size() > 0) {
-            final_pos = results.getClosestCollision().getGeometry().getLocalTranslation();
+            CollisionResult final_result = results.getClosestCollision();
+            DropContainer container = resultMap.get(final_result);
+            
+            if (container.isVacant()) {
+                final_pos = container.getPosition();
+                container.addItem(spatial);
+                
+                if (current_drop_container != null) {
+                    current_drop_container.removeItem();
+                }
+                
+                current_drop_container = container;
+            } else if (snapback) {
+                final_pos = start_pos;
+            } else {
+                final_pos = spatial.getLocalTranslation();
+            }
         } else if (snapback) {
             final_pos = start_pos;
         } else {
@@ -87,7 +110,6 @@ public class DropControl extends AbstractControl {
         drop_containers.add(container);
     }
     
-   
     @Override
     public void setSpatial(Spatial spatial) {
         super.setSpatial(spatial);
