@@ -25,6 +25,9 @@ public class DragDropControl {
         dragControlManager = dc;
         dragControl = new DragControl(dc);
         dropControl = new DropControl(dc);
+        
+        dragControl.setEnabled(false);
+        dropControl.setEnabled(false);
     }
     
     public void setDraggable(boolean bool) {
@@ -36,6 +39,8 @@ public class DragDropControl {
     }
     
     public void setSpatial(Spatial spatial) {
+        this.spatial = spatial;
+        
         if (spatial != null) { 
             spatial.addControl(dragControl);
             spatial.addControl(dropControl);
