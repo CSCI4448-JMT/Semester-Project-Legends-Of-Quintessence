@@ -21,6 +21,8 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -36,6 +38,7 @@ public class LegendsOfQuintessence extends SimpleApplication {
             
     protected Spatial card;
     protected Spatial card2;
+    protected Spatial card3;
     
     @Override
     public void simpleInitApp() {
@@ -43,34 +46,23 @@ public class LegendsOfQuintessence extends SimpleApplication {
        
         DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
        
-        DropContainer slot1 = makeSlot(6f,0,0);
-        DropContainer slot2 = makeSlot(0,0,0);
-        DropContainer slot3 = makeSlot(-6f,0,0);
-        
+        List<DropContainer> board_row = makeRow(0);
+        List<DropContainer> field_row = makeRow(7);
+                
         card = makeCard(0,-6,0);
         card2 = makeCard(6,-6,0);
-        Node board = new Node();
-                
-        rootNode.attachChild(card);
-        rootNode.attachChild(card2);
-        rootNode.attachChild(board);
-        board.attachChild(slot1);
-        board.attachChild(slot2);
-        board.attachChild(slot3);
-        
+        card3 = makeCard(-6,-6,0);
         
         DragDropControl c = new DragDropControl(dragController);
-        c.addDropContainer(slot1);
-        c.addDropContainer(slot2);
-        c.addDropContainer(slot3);
-
-        DragDropControl c2 = new DragDropControl(dragController);
-        c2.addDropContainer(slot1);
-        c2.addDropContainer(slot2);
-        c2.addDropContainer(slot3);
-
+        c.addDropContainers(board_row);
+        c.addDropContainers(field_row);
+        
+        DragDropControl c2 = c.clone();
+        DragDropControl c3 = c.clone();
+        
         card.addControl(c);
         card2.addControl(c2);
+        card3.addControl(c3);
     }
 
     private void initScene() {
@@ -104,8 +96,22 @@ public class LegendsOfQuintessence extends SimpleApplication {
         geom.setMaterial(mat);
         
         geom.setLocalTranslation(x,y,z);
+        rootNode.attachChild(geom);
         
         return geom;
+    }
+    
+    private List<DropContainer> makeRow (float y) {
+        float width = 5;
+        
+        ArrayList slots = new ArrayList(); 
+        
+        for(int i = -2; i <=2; i++) {
+            DropContainer slot = makeSlot(i * width, y, 0);
+            slots.add(slot);
+        }
+        
+        return slots;
     }
     
     // USE FOR TESTING ONLY
@@ -124,6 +130,8 @@ public class LegendsOfQuintessence extends SimpleApplication {
         geom.setLocalTranslation(x,y,z);
         
         DropContainer dc = new DropContainer(geom);
+        rootNode.attachChild(geom);
+        
         return dc;
     }
     

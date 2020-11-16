@@ -25,10 +25,10 @@ import java.util.Map;
  */
 public class DropControl {
 
-    private DragControlManager dragControlManager;
+    protected DragControlManager dragControlManager;
     private Spatial spatial;
     
-    private List<DropContainer> drop_containers;
+    protected List<DropContainer> drop_containers;
     private DropContainer current_drop_container;
     
     private Vector3f start_pos;
@@ -42,6 +42,13 @@ public class DropControl {
     DropControl(DragControlManager dc) {
         dragControlManager = dc;
         drop_containers = new ArrayList();
+    }
+    
+    public DropControl clone() {                
+        DropControl dc = new DropControl(dragControlManager);
+        dc.drop_containers = new ArrayList(drop_containers);
+        
+        return dc;
     }
     
     // the update loop - when enabled, move the spatial to the final position

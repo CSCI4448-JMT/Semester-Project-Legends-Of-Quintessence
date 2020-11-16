@@ -39,6 +39,11 @@ public class DragControl {
         dragControlManager = dc;
     }
    
+    public DragControl clone() {                
+        DragControl dc = new DragControl(dragControlManager);        
+        return dc;
+    }
+    
     // the update loop - when enabled, update the position of spatial to track mouse cursor
     public void update(float tpf) {
         if (enabled) {

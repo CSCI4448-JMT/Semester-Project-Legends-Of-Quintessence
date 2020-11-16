@@ -10,15 +10,16 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
+import java.util.List;
 
 /**
  * 
  * @author JMT
  */
 public class DragDropControl extends AbstractControl {
-    DragControlManager dragControlManager;
-    DragControl dragControl;
-    DropControl dropControl;
+    protected DragControlManager dragControlManager;
+    protected DragControl dragControl;
+    protected DropControl dropControl;
     
     Spatial spatial;
     
@@ -27,7 +28,16 @@ public class DragDropControl extends AbstractControl {
         dragControl = new DragControl(dc);
         dropControl = new DropControl(dc);
     }
-
+    
+    public DragDropControl clone() {      
+        
+        DragDropControl dc = new DragDropControl(dragControlManager);
+        dc.dragControl = dragControl.clone();
+        dc.dropControl = dropControl.clone();
+        
+        return dc;
+    }
+    
     public boolean isDraggable() {
         return dragControl.isDraggable();
     }
@@ -38,6 +48,12 @@ public class DragDropControl extends AbstractControl {
     
     public void addDropContainer(DropContainer container) {
         dropControl.addDropContainer(container);
+    }
+    
+    public void addDropContainers(List<DropContainer> containers) {
+        for (DropContainer container : containers) {
+                dropControl.addDropContainer(container);
+        }
     }
     
     @Override
