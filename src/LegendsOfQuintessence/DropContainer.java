@@ -11,14 +11,17 @@ import com.jme3.scene.Spatial;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
+/** A drop container for spatials with DragDropControl. 
+ *  Spatials can drop into a drop container if that container was added to the control.
+ *  Usage:
+ *      - Create new DropContainer using an associated collision spatial.
+ *      - If the container is to be visible, add to the scene graph.
+ *      - Add the DropContainer to any spatial with DragDropControl behavior.
  * @author JMT
- * @param <T>
  */
 public class DropContainer extends Node {
     private Spatial item;             // item currently in the container
-    private Spatial collisionSpatial; // detect drops using a collision with this
+    private Spatial collisionSpatial; // detect drops using a collision with this spatial
     private Boolean vacant;           // is container vacant
     
     DropContainer(Spatial s) {
@@ -28,18 +31,22 @@ public class DropContainer extends Node {
         collisionSpatial = s;
         vacant = true;
         
-        this.attachChild(s); // for visibility
+        this.attachChild(s);
     }
     
     
     public void addItem(Spatial item) {
         this.item = item;
         vacant = false;
+        
+        System.out.println("Notification: item has been added!");
     }
     
     public void removeItem() {
         this.item = null;
         vacant = true;
+        
+        System.out.println("Notification: item has been removed!");
     }
     
     public Spatial getItem() {

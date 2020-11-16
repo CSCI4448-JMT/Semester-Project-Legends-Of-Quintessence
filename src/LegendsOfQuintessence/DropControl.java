@@ -19,7 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
+/** A class encapsulating drop behavior for a spatial,
+ *  and is created by DragDropControl automatically.
  *
  * @author JMT
  */
@@ -52,6 +53,22 @@ public class DropControl {
         return dc;
     }
     
+    /* -------------- METHODS FOR CONTROL ---------------- */
+    
+    public void addDropContainer(DropContainer container) {
+        drop_containers.add(container);
+    }
+    
+    public void addDropContainers(List<DropContainer> containers) {
+        for (DropContainer container : containers) {
+            drop_containers.add(container);
+        }
+    }
+    
+    public void removeDropContainers() {
+        drop_containers.clear();
+    }
+
     // the update loop - when enabled, move the spatial to the final position
     public void update(float tpf) {
         if (enabled) {
@@ -117,11 +134,6 @@ public class DropControl {
         
         dropped = false;
         setEnabled(true);
-    }
-    
-    // add container that the dragged item can drop into
-    public void addDropContainer(DropContainer container) {
-        drop_containers.add(container);
     }
     
     public void setSpatial(Spatial spatial) {

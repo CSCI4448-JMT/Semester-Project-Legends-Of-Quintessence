@@ -25,8 +25,9 @@ import java.util.Map;
 /** Manages drag controls (and associated spatials), and global drag and drop functionality.
  *  Usage:
  *      - Add new DragControlManager to Game app (after that, NO need to call any methods on manager).
- *      - Construct new DragDropControl (with reference to the manager) and set it to any Spatial.
- *      - Spatial will be draggable, and DragDropControl methods can be used for customization/restriction.
+ *      - Construct new DragDropControl (with reference to the manager) and set it to a Spatial.
+ *          - Spatial will be draggable, and DragDropControl methods can be used for customization/restriction.
+ *      - Clone or construct DragDropControls for Spatials as needed.
  * 
  *  @author JMT
  */

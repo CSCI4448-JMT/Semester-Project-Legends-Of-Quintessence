@@ -18,13 +18,9 @@ import com.jme3.scene.control.AbstractControl;
 import java.util.ArrayList;
 import java.util.List;
 
-/** A custom control that can be used for draggability.
- *  Usage:
- *      - construct new control with reference to a DragControlManager
- *      - add control to any Spatial, and call the following methods;
- *          (1) setDraggable(boolean) to turn on or turn off draggability for the spatial
- *          (2) addDroppable(Spatial) to add Spatials that the spatial can snap to upon collision
- *          (3) ...
+/** A class encapsulating drag behavior for a spatial,
+ *  and is created by DragDropControl automatically
+ * 
  *  @author JMT
  */
 public class DragControl {

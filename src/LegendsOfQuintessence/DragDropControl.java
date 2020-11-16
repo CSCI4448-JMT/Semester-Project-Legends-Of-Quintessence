@@ -12,7 +12,13 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 import java.util.List;
 
-/**
+/** A custom control that can be used for drag and drop.
+ *  Usage:
+ *      - construct new control with reference to a DragControlManager
+ *      - add control to any Spatial, and call the following methods;
+ *          (1) setDraggable(boolean) to set draggability for the spatial
+ *          (2) addDropContainer(DropContainer) to adda drop container 
+ *          (3) addDropContaniers(List<DropContainer>) to add multiple drop containers
  * 
  * @author JMT
  */
@@ -38,23 +44,43 @@ public class DragDropControl extends AbstractControl {
         return dc;
     }
     
-    public boolean isDraggable() {
-        return dragControl.isDraggable() && dropControl.isDropped();
-    }
+    /* ------------- METHODS FOR OUR PROJECT --------------- */
     
+    // turn on (or off) draggability
     public void setDraggable(boolean bool) {
         dragControl.setDraggable(bool);
     }
-    
+ 
+    // add drop container for Spatial to snap to
     public void addDropContainer(DropContainer container) {
         dropControl.addDropContainer(container);
     }
     
+    // add multiple drop containers
     public void addDropContainers(List<DropContainer> containers) {
-        for (DropContainer container : containers) {
-                dropControl.addDropContainer(container);
-        }
+        dropControl.addDropContainers(containers);
     }
+    
+    // remove all drop containers
+    public void removeDropContainers() {
+        dropControl.removeDropContainers();
+    }
+    
+    // swap out drag control
+    public void setDragControl(DragControl dc) {
+        dragControl.setSpatial(null);
+        dragControl = dc;
+        dragControl.setSpatial(spatial);
+    }
+    
+    // swap out drop control
+    public void setDropControl(DropControl dc) {
+        dropControl.setSpatial(null);
+        dropControl = dc;
+        dropControl.setSpatial(spatial);
+    }
+    
+    // ------ METHODS FROM ABSTRACT CONTROL --------
     
     @Override
     public void setSpatial(Spatial spatial) {
@@ -70,17 +96,20 @@ public class DragDropControl extends AbstractControl {
         dropControl.setSpatial(spatial);
     }
     
-    
-    public void setDragControl(DragControl dc) {
-        dragControl.setSpatial(null);
-        dragControl = dc;
-        dragControl.setSpatial(spatial);
+    @Override
+    protected void controlUpdate(float tpf) {
+        dragControl.update(tpf);
+        dropControl.update(tpf);
     }
+
+    @Override
+    protected void controlRender(RenderManager rm, ViewPort vp) {}
+ 
     
-    public void setDropControl(DropControl dc) {
-        dropControl.setSpatial(null);
-        dropControl = dc;
-        dropControl.setSpatial(spatial);
+    // ------------ METHODS FOR DRAG CONTROL MANAGER ------------------
+    
+    public boolean isDraggable() {
+        return dragControl.isDraggable() && dropControl.isDropped();
     }
 
     public void snapToCursor() {
@@ -92,15 +121,5 @@ public class DragDropControl extends AbstractControl {
         dropControl.unsnapFromCursor();
         dragControl.unsnapFromCursor();
     }
-    
-    @Override
-    protected void controlUpdate(float tpf) {
-        dragControl.update(tpf);
-        dropControl.update(tpf);
-    }
-
-    // IGNORE.
-    @Override
-    protected void controlRender(RenderManager rm, ViewPort vp) {}
     
 }

@@ -49,13 +49,15 @@ public class LegendsOfQuintessence extends SimpleApplication {
         List<DropContainer> board_row = makeRow(0);
         List<DropContainer> field_row = makeRow(7);
                 
-        card = makeCard(0,-6,0);
-        card2 = makeCard(6,-6,0);
-        card3 = makeCard(-6,-6,0);
+        card = makeCard(0,-7,0);
+        card2 = makeCard(5,-7,0);
+        card3 = makeCard(-5,-7,0);
         
         DragDropControl c = new DragDropControl(dragController);
         c.addDropContainers(board_row);
         c.addDropContainers(field_row);
+        //c.removeDropContainers();
+        //c.addDropContainers(board_row);
         
         DragDropControl c2 = c.clone();
         DragDropControl c3 = c.clone();
@@ -101,6 +103,7 @@ public class LegendsOfQuintessence extends SimpleApplication {
         return geom;
     }
     
+    // USE FOR TESTING ONLY
     private List<DropContainer> makeRow (float y) {
         float width = 5;
         
