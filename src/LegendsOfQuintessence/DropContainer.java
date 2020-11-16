@@ -23,10 +23,12 @@ public class DropContainer extends Node {
     
     DropContainer(Spatial s) {
         super();
+        
         item = null;
         collisionSpatial = s;
         vacant = true;
-        this.attachChild(s);
+        
+        this.attachChild(s); // for visibility
     }
     
     

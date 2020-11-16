@@ -27,6 +27,8 @@ import java.util.Map;
  *      - Add new DragControlManager to Game app (after that, NO need to call any methods on manager).
  *      - Construct new DragDropControl (with reference to the manager) and set it to any Spatial.
  *      - Spatial will be draggable, and DragDropControl methods can be used for customization/restriction.
+ * 
+ *  @author JMT
  */
 public class DragControlManager {
     private InputManager inputManager;  // cursor info 

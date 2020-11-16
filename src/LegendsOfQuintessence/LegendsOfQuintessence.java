@@ -57,9 +57,9 @@ public class LegendsOfQuintessence extends SimpleApplication {
         
         
         DragDropControl c = new DragDropControl(dragController);
-        c.addDroppable(slot1);
-        c.addDroppable(slot2);
-        c.addDroppable(slot3);
+        c.addDropContainer(slot1);
+        c.addDropContainer(slot2);
+        c.addDropContainer(slot3);
 
         c.setSpatial(card);
     }

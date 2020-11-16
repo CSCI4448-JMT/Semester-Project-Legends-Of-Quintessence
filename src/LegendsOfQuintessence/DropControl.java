@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  *
- * @author Rashed
+ * @author JMT
  */
 public class DropControl extends AbstractControl {
 
@@ -82,8 +82,8 @@ public class DropControl extends AbstractControl {
         setEnabled(true);
     }
     
-    // add Spatial that the dragged item can snap to
-    public void addDroppable(DropContainer container) {
+    // add container that the dragged item can drop into
+    public void addDropContainer(DropContainer container) {
         drop_containers.add(container);
     }
     

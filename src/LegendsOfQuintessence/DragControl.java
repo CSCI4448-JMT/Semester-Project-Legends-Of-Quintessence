@@ -25,6 +25,7 @@ import java.util.List;
  *          (1) setDraggable(boolean) to turn on or turn off draggability for the spatial
  *          (2) addDroppable(Spatial) to add Spatials that the spatial can snap to upon collision
  *          (3) ...
+ *  @author JMT
  */
 public class DragControl extends AbstractControl {
 

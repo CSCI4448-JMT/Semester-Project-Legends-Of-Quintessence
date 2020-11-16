@@ -35,8 +35,8 @@ public class DragDropControl {
         dragControl.setDraggable(bool);
     }
     
-    public void addDroppable(DropContainer container) {
-        dropControl.addDroppable(container);
+    public void addDropContainer(DropContainer container) {
+        dropControl.addDropContainer(container);
     }
     
     public void setSpatial(Spatial spatial) {
