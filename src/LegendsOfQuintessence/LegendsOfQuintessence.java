@@ -42,9 +42,9 @@ public class LegendsOfQuintessence extends SimpleApplication {
        
         DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
        
-        Spatial slot1 = makeSlot(6f,0,0);
-        Spatial slot2 = makeSlot(0,0,0);
-        Spatial slot3 = makeSlot(-6f,0,0);
+        DropContainer slot1 = makeSlot(6f,0,0);
+        DropContainer slot2 = makeSlot(0,0,0);
+        DropContainer slot3 = makeSlot(-6f,0,0);
         
         card = makeCard(0,-6,0);
         Node board = new Node();
@@ -100,7 +100,7 @@ public class LegendsOfQuintessence extends SimpleApplication {
     }
     
     // USE FOR TESTING ONLY
-    private Spatial makeSlot(float x, float y, float z) {
+    private DropContainer makeSlot(float x, float y, float z) {
         Box b = new Box(2, 3, 0.01f);
         Geometry geom = new Geometry("Box", b);
 
@@ -114,7 +114,8 @@ public class LegendsOfQuintessence extends SimpleApplication {
         
         geom.setLocalTranslation(x,y,z);
         
-        return geom;
+        DropContainer dc = new DropContainer(geom);
+        return dc;
     }
     
     

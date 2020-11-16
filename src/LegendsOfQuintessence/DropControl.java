@@ -25,7 +25,7 @@ public class DropControl extends AbstractControl {
 
     private DragControlManager dragControlManager;
 
-    private List<Spatial> droppables;
+    private List<DropContainer> drop_containers;
     private Vector3f start_pos;
     private Vector3f final_pos;
     
@@ -35,7 +35,7 @@ public class DropControl extends AbstractControl {
 
     DropControl(DragControlManager dc) {
         dragControlManager = dc;
-        droppables = new ArrayList();
+        drop_containers = new ArrayList();
     }
     
     // the update loop - when enabled, move the spatial to the final position
@@ -61,10 +61,11 @@ public class DropControl extends AbstractControl {
         spatial.setLocalTranslation(location.getX(), location.getY(), 0);
         CollisionResults results = new CollisionResults();
         
-        for (Spatial container : droppables) {    
+        for (DropContainer container : drop_containers) { 
+            Spatial collision_spatial = container.getCollisionSpatial();
             CollisionResults local_results = new CollisionResults();
             
-            container.collideWith((BoundingBox) spatial.getWorldBound(), local_results);
+            collision_spatial.collideWith((BoundingBox) spatial.getWorldBound(), local_results);
             if (local_results.size() > 0) {
                 CollisionResult result = local_results.getClosestCollision();
                 results.addCollision(result);
@@ -82,8 +83,8 @@ public class DropControl extends AbstractControl {
     }
     
     // add Spatial that the dragged item can snap to
-    public void addDroppable(Spatial item) {
-        droppables.add(item);
+    public void addDroppable(DropContainer container) {
+        drop_containers.add(container);
     }
     
    
