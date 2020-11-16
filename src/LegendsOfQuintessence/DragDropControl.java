@@ -55,4 +55,16 @@ public class DragDropControl {
         return spatial;
     }
     
+    public void setDragControl(DragControl dc) {
+        spatial.removeControl(dragControl);
+        dragControl = dc;
+        spatial.addControl(dc);
+    }
+    
+    public void setDropControl(DropControl dc) {
+        spatial.removeControl(dropControl);
+        dropControl = dc;
+        spatial.addControl(dc);
+    }
+    
 }

@@ -11,6 +11,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.Node;
 import com.jme3.scene.control.AbstractControl;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,60 +22,77 @@ import java.util.List;
  */
 public class DropControl extends AbstractControl {
 
-    DragControlManager dragControlManager;
-    List<Spatial> droppables;
-    private Vector3f final_location;
+    private DragControlManager dragControlManager;
+    private Node droppables;
+    private Vector3f start_pos;
+    private Vector3f final_pos;
 
     DropControl(DragControlManager dc) {
         dragControlManager = dc;
-        droppables = new ArrayList();
+        droppables = new Node();
+        dragControlManager.getRootNode().attachChild(droppables);
     }
     
     @Override
     protected void controlUpdate(float tpf) {
-        animateMoveTo(final_location, tpf);
+        animateMoveTo(final_pos, tpf);
+    }
+    
+    public void unsnapFromCursor() {
+        Vector3f location = spatial.getLocalTranslation();
+        spatial.setLocalTranslation(location.getX(), location.getY(), 0);
+            
+        snapToDroppable();
+    }
+    
+    // add Spatial that the dragged item can snap to
+    public void addDroppable(Spatial item) {
+        item.removeFromParent();
+        droppables.attachChild(item);
     }
 
+    public void setStartPos(Vector3f pos) {
+        start_pos = pos;
+    }
+    
+    // ----------------------- HELPER FUNCTIONS ------------------------------
+    
+    // set Spatial to snap to one of the desired Spatials upon collision
+    private void snapToDroppable() {
+        CollisionResults results = new CollisionResults();
+        droppables.collideWith((BoundingBox) spatial.getWorldBound(), results);
+
+        if (results.size() > 0) {
+            final_pos = results.getClosestCollision().getGeometry().getLocalTranslation();
+            start_pos = final_pos;
+        } else {
+            System.out.println("No collision.");
+            final_pos = start_pos;
+        }
+        setEnabled(true);
+    }
     
     private void animateMoveTo(Vector3f new_location, float tpf) {
         Vector3f current_location = spatial.getLocalTranslation();  
         Vector3f dir = new_location.subtract(current_location);
         
-        if (dir.length() < 0.001f) {
+        if (dir.length() < 0.01f) {
             spatial.setLocalTranslation(new_location);
             setEnabled(false);
         } else {
-            spatial.setLocalTranslation(current_location.add(dir.normalizeLocal().mult(10*tpf)));
+            spatial.setLocalTranslation(current_location.add(dir.normalizeLocal().mult(20*tpf)));
         }
     }
-    
-    // set Spatial to snap to one of the desired Spatials upon collision
-    public void snapToDroppable() {
-        for (Spatial item : droppables) {
-            CollisionResults results = new CollisionResults();
-            spatial.collideWith((BoundingBox) item.getWorldBound(), results);
 
-            if (results.size() > 0) {
-                Vector3f location = item.getLocalTranslation();
-                final_location = location;
-                setEnabled(true);
-                
-                // ?? notify droppable
-                
-                break;
-            }
+    @Override
+    public void setSpatial(Spatial spatial) {
+        super.setSpatial(spatial);
+        
+        if (spatial != null) { 
+            start_pos = spatial.getLocalTranslation().clone();
         }
     }
     
-    // add Spatial that the dragged item can snap to
-    public void addDroppable(Spatial item) {
-        droppables.add(item);
-    }
-    
-    public List<Spatial> getDroppables() {
-        return droppables;
-    }
-   
     
     // IGNORE. Method for advanced users.
     @Override

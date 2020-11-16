@@ -30,78 +30,41 @@ public class DragControl extends AbstractControl {
 
     DragControlManager dragControlManager;
     
-    List<Spatial> droppables;
-    
     private boolean draggable = true;   // spatial can be dragged by cursor
     private boolean drag = false;       // spatial is being dragged
-    private boolean drop = false;       // spatial has dropped
-    
-    private Vector3f final_location; // spatial's final location
     
     public DragControl(DragControlManager dc){
         dragControlManager = dc;
-        droppables = new ArrayList();
     }
    
-    /* controlUpdate() is 
-        - called by the main game update loop on every control,
-        - will update position of spatial currently being dragged by cursor,
-        - is activated and deactivated by the DragControlManager (using setEnabled()).
-    */
+    // when control enabled, update position of spatial to track cursor
     @Override
     protected void controlUpdate(float tpf) {
-        if (drag) {
-            InputManager inputManager = dragControlManager.getInputManager();
-            Camera cam = dragControlManager.getCamera();
+        InputManager inputManager = dragControlManager.getInputManager();
+        Camera cam = dragControlManager.getCamera();
 
-            Vector3f item_location = spatial.getLocalTranslation().subtract(cam.getLocation());
-            Vector3f projection = item_location.project(cam.getDirection());
-            float z_view = cam.getViewToProjectionZ(projection.length());
+        Vector3f item_location = spatial.getLocalTranslation().subtract(cam.getLocation());
+        Vector3f projection = item_location.project(cam.getDirection());
+        float z_view = cam.getViewToProjectionZ(projection.length());
 
-            Vector2f click2d = inputManager.getCursorPosition().clone();  
-            Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
+        Vector2f click2d = inputManager.getCursorPosition().clone();  
+        Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
 
-            spatial.setLocalTranslation(click3d);
-        }
-        
-        if (drop) {
-            animateMoveTo(final_location, tpf);
-        }
+        spatial.setLocalTranslation(click3d);
     }
 
-    
-    public void animateMoveTo(Vector3f new_location, float tpf) {
-        Vector3f current_location = spatial.getLocalTranslation();  
-        Vector3f dir = new_location.subtract(current_location);
+    public void snapToCursor() {
+        Vector3f location = spatial.getLocalTranslation();        
+        spatial.setLocalTranslation(location.getX(), location.getY(), 2);
         
-        if (dir.length() < 0.001f) {
-            spatial.setLocalTranslation(new_location);
-            drop = false;
-        } else {
-            spatial.setLocalTranslation(current_location.add(dir.normalizeLocal().mult(10*tpf)));
-        }
+        setEnabled(true);
     }
     
-    // set Spatial to snap to one of the desired Spatials upon collision
-    public void snapToDroppable() {
-        List<Spatial> droppables = spatial.getControl(DragControl.class).getDroppables();
-
-        for (Spatial item : droppables) {
-            CollisionResults results = new CollisionResults();
-            spatial.collideWith((BoundingBox) item.getWorldBound(), results);
-
-            if (results.size() > 0) {
-                Vector3f location = item.getLocalTranslation();
-                final_location = location;
-                drop = true;
-                
-                // ?? notify droppable
-                
-                break;
-            }
-        }
+    public void unsnapFromCursor() {
+        setEnabled(false);
     }
-
+    
+    
     // ------------- SETTERS / GETTERS -------------- //
     
     
@@ -112,36 +75,6 @@ public class DragControl extends AbstractControl {
     
     public boolean isDraggable() {
         return draggable;
-    }
-    
-    // add Spatial that the dragged item can snap to
-    public void addDroppable(Spatial item) {
-        droppables.add(item);
-    }
-    
-    public List<Spatial> getDroppables() {
-        return droppables;
-    }
-    
-    public Spatial getSpatial() {
-        return spatial;
-    }
-    
-    public void setDrag(boolean b) {
-        drag = b;
-    }
-
-    
-    // do NOT call setSpatial (game engine will do this)
-    @Override
-    public void setSpatial(Spatial spatial) {
-        super.setSpatial(spatial);
-     
-        if (spatial != null) { 
-            dragControlManager.register(this);
-        } else {
-            dragControlManager.remove(this);
-        }
     }
     
     // --------- IGNORE. Method for advanced users. ---------------

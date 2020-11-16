@@ -42,22 +42,31 @@ public class LegendsOfQuintessence extends SimpleApplication {
        
         DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
        
-        Spatial slot = makeSlot(4.5f,0,0);
-        card = card = makeCard(0,0,0);
+        Spatial slot1 = makeSlot(6f,0,0);
+        Spatial slot2 = makeSlot(0,0,0);
+        Spatial slot3 = makeSlot(-6f,0,0);
+        
+        card = card = makeCard(0,-6,0);
                 
         rootNode.attachChild(card);
-        rootNode.attachChild(slot);
+        rootNode.attachChild(slot1);
+        rootNode.attachChild(slot2);
+        rootNode.attachChild(slot3);
         
-        DragControl c = new DragControl(dragController);
-        c.addDroppable(slot);
-        card.addControl(c);
+        DragDropControl c = new DragDropControl(dragController);
+        c.addDroppable(slot1);
+        c.addDroppable(slot2);
+        c.addDroppable(slot3);
+
+        c.setSpatial(card);
     }
 
     private void initScene() {
+        viewPort.setBackgroundColor(ColorRGBA.White);
         flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
         inputManager.setCursorVisible(true); // show cursor
         
-        cam.setLocation(new Vector3f(0f, 0f, 30f));
+        cam.setLocation(new Vector3f(0f, 0f, 40f));
         
         DirectionalLight sun = new DirectionalLight();
         sun.setDirection(new Vector3f(1,0,-2).normalizeLocal());
@@ -71,7 +80,7 @@ public class LegendsOfQuintessence extends SimpleApplication {
  
     // USE FOR TESTING ONLY
     private Spatial makeCard(float x, float y, float z) {
-        Box b = new Box(2, 3, 0.5f);
+        Box b = new Box(2, 3, 0.1f);
         Geometry geom = new Geometry("Box", b);
 
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
@@ -94,7 +103,7 @@ public class LegendsOfQuintessence extends SimpleApplication {
 
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
         mat.setBoolean("UseMaterialColors", true);
-        ColorRGBA color = ColorRGBA.randomColor();
+        ColorRGBA color = ColorRGBA.Gray;
         
         mat.setColor("Ambient", color);
         mat.setColor("Diffuse", color);

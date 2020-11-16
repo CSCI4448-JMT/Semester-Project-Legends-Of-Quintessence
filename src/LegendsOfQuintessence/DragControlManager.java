@@ -25,18 +25,18 @@ import java.util.Map;
 /** Manages drag controls (and associated spatials), and global drag and drop functionality.
  *  Usage:
  *      - Add new DragControlManager to Game app (after that, NO need to call any methods on manager).
- *      - Construct new DragControls (with reference to the manager) and add to any Spatial.
- *      - Spatial will be draggable, and DragControl can be used for customization/restriction.
+ *      - Construct new DragDropControl (with reference to the manager) and set it to any Spatial.
+ *      - Spatial will be draggable, and DragDropControl methods can be used for customization/restriction.
  */
 public class DragControlManager {
     private InputManager inputManager;  // cursor info 
     private Camera cam;                 // camera info
     private Node rootNode;              // parent node (usually root node of game)
     
-    private Map<DragControl,Spatial> controls; // map of registered DraggableControls to Spatials
-    private Node draggables;                   // parent node to hold draggable Spatials as children
+    private Map<DragDropControl,Spatial> controls;  // map of registered DragDropControls to Spatials
+    private Node draggables;                        // parent node to hold all draggable Spatials as children
     
-    private Spatial dragged_spatial;           // spatial currently being dragged by cursor
+    private Spatial dragged_spatial;    // spatial currently being dragged by cursor
     
     DragControlManager(InputManager im, Camera cam, Node rn) {
         this.inputManager = im;
@@ -62,15 +62,12 @@ public class DragControlManager {
         inputManager.addListener(clickListener, "LeftClick");
     }
     
-    public void register(DragControl control) {
+    public void register(DragDropControl control) {
         controls.put(control, control.getSpatial());
         addDraggable(control.getSpatial());
-        
-        control.setDraggable(true);
-        control.setEnabled(true);
     }
     
-    public void remove(DragControl control) {
+    public void remove(DragDropControl control) {
         removeDraggable(controls.get(control));
         controls.remove(control);
     }
@@ -93,13 +90,17 @@ public class DragControlManager {
             CollisionResult closest = results.getClosestCollision();
             
             if (closest.getGeometry().getControl(DragControl.class).isDraggable()) {
-                snapToCursor(closest.getGeometry());
+                dragged_spatial = closest.getGeometry();
+                dragged_spatial.getControl(DragControl.class).snapToCursor();
             }
         }
     }
     
     private void drop() {
-        unsnapFromCursor();
+        if (dragged_spatial != null) {
+            dragged_spatial.getControl(DragControl.class).unsnapFromCursor();
+            dragged_spatial.getControl(DropControl.class).unsnapFromCursor();
+        }
         dragged_spatial = null;
     }
     
@@ -115,26 +116,6 @@ public class DragControlManager {
         rootNode.attachChild(item);
     }
     
-    // set Spatial to keep following the cursor
-    private void snapToCursor(Spatial item) {
-        dragged_spatial = item;
-        
-        Vector3f location = dragged_spatial.getLocalTranslation();
-        dragged_spatial.setLocalTranslation(location.getX(), location.getY(), 2);
-        dragged_spatial.getControl(DragControl.class).setDrag(true);
-    }
-    
-    // set Spatial to stop following the cursor
-    private void unsnapFromCursor() {
-        if (dragged_spatial != null) {
-            Vector3f location = dragged_spatial.getLocalTranslation();
-            dragged_spatial.setLocalTranslation(location.getX(), location.getY(), 0);
-            dragged_spatial.getControl(DragControl.class).setDrag(false);
-            dragged_spatial.getControl(DragControl.class).snapToDroppable();
-        }
-    }
-
-    
     
     // --------- GETTERS & SETTERS --------- //
     
@@ -146,4 +127,7 @@ public class DragControlManager {
         return cam;
     }
     
+    public Node getRootNode() {
+        return rootNode;
+    }
 }
