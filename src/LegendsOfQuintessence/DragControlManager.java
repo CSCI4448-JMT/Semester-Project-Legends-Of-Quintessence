@@ -96,25 +96,19 @@ public class DragControlManager {
     // ---------- REGISTRATION METHODS ----------- //
 
     public void register(DragDropControl control) {
-        controls.put(control, control.getSpatial());
-        addDraggable(control.getSpatial());
-    }
-    
-    public void remove(DragDropControl control) {
-        removeDraggable(controls.get(control));
-        controls.remove(control);
-    }
-    
-    // set Spatial as child of draggable node
-    private void addDraggable(Spatial item) {
+        Spatial item = control.getSpatial();
+        controls.put(control, item);
+        
         item.removeFromParent();
         draggables.attachChild(item);
     }
     
-    // set Spatial as child of root node
-    private void removeDraggable(Spatial item) {
+    public void remove(DragDropControl control) {
+        Spatial item = controls.get(control);
         item.removeFromParent();
         rootNode.attachChild(item);
+        
+        controls.remove(control);
     }
     
     
