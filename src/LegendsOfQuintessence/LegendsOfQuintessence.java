@@ -21,6 +21,8 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -34,28 +36,43 @@ public class LegendsOfQuintessence extends SimpleApplication {
         app.start();
     }
             
+    protected Spatial card;
+    protected Spatial card2;
+    protected Spatial card3;
+    
     @Override
     public void simpleInitApp() {
         initScene();
        
         DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
        
-     
-        Spatial card = makeCard(0,0,0);
-        Spatial card2 = makeCard(4.5f,0,0);
+        List<DropContainer> board_row = makeRow(0);
+        List<DropContainer> field_row = makeRow(7);
+                
+        card = makeCard(0,-7,0);
+        card2 = makeCard(5,-7,0);
+        card3 = makeCard(-5,-7,0);
         
-        rootNode.attachChild(card);
-        rootNode.attachChild(card2);
+        DragDropControl c = new DragDropControl(dragController);
+        c.addDropContainers(board_row);
+        c.addDropContainers(field_row);
+        //c.removeDropContainers();
+        //c.addDropContainers(board_row);
         
-        card.addControl(new DragControl(dragController));
-        card2.addControl(new DragControl(dragController));
+        DragDropControl c2 = c.clone();
+        DragDropControl c3 = c.clone();
+        
+        card.addControl(c);
+        card2.addControl(c2);
+        card3.addControl(c3);
     }
 
     private void initScene() {
+        viewPort.setBackgroundColor(ColorRGBA.White);
         flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
         inputManager.setCursorVisible(true); // show cursor
         
-        cam.setLocation(new Vector3f(0f, 0f, 30f));
+        cam.setLocation(new Vector3f(0f, 0f, 40f));
         
         DirectionalLight sun = new DirectionalLight();
         sun.setDirection(new Vector3f(1,0,-2).normalizeLocal());
@@ -67,9 +84,9 @@ public class LegendsOfQuintessence extends SimpleApplication {
         rootNode.addLight(al);
     }
  
-
+    // USE FOR TESTING ONLY
     private Spatial makeCard(float x, float y, float z) {
-        Box b = new Box(2, 3, 0.5f);
+        Box b = new Box(2, 3, 0.1f);
         Geometry geom = new Geometry("Box", b);
 
         Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
@@ -81,9 +98,46 @@ public class LegendsOfQuintessence extends SimpleApplication {
         geom.setMaterial(mat);
         
         geom.setLocalTranslation(x,y,z);
+        rootNode.attachChild(geom);
         
         return geom;
     }
+    
+    // USE FOR TESTING ONLY
+    private List<DropContainer> makeRow (float y) {
+        float width = 5;
+        
+        ArrayList slots = new ArrayList(); 
+        
+        for(int i = -2; i <=2; i++) {
+            DropContainer slot = makeSlot(i * width, y, 0);
+            slots.add(slot);
+        }
+        
+        return slots;
+    }
+    
+    // USE FOR TESTING ONLY
+    private DropContainer makeSlot(float x, float y, float z) {
+        Box b = new Box(2, 3, 0.01f);
+        Geometry geom = new Geometry("Box", b);
+
+        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        mat.setBoolean("UseMaterialColors", true);
+        ColorRGBA color = ColorRGBA.Gray;
+        
+        mat.setColor("Ambient", color);
+        mat.setColor("Diffuse", color);
+        geom.setMaterial(mat);
+        
+        geom.setLocalTranslation(x,y,z);
+        
+        DropContainer dc = new DropContainer(geom);
+        rootNode.attachChild(geom);
+        
+        return dc;
+    }
+    
     
     
     @Override

@@ -5,6 +5,8 @@
  */
 package LegendsOfQuintessence;
 
+import com.jme3.bounding.BoundingBox;
+import com.jme3.collision.CollisionResults;
 import com.jme3.input.InputManager;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -13,46 +15,69 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
+import java.util.ArrayList;
+import java.util.List;
 
-/** A custom control that can be used for draggability.
- *  Usage:
- *      - construct new control with reference to a DragControlManager
- *      - add control to any Spatial, and call the following methods;
- *          (1) setDraggable(boolean) to turn on or turn off draggability
- *          (2) MORE FUNCTIONALITY TO COME...
+/** A class encapsulating drag behavior for a spatial,
+ *  and is created by DragDropControl automatically
+ * 
+ *  @author JMT
  */
-public class DragControl extends AbstractControl {
+public class DragControl {
 
     DragControlManager dragControlManager;
-    private boolean draggable = true;
+    Spatial spatial;
+
+    private boolean enabled = false;
+    private boolean draggable = true;   // whether spatial can be dragged by cursor
     
- 
     public DragControl(DragControlManager dc){
         dragControlManager = dc;
     }
    
-    /* controlUpdate() is 
-        - called by the main game update loop on every control,
-        - will update position of spatial currently being dragged by cursor,
-        - is activated and deactivated by the DragControlManager (using setEnabled()).
-    */
-    @Override
-    protected void controlUpdate(float tpf) {
-        InputManager inputManager = dragControlManager.getInputManager();
-        Camera cam = dragControlManager.getCamera();
-        
-        Vector3f item_location = spatial.getLocalTranslation().subtract(cam.getLocation());
-        Vector3f projection = item_location.project(cam.getDirection());
-        float z_view = cam.getViewToProjectionZ(projection.length());
-
-        Vector2f click2d = inputManager.getCursorPosition().clone();  
-        Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
-
-        spatial.setLocalTranslation(click3d);
+    public DragControl clone() {                
+        DragControl dc = new DragControl(dragControlManager);        
+        return dc;
     }
+    
+    // the update loop - when enabled, update the position of spatial to track mouse cursor
+    public void update(float tpf) {
+        if (enabled) {
+            InputManager inputManager = dragControlManager.getInputManager();
+            Camera cam = dragControlManager.getCamera();
 
+            Vector3f item_location = spatial.getLocalTranslation().subtract(cam.getLocation());
+            Vector3f projection = item_location.project(cam.getDirection());
+            float z_view = cam.getViewToProjectionZ(projection.length());
+
+            Vector2f click2d = inputManager.getCursorPosition().clone();  
+            Vector3f click3d = cam.getWorldCoordinates(click2d, z_view);
+
+            spatial.setLocalTranslation(click3d);
+        }
+    }
+    
+    // the command to make the spatial track the mouse cursor
+    public void snapToCursor() {
+        // make spatial pop out
+        Vector3f location = spatial.getLocalTranslation();        
+        spatial.setLocalTranslation(location.getX(), location.getY(), 2); 
+        
+        // enable update loop
+        setEnabled(true);
+    }
+    
+    // the command to make the spatial stop following the cursor
+    public void unsnapFromCursor() {
+        setEnabled(false);
+    }
+    
+    
     // ------------- SETTERS / GETTERS -------------- //
     
+    private void setEnabled(boolean bool) {
+        enabled = bool;
+    }
     
     // turn on (or off) draggability of the spatial
     public void setDraggable(boolean b) {
@@ -63,23 +88,54 @@ public class DragControl extends AbstractControl {
         return draggable;
     }
     
-    public Spatial getSpatial() {
-        return spatial;
-    }
-    
-    // do NOT call setSpatial (game engine will do this)
-    @Override
     public void setSpatial(Spatial spatial) {
-        super.setSpatial(spatial);
-     
-        if (spatial != null) { 
-            dragControlManager.register(this);
-        } else {
-            dragControlManager.remove(this);
-        }
+        this.spatial = spatial;
     }
     
-    // --------- IGNORE. Method for advanced users. ---------------
-    @Override
-    protected void controlRender(RenderManager rm, ViewPort vp) {}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
