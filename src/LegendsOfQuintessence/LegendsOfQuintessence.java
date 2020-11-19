@@ -1,6 +1,8 @@
 package LegendsOfQuintessence;
 
+
 import com.jme3.app.SimpleApplication;
+import com.jme3.system.AppSettings;
 import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.KeyInput;
@@ -24,15 +26,28 @@ import com.jme3.scene.shape.Box;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jme3.niftygui.NiftyJmeDisplay;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.screen.ScreenController;
+
 /**
  * This is the Main Class of your Game. You should only do initialization here.
  * Move your Logic into AppStates or Controls
  * @author normenhansen
  */
 public class LegendsOfQuintessence extends SimpleApplication {
-
+    
+    private Nifty nifty;
+    private StartScreen startScreen = new StartScreen();
+    
     public static void main(String[] args) {
+        //Needed to change the Window Title to LoQ & get rid of the JMonkey pop-up
+        AppSettings settings = new AppSettings(true);
+        settings.setTitle("Legends Of Quintessence");
+        
         LegendsOfQuintessence app = new LegendsOfQuintessence();
+        app.setShowSettings(false); //Needed to change the Window Title to LoQ & get rid of the JMonkey pop-up
+        app.setSettings(settings); //Needed to change the Window Title to LoQ
         app.start();
     }
             
@@ -40,9 +55,19 @@ public class LegendsOfQuintessence extends SimpleApplication {
     protected Spatial card2;
     protected Spatial card3;
     
-    @Override
+    //@Override
     public void simpleInitApp() {
         initScene();
+        
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(this.assetManager, this.inputManager, this.audioRenderer, this.guiViewPort);
+        this.nifty = niftyDisplay.getNifty();
+        this.nifty.fromXml("Interface/StartScreen.xml", "start", new ScreenController[]{this.startScreen});
+        this.startScreen.setGameState(new GameState());
+        this.guiViewPort.addProcessor(niftyDisplay);
+        this.inputManager.setCursorVisible(true);
+        this.flyCam.setEnabled(false); //enables mouse movement on screen
+        this.setDisplayStatView(false); //gets rid of StatView box
+        this.setDisplayFps(false); //gets rid of FPS onscreen
        
         DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
        
@@ -69,8 +94,8 @@ public class LegendsOfQuintessence extends SimpleApplication {
 
     private void initScene() {
         viewPort.setBackgroundColor(ColorRGBA.White);
-        flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
-        inputManager.setCursorVisible(true); // show cursor
+        //flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
+        //inputManager.setCursorVisible(true); // show cursor
         
         cam.setLocation(new Vector3f(0f, 0f, 40f));
         
@@ -137,7 +162,6 @@ public class LegendsOfQuintessence extends SimpleApplication {
         
         return dc;
     }
-    
     
     
     @Override
