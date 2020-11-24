@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
+    
+    <screen id="GScreen0" controller="mygame.Main">
+        <layer id="GLayer0" childLayout="absolute">
+            <control id="testCard1" width="50%" height="50%" 
+                name="draggable"
+                backgroundImage="Interface/DefenseGraphic.jpeg" 
+                imageMode="normal" 
+                />
+            <control id="testCard" width="50%" height="50%" 
+                name="draggable"
+                backgroundImage="Interface/DefenseGraphic.jpeg" 
+                imageMode="normal" 
+                />
+            <control id="testCardSlot" width="20%" height="30%"
+                childLayout="absolute"
+                backgroundColor="#0ff6"
+                name="droppable"
+                align="center"
+            />
+        </layer>
+    </screen>
+</nifty>

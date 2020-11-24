@@ -69,27 +69,27 @@ public class LegendsOfQuintessence extends SimpleApplication {
         this.setDisplayStatView(false); //gets rid of StatView box
         this.setDisplayFps(false); //gets rid of FPS onscreen
        
-        DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
-       
-        List<DropContainer> board_row = makeRow(0);
-        List<DropContainer> field_row = makeRow(7);
-                
-        card = makeCard(0,-7,0);
-        card2 = makeCard(5,-7,0);
-        card3 = makeCard(-5,-7,0);
-        
-        DragDropControl c = new DragDropControl(dragController);
-        c.addDropContainers(board_row);
-        c.addDropContainers(field_row);
-        //c.removeDropContainers();
-        //c.addDropContainers(board_row);
-        
-        DragDropControl c2 = c.clone();
-        DragDropControl c3 = c.clone();
-        
-        card.addControl(c);
-        card2.addControl(c2);
-        card3.addControl(c3);
+//        DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
+//       
+//        List<DropContainer> board_row = makeRow(0);
+//        List<DropContainer> field_row = makeRow(7);
+//                
+//        card = makeCard(0,-7,0);
+//        card2 = makeCard(5,-7,0);
+//        card3 = makeCard(-5,-7,0);
+//        
+//        DragDropControl c = new DragDropControl(dragController);
+//        c.addDropContainers(board_row);
+//        c.addDropContainers(field_row);
+//        //c.removeDropContainers();
+//        //c.addDropContainers(board_row);
+//        
+//        DragDropControl c2 = c.clone();
+//        DragDropControl c3 = c.clone();
+//        
+//        card.addControl(c);
+//        card2.addControl(c2);
+//        card3.addControl(c3);
     }
 
     private void initScene() {

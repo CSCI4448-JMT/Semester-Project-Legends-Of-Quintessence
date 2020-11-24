@@ -6,6 +6,8 @@
 package LegendsOfQuintessence;
 
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.NiftyEventSubscriber;
+import de.lessvoid.nifty.elements.events.NiftyMousePrimaryClickedEvent;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 
@@ -43,6 +45,12 @@ public class StartScreen implements ScreenController{
         this.gameState = gameState;
         
         
+    }
+    
+    @NiftyEventSubscriber(id="StartButton")
+    public void onClick(String id, NiftyMousePrimaryClickedEvent event) {
+        nifty.fromXml("Interface/card.xml", "GScreen0", this);
+        nifty.gotoScreen("GScreen0");
     }
     
 }

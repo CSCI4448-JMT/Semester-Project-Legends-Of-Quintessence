@@ -33,7 +33,7 @@
                 <panel id="panel_bottom_center" height="50%" width="33%" valign="center"
                   childLayout="center">
                     <control name="button" label="Start" id="StartButton" align="center"
-                      valign="center">
+                      valign="center" >
                     </control>
                 </panel>
                 
