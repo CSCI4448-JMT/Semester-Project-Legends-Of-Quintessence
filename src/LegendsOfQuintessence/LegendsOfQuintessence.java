@@ -28,6 +28,9 @@ import java.util.List;
 
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.dynamic.PanelCreator;
+import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 
 /**
@@ -68,7 +71,7 @@ public class LegendsOfQuintessence extends SimpleApplication {
         this.flyCam.setEnabled(false); //enables mouse movement on screen
         this.setDisplayStatView(false); //gets rid of StatView box
         this.setDisplayFps(false); //gets rid of FPS onscreen
-       
+             
 //        DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
 //       
 //        List<DropContainer> board_row = makeRow(0);

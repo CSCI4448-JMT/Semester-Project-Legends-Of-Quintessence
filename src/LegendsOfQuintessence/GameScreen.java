@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,18 +7,25 @@ package LegendsOfQuintessence;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
+import de.lessvoid.nifty.builder.ElementBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
+import de.lessvoid.nifty.builder.TextBuilder;
+import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dynamic.PanelCreator;
+import de.lessvoid.nifty.controls.dynamic.TextCreator;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.events.NiftyMousePrimaryClickedEvent;
+import de.lessvoid.nifty.elements.render.PanelRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.tools.Color;
+import java.util.List;
 
 /**
  *
- * @author Jenn1
+ * @author JMT
  */
-public class StartScreen implements ScreenController{
+public class GameScreen implements ScreenController{
     private Nifty nifty;
     private GameState gameState;
     
@@ -31,12 +38,20 @@ public class StartScreen implements ScreenController{
 
     @Override
     public void onStartScreen() {
-        System.out.println("onStartScreen");
+        System.out.println("Entering game screen");
+        
+        Screen screen = nifty.getCurrentScreen();
+        ConcreteCard c = new ConcreteCard();
+        ElementBuilder eb = c.getCardBuilder();
+        Element card_element = eb.build(nifty, screen, screen.findElementById("GLayer0") );    
+        
+        c.setElement(card_element);
+        c.setDefensePower(7);
     }
 
     @Override
     public void onEndScreen() {
-        System.out.println("onEndScreen");
+        System.out.println("Leaving game screen");
         //initScene();
     }
 
@@ -46,14 +61,6 @@ public class StartScreen implements ScreenController{
     
     public void setGameState(GameState gameState){
         this.gameState = gameState;
-        
-        
-    }
-    
-    @NiftyEventSubscriber(id="StartButton")
-    public void onClick(String id, NiftyMousePrimaryClickedEvent event) {
-        nifty.fromXml("Interface/card.xml", "GScreen0", this);
-        nifty.gotoScreen("GScreen0"); 
     }
     
 }

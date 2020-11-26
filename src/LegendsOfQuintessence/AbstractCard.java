@@ -15,9 +15,11 @@ import de.lessvoid.nifty.controls.Parameters;
 import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dynamic.TextCreator;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.input.NiftyInputEvent;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.tools.Color;
+import java.util.List;
 import java.util.Properties;
 import java.util.jar.Attributes;
 
@@ -25,14 +27,26 @@ import java.util.jar.Attributes;
  *
  * @author JMT
  */
-public abstract class AbstractCard implements Controller {
+public abstract class AbstractCard {
     protected Integer attack_power;
     protected Integer defense_power;
     protected Integer resource_req;
     
-    private Element element;
+    private Element card_element; // card element to be stored here, whenever it is built in Nifty screen.
+    protected String image_file;
+    
+    public void updateDefensePower() {
+        if (card_element != null) {
+            Element text_element = card_element.findElementById("defense-power-text");
+
+            if  (text_element != null) {
+                text_element.getRenderer(TextRenderer.class).setText(defense_power.toString());
+            }
+        }
+    }
     
     public ElementBuilder getCardBuilder() {
+        final Color color = Color.randomColor();
         
         DraggableBuilder DB = new DraggableBuilder() {{
             height("400px");
@@ -48,9 +62,9 @@ public abstract class AbstractCard implements Controller {
                 panel(new PanelBuilder() {{
                     height("50%");
                     width("25%");
-                    backgroundColor(Color.randomColor());
+                    backgroundColor("#33cc33");
                     childLayoutCenter();
-                    text(new TextBuilder() {{ 
+                    text(new TextBuilder("resource-req-text") {{ 
                         font("Interface/Fonts/ArialBlack.fnt");
                         text(resource_req.toString());
                         }}
@@ -66,7 +80,8 @@ public abstract class AbstractCard implements Controller {
                 childLayoutCenter();
                 image(new ImageBuilder() {{
                         height("100%");
-                        filename("Interface/DefenseGraphic.jpeg");
+                        width("70%");
+                        filename(image_file);
                     }}
                 );
                 }}
@@ -84,9 +99,9 @@ public abstract class AbstractCard implements Controller {
                     panel(new PanelBuilder() {{
                         height("50%");
                         width("50%");
-                        backgroundColor(Color.randomColor());
+                        backgroundColor("#DC143C");
                         childLayoutCenter();
-                        text(new TextBuilder() {{ 
+                        text(new TextBuilder("attack-power-text") {{ 
                             font("Interface/Fonts/ArialBlack.fnt");
                             text(attack_power.toString());
                             }}
@@ -103,9 +118,9 @@ public abstract class AbstractCard implements Controller {
                     panel(new PanelBuilder() {{
                         height("50%");
                         width("50%");
-                        backgroundColor(Color.randomColor());
+                        backgroundColor("#6495ED");
                         childLayoutCenter();
-                        text(new TextBuilder() {{ 
+                        text(new TextBuilder("defense-power-text") {{ 
                             font("Interface/Fonts/ArialBlack.fnt");
                             text(defense_power.toString());
                             }}
@@ -121,35 +136,6 @@ public abstract class AbstractCard implements Controller {
         return DB;
     }
     
-    @Override
-    public void bind(Nifty nifty, Screen screen, Element elmnt, Parameters prmtrs) {
-        this.element = elmnt;
-    }
-
-    @Override
-    public void init(Parameters prmtrs) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void onEndScreen() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
-    public void onStartScreen() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void onFocus(boolean bln) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean inputEvent(NiftyInputEvent nie) {
-        return false;
-    }
     
     // ----------- GETTERS / SETTERS ------------- //
     
@@ -157,7 +143,7 @@ public abstract class AbstractCard implements Controller {
         return attack_power;
     }
     
-    public final Integer getDefensePower() {
+    public final Integer getDefensePower() { 
         return defense_power;
     }
 
@@ -171,10 +157,15 @@ public abstract class AbstractCard implements Controller {
     
     public final void setDefensePower(Integer defense_power) {
         this.defense_power = defense_power;
+        updateDefensePower();
     }
     
     public final void setResourceReq(Integer resource_req) {
         this.resource_req = resource_req;
     } 
+    
+    public final void setElement(Element card_element) {
+        this.card_element = card_element;
+    }
     
 }
