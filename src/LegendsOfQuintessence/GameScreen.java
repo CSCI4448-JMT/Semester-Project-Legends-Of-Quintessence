@@ -42,7 +42,7 @@ public class GameScreen implements ScreenController{
         
         Screen screen = nifty.getCurrentScreen();
         ConcreteCard c = new ConcreteCard();
-        ElementBuilder eb = c.getCardBuilder();
+        ElementBuilder eb = c.cardBuilder();
         Element card_element = eb.build(nifty, screen, screen.findElementById("GLayer0") );    
         
         c.setElement(card_element);

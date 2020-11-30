@@ -1,24 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
+    <useStyles filename="nifty-default-styles.xml" />
+    <!--<useControls filename="nifty-default-controls.xml" />-->s
+    <!--<useControls filename="Interface/nifty-dragndrop-controls.xml" />-->
     
-    <screen id="GScreen0" controller="mygame.Main">
-        <layer id="GLayer0" childLayout="absolute">
-            <control id="testCard1" width="50%" height="50%" 
+    <screen id="GScreen0" controller="de.lessvoid.nifty.controls.dragndrop.DraggableControl">
+        <layer id="GLayer0" childLayout="vertical">
+<!--            <panel height="10%" width="20%" valign="center"
+                  childLayout="center">
+                <control id="testCard" width="100px" height="200px" 
                 name="draggable"
                 backgroundImage="Interface/DefenseGraphic.jpeg" 
                 imageMode="normal" 
                 />
-            <control id="testCard" width="50%" height="50%" 
+            </panel>-->
+            <panel height="30%" width="50%" valign="center"
+                  childLayout="center">
+                <control id="testCard" width="100px" height="200px" 
                 name="draggable"
                 backgroundImage="Interface/DefenseGraphic.jpeg" 
                 imageMode="normal" 
                 />
-            <control id="testCardSlot" width="20%" height="30%"
-                childLayout="absolute"
-                backgroundColor="#0ff6"
-                name="droppable"
-                align="center"
-            />
+            </panel>
+            <panel id="panel_bottom" height="25%" width="75%" align="center"
+              childLayout="horizontal">
+                
+                <panel height="50%" width="20%" valign="center"
+                  childLayout="center">
+                    <control id="testCardSlot" width="100px" height="200px" 
+                    name="droppable" 
+                    imageMode="normal"
+                    align="center"
+                    backgroundColor="#f008"
+                    />
+                </panel>
+                
+                <panel id="panel_bottom_center" height="50%" width="33%" valign="center"
+                  childLayout="center">
+                    <control id="testCardSlot" width="100px" height="200px" 
+                    name="droppable" 
+                    imageMode="normal"
+                    align="center"
+                    backgroundColor="#f008"
+                    />
+                </panel>
+                
+                <panel id="panel_bottom_right" height="50%" width="33%" valign="center"
+                  childLayout="center">
+                    <control id="testCardSlot" width="100px" height="200px" 
+                    name="droppable" 
+                    imageMode="normal"
+                    align="center"
+                    backgroundColor="#f008"
+                    />
+                </panel>
+            </panel>
         </layer>
+        <layer id="GLayer1" childLayout="vertical">
+        <panel height="10%" width="20%" valign="center"
+                  childLayout="center">
+                <control id="testCard1" width="100px" height="200px" 
+                name="draggable"
+                backgroundImage="Interface/DefenseGraphic.jpeg" 
+                imageMode="normal" 
+                />
+            </panel>
+        </layer>
+        
     </screen>
 </nifty>
+

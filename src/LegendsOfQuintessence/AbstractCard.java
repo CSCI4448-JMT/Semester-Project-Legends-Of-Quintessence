@@ -6,6 +6,7 @@
 package LegendsOfQuintessence;
 
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.ControlBuilder;
 import de.lessvoid.nifty.builder.ElementBuilder;
 import de.lessvoid.nifty.builder.ImageBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
@@ -45,12 +46,13 @@ public abstract class AbstractCard {
         }
     }
     
-    public ElementBuilder getCardBuilder() {
+    public ControlBuilder cardBuilder() {
         final Color color = Color.randomColor();
         
-        DraggableBuilder DB = new DraggableBuilder() {{
-            height("400px");
-            width("250px");
+        DraggableBuilder DB = new DraggableBuilder("card") {{
+            valignCenter();
+            height("150px");
+            width("85px");
             //backgroundColor("#f00f");
             style("nifty-panel-simple");
             childLayoutVertical();

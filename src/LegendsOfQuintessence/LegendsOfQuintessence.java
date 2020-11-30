@@ -47,6 +47,8 @@ public class LegendsOfQuintessence extends SimpleApplication {
         //Needed to change the Window Title to LoQ & get rid of the JMonkey pop-up
         AppSettings settings = new AppSettings(true);
         settings.setTitle("Legends Of Quintessence");
+        settings.setWidth(1024);
+        settings.setHeight(768);
         
         LegendsOfQuintessence app = new LegendsOfQuintessence();
         app.setShowSettings(false); //Needed to change the Window Title to LoQ & get rid of the JMonkey pop-up
@@ -71,6 +73,9 @@ public class LegendsOfQuintessence extends SimpleApplication {
         this.flyCam.setEnabled(false); //enables mouse movement on screen
         this.setDisplayStatView(false); //gets rid of StatView box
         this.setDisplayFps(false); //gets rid of FPS onscreen
+        
+        
+        
              
 //        DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
 //       
