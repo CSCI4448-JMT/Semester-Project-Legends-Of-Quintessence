@@ -32,6 +32,8 @@ import de.lessvoid.nifty.controls.dynamic.PanelCreator;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import gameplay.Game;
+import player.Player;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -71,28 +73,13 @@ public class LegendsOfQuintessence extends SimpleApplication {
         this.flyCam.setEnabled(false); //enables mouse movement on screen
         this.setDisplayStatView(false); //gets rid of StatView box
         this.setDisplayFps(false); //gets rid of FPS onscreen
-             
-//        DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
-//       
-//        List<DropContainer> board_row = makeRow(0);
-//        List<DropContainer> field_row = makeRow(7);
-//                
-//        card = makeCard(0,-7,0);
-//        card2 = makeCard(5,-7,0);
-//        card3 = makeCard(-5,-7,0);
-//        
-//        DragDropControl c = new DragDropControl(dragController);
-//        c.addDropContainers(board_row);
-//        c.addDropContainers(field_row);
-//        //c.removeDropContainers();
-//        //c.addDropContainers(board_row);
-//        
-//        DragDropControl c2 = c.clone();
-//        DragDropControl c3 = c.clone();
-//        
-//        card.addControl(c);
-//        card2.addControl(c2);
-//        card3.addControl(c3);
+
+        Player p1 = new Player("Jack");
+        Player p2 = new Player("Jill");
+
+        Game g = new Game(p1, p2);
+        g.start();
+        
     }
 
     private void initScene() {
@@ -112,59 +99,6 @@ public class LegendsOfQuintessence extends SimpleApplication {
         rootNode.addLight(al);
     }
  
-    // USE FOR TESTING ONLY
-    private Spatial makeCard(float x, float y, float z) {
-        Box b = new Box(2, 3, 0.1f);
-        Geometry geom = new Geometry("Box", b);
-
-        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        mat.setBoolean("UseMaterialColors", true);
-        ColorRGBA color = ColorRGBA.randomColor();
-        
-        mat.setColor("Ambient", color);
-        mat.setColor("Diffuse", color);
-        geom.setMaterial(mat);
-        
-        geom.setLocalTranslation(x,y,z);
-        rootNode.attachChild(geom);
-        
-        return geom;
-    }
-    
-    // USE FOR TESTING ONLY
-    private List<DropContainer> makeRow (float y) {
-        float width = 5;
-        
-        ArrayList slots = new ArrayList(); 
-        
-        for(int i = -2; i <=2; i++) {
-            DropContainer slot = makeSlot(i * width, y, 0);
-            slots.add(slot);
-        }
-        
-        return slots;
-    }
-    
-    // USE FOR TESTING ONLY
-    private DropContainer makeSlot(float x, float y, float z) {
-        Box b = new Box(2, 3, 0.01f);
-        Geometry geom = new Geometry("Box", b);
-
-        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        mat.setBoolean("UseMaterialColors", true);
-        ColorRGBA color = ColorRGBA.Gray;
-        
-        mat.setColor("Ambient", color);
-        mat.setColor("Diffuse", color);
-        geom.setMaterial(mat);
-        
-        geom.setLocalTranslation(x,y,z);
-        
-        DropContainer dc = new DropContainer(geom);
-        rootNode.attachChild(geom);
-        
-        return dc;
-    }
     
     
     @Override
