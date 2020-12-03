@@ -5,14 +5,21 @@
  */
 package LegendsOfQuintessence;
 
+import LegendsOfQuintessence.card.CardDropFilter;
+import LegendsOfQuintessence.card.CardSlot;
+import LegendsOfQuintessence.card.AbstractCard;
+import LegendsOfQuintessence.card.ConcreteCard;
+import LegendsOfQuintessence.gameComponents.Player2Board;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
+import de.lessvoid.nifty.builder.ControlBuilder;
 import de.lessvoid.nifty.builder.ElementBuilder;
 import de.lessvoid.nifty.builder.LayerBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.controls.DroppableDropFilter;
 import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
+import de.lessvoid.nifty.controls.dragndrop.DraggableControl;
 import de.lessvoid.nifty.controls.dragndrop.DroppableControl;
 import de.lessvoid.nifty.controls.dynamic.PanelCreator;
 import de.lessvoid.nifty.elements.Element;
@@ -29,7 +36,7 @@ public class StartScreen implements ScreenController{
     private Nifty nifty;
     private GameState gameState;
     
-//Binds this ScreenController to a screen,
+    //Binds this ScreenController to a screen,
     @Override
     public void bind(Nifty nifty, Screen screen) {
         this.nifty = nifty;
@@ -61,9 +68,10 @@ public class StartScreen implements ScreenController{
     public void onClick(String id, NiftyMousePrimaryClickedEvent event) {
 //        nifty.fromXml("Interface/card.xml", "GScreen0", this);
 //        nifty.gotoScreen("GScreen0"); 
-        final AbstractCard defenseCard = new ConcreteCard();
-        final CardSlot cSlot = new CardSlot("board-slot");
-        
+        final AbstractCard defenseCard1 = new ConcreteCard("p1-card");
+        final AbstractCard defenseCard2 = new ConcreteCard("p2-card");
+        final Player2Board p2Board = new Player2Board();
+        final CardGameScreen cgs = new CardGameScreen(nifty, gameState);
         
  
        Screen s = new ScreenBuilder("Hello Nifty Screen"){{
@@ -81,44 +89,27 @@ public class StartScreen implements ScreenController{
                     backgroundColor("#2eb82e");
                     
                     
-
-                    control(defenseCard.cardBuilder());
-                    control(defenseCard.cardBuilder());
-                    
-                //.. add more GUI elements here
+                    for(int i = 0; i < 5; i++){
+                        control(defenseCard1.cardBuilder());
+                    }
+//                   controller(new DroppableControl());
+                       
+               //.. add more GUI elements here
 
                }});
                 
-               // <panel>
-                panel(new PanelBuilder("player2-board") {{
-                    childLayoutHorizontal(); // panel properties, add more...
-                    x("200px");
-                    y("500px");
-                    height("175px");
-                    width("700px");
-                    backgroundColor("#2eb82e");
-                    
-                    // GUI elements
-//                    control(new ButtonBuilder("Button_ID", "Hello Nifty"){{
-//                        alignCenter();
-//                        valignCenter();
-//                        height("5%");
-//                        width("15%");
-//                    }});
-                     
-
-                    control(cSlot.slotBuilder());
-                //.. add more GUI elements here
-
-               }});
+              // <panel>
+                panel(p2Board.gameComponentBuilder());
+                
             }});
-            
             
         }}.build(nifty);
        
-       DroppableDropFilter ddf = new CardDropFilter();
+       DroppableDropFilter ddf = new CardDropFilter("p1-card");
        
-       s.findControl("board-slot", DroppableControl.class).addFilter(ddf);
+       for(int i = 0; i < 5; i++) {
+        s.findControl("player 2 board card slot" + i, DroppableControl.class).addFilter(ddf);
+       }
         
         nifty.addScreen("game_screen", s);
         
