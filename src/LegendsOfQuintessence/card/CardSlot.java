@@ -34,7 +34,7 @@ public class CardSlot {
             control(new DroppableBuilder(sn) {{
                 height(height);
                 width(width);
-                backgroundColor("#ccffcc");
+                backgroundColor("#080808"); //black card slot color
                 valignCenter();
                 alignCenter();
             }});

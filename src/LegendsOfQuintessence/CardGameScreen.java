@@ -95,7 +95,14 @@ public class CardGameScreen implements ScreenController{
                     height("50%");
                     backgroundColor("#ff8080");
                 }});
-                
+ /*               
+                panel(new PanelBuilder("divider") {{
+                    childLayoutVertical();
+                    width("100%");
+                    height("2%");
+                    backgroundColor("#0a0a0a");
+                }});
+ */               
                 panel(new PanelBuilder("player 2 panel") {{
                     childLayoutVertical();
                     width("100%");

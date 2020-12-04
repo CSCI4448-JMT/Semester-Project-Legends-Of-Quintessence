@@ -9,22 +9,18 @@ import LegendsOfQuintessence.card.CardSlot;
 
 /**
  *
- * @author JMT
+ * @author Jenn1
  */
-public class Player1Board extends AbstractGameComponent {
-    
-    public Player1Board() {
-
+public class Player1InPlay extends AbstractGameComponent {
+    public Player1InPlay() {
         width = "460px";
-        height = "180px";
+        height = "175px";
         xPos = "20px";
-        yPos = "10px";
-        color = "#9c9595"; //gray
-        componentName = "player 1 board";
+        yPos = "200px";
+        color = "#3223db"; //dark blue
+        componentName = "player 1 inPlay";
         numAnchors = 5;
         cardAnchorLayout = new CardSlot("20%");
-        
-        
-        
     }
+    
 }
