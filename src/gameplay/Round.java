@@ -9,15 +9,15 @@ public class Round {
 
     // round-related dynamics
     private Integer skip_counter;
-    private Boolean attack_occurred;
+    public Boolean attack_occurred;
     private Boolean end_round_request;
 
     // the players identified by their role
-    private final Player attack_player;
-    private final Player defend_player;
+    public final Player attack_player;
+    public final Player defend_player;
 
     private Turn turn;             // current turn
-    private Player current_player; // player currently in turn
+    public Player current_player; // player currently in turn
 
     // TODO : REMOVE THIS
     Integer temp_count = 0;
@@ -86,6 +86,8 @@ public class Round {
     void endRound() {
         // TODO : REMOVE THIS!
         defend_player.decrementBaseHealth(5);
+        
+        
         System.out.println("========== ROUND " + round_number + " HAS ENDED ===========");
         game.nextRound();
     }

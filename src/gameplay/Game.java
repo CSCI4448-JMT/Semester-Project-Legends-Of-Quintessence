@@ -13,8 +13,8 @@ public class Game {
     Integer round_number;
 
     // in any given round, a player is either be attacking or defending
-    Player attack_player;
-    Player defend_player;
+    private Player attack_player;
+    private Player defend_player;
 
     public Game(Player player1, Player player2) {
         System.out.printf("Players" +
