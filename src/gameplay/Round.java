@@ -1,6 +1,7 @@
 package gameplay;
 
 import items.AbstractCard;
+import items.Board;
 import items.Field;
 import player.Player;
 
@@ -129,25 +130,45 @@ public class Round {
     void resetSkipCounter()      { skip_counter = 0; }
     void incrementSkipCounter()  { skip_counter += 1; }
 
-    void resolveCombat() {
-        /* TODO: get player cards on field and resolve combat */
-        
+    /* TODO: finish this (see TODO below) */
+    void resolveCombat() {        
         Field attack_field = attack_player.getField();
-        Field defend_field = defend_player.getField();
+        Field defend_field = defend_player.getField();    
         
+        // deal with damage-oriented aspects of combat 
         for (int i = 0; i < 5; i++) {
             AbstractCard attack_card = attack_field.getCardAt(i);
             AbstractCard defend_card = defend_field.getCardAt(i);
             
             if (attack_card != null) {
+                Integer attack_damage = attack_card.getAttackPower();
+                
                 if (defend_card == null) {
-                    // TODO: get attacking card attack damage, subtract from base health
+                    // no defending card, subtract damage from base health
+                    defend_player.decrementBaseHealth(attack_damage);
                 } else {
-                    // TODO: get attacking card attack damage, subtract from defending card, and possibly destroy defending card.
+                    Integer defend_damage = defend_card.getAttackPower();
+                    
+                    // the opposing cards reduce each other's defense power
+                    attack_card.decrementDefensePower(defend_damage);
+                    defend_card.decrementDefensePower(attack_damage);
+                    
+                    // remove cards with zero defense power left
+                    if (attack_card.getDefensePower() == 0) {
+                        attack_field.removeCard(i);
+                    }
+                    if (defend_card.getDefensePower() == 0) {
+                        defend_field.removeCard(i);
+                    }                    
                 }
                
             } 
         }
+        
+        /* TO DO: move cards back to their corresponding boards, after damage has been dealt */
+        Board attack_board = attack_player.getBoard();
+        Board defend_board = defend_player.getBoard();
+
     }
 
     /* ----------------- Getters and Setters --------------------- */

@@ -19,12 +19,22 @@ public abstract class AbstractGameComponent {
     protected Player player;
     protected HashMap<Integer, AbstractCard> cards;
     
+    public Integer getEmptyPosition() {
+        for (int i = 0; i < 5; i++) {
+            if (cards.get(i) != null) {
+                return i;
+            }
+        }
+        
+        return null;
+    }
+     
     public void addCard(Integer position, AbstractCard card) {
         cards.put(position, card);
     }
     
-    public void removeCard(Integer position, AbstractCard card) {
-        cards.put(position, card);
+    public void removeCard(Integer position) {
+        cards.remove(position);
     }
     
     public Integer getNumCards() {
