@@ -36,8 +36,9 @@ public class PlayerComponentBuilder {
         AbstractGameComponent board = new Player1Board();
         
         PanelBuilder outerPlayerPanel = new PlayerOuterPanel(board).gameComponentBuilder();
+        Element outerPlayerElement = outerPlayerPanel.build(player1ParentElement);
         
-        Element outerPlayerElement = outerPlayerPanel.build(nifty, screen, player1ParentElement);
+//        Element outerPlayerElement = outerPlayerPanel.build(nifty, screen, player1ParentElement);
         
         Element deckParent = new PanelBuilder() {{
             childLayoutVertical();

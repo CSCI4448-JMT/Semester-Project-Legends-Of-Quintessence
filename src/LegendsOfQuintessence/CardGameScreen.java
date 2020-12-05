@@ -134,10 +134,7 @@ public class CardGameScreen implements ScreenController{
         }}.build(nifty);
         
         player1ParentElement = s.findElementById("player 1 main panel");
-        
-        PanelBuilder random = new PanelBuilder();
-        
-        random.build(player1ParentElement);
+       
         
         PlayerComponentBuilder playerBuilder = new PlayerComponentBuilder(nifty, s, player1ParentElement);
         
