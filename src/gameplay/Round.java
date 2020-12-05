@@ -1,5 +1,6 @@
 package gameplay;
 
+import items.Card;
 import items.Field;
 import player.Player;
 
@@ -134,7 +135,19 @@ public class Round {
         Field attack_field = attack_player.getField();
         Field defend_field = defend_player.getField();
         
-        
+        for (int i = 0; i < 5; i++) {
+            Card attack_card = attack_field.getCardAt(i);
+            Card defend_card = defend_field.getCardAt(i);
+            
+            if (attack_card != null) {
+                if (defend_card == null) {
+                    // TODO: get attacking card attack damage, subtract from base health
+                } else {
+                    // TODO: get attacking card attack damage, subtract from defending card, and possibly destroy defending card.
+                }
+               
+            } 
+        }
     }
 
     /* ----------------- Getters and Setters --------------------- */
