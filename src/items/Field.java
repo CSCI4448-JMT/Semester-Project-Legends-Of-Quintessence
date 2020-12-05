@@ -12,7 +12,7 @@ import player.Player;
  *
  * @author JMT
  */
-public class Field extends CardGameComponent {
+public class Field extends AbstractGameComponent {
     
     public Field(Player player) {
         this.name = player.getId() + "-field";

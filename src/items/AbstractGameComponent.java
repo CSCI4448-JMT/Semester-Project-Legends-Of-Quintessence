@@ -13,17 +13,17 @@ import player.Player;
  *
  * @author JMT
  */
-public abstract class CardGameComponent {
+public abstract class AbstractGameComponent {
     protected String name;
     
     protected Player player;
-    protected HashMap<Integer, Card> cards;
+    protected HashMap<Integer, AbstractCard> cards;
     
-    public void addCard(Integer position, Card card) {
+    public void addCard(Integer position, AbstractCard card) {
         cards.put(position, card);
     }
     
-    public void removeCard(Integer position, Card card) {
+    public void removeCard(Integer position, AbstractCard card) {
         cards.put(position, card);
     }
     
@@ -31,7 +31,7 @@ public abstract class CardGameComponent {
         return cards.size();
     }
     
-    public Card getCardAt(Integer position) {
+    public AbstractCard getCardAt(Integer position) {
         return cards.get(position);
     }
     

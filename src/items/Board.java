@@ -13,7 +13,7 @@ import player.Player;
  *
  * @author JMT
  */
-public class Board extends CardGameComponent {
+public class Board extends AbstractGameComponent {
     
     public Board(Player player) {
         this.name = player.getId() + "-board";

@@ -9,6 +9,6 @@ package items;
  *
  * @author Rashed
  */
-public class Card {
-    
+public class AbstractCard {
+       
 }

@@ -1,6 +1,6 @@
 package gameplay;
 
-import items.Card;
+import items.AbstractCard;
 import items.Field;
 import player.Player;
 
@@ -136,8 +136,8 @@ public class Round {
         Field defend_field = defend_player.getField();
         
         for (int i = 0; i < 5; i++) {
-            Card attack_card = attack_field.getCardAt(i);
-            Card defend_card = defend_field.getCardAt(i);
+            AbstractCard attack_card = attack_field.getCardAt(i);
+            AbstractCard defend_card = defend_field.getCardAt(i);
             
             if (attack_card != null) {
                 if (defend_card == null) {
