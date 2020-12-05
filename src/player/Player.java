@@ -1,8 +1,11 @@
 package player;
 
 import gameplay.Game;
+import items.Board;
+import items.Field;
 
 public class Player {
+    private Integer id;
     private String name;            // player's name
     private Integer base_health;    // current health of player's base
     private Integer num_resources;  // current number of resources for player
@@ -10,8 +13,12 @@ public class Player {
     private Game game;
 
     /* TODO: add board components here */
-
-    public Player(String name) {
+    private Board board;
+    private Field field;
+    
+   
+    public Player(Integer id, String name) {
+        this.id = id;
         this.name = name;
         this.base_health = 10;
         this.num_resources = 2;
@@ -62,8 +69,12 @@ public class Player {
 
     public void setGame(Game game) {this.game = game;}
 
+    public Integer getId() {return this.id; }
     public String getName() { return this.name; }
     public Integer getNumResources() { return this.num_resources; }
     public Integer getBaseHealth() { return this.base_health; }
 
+    public Board getBoard() {return this.board;}
+    public Field getField() {return this.field;}
+    
 }

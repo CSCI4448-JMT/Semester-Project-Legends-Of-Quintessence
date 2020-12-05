@@ -1,5 +1,6 @@
 package gameplay;
 
+import items.Field;
 import player.Player;
 
 /*  Responsibility: take care of the round-related aspects of the game */
@@ -129,6 +130,11 @@ public class Round {
 
     void resolveCombat() {
         /* TODO: get player cards on field and resolve combat */
+        
+        Field attack_field = attack_player.getField();
+        Field defend_field = defend_player.getField();
+        
+        
     }
 
     /* ----------------- Getters and Setters --------------------- */
