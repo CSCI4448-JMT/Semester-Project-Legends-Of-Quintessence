@@ -5,8 +5,14 @@
  */
 package LegendsOfQuintessence.gameComponents;
 
+import LegendsOfQuintessence.card.CardDropFilter;
 import LegendsOfQuintessence.card.CardSlot;
+import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.PanelBuilder;
+import de.lessvoid.nifty.controls.DroppableDropFilter;
+import de.lessvoid.nifty.controls.dragndrop.DroppableControl;
+import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.screen.Screen;
 import java.util.List;
 
 /**
@@ -16,21 +22,26 @@ import java.util.List;
 public abstract class AbstractGameComponent {
     protected String width;
     protected String height;
-    protected String xPos;
-    protected String yPos;
     protected String componentName;
     protected CardSlot cardAnchorLayout;
     protected int numAnchors;
+    protected String backgroundColor;
+    protected String backgroundImage;
     
     public PanelBuilder gameComponentBuilder() {
         
         return new PanelBuilder(componentName) {{
             childLayoutHorizontal(); // panel properties, add more...
+            valignCenter();
+            alignCenter();
             width(width);
             height(height);
-            x(xPos);
-            y(yPos);
-            backgroundColor("#2eb82e");
+            if(backgroundColor != null) {
+                backgroundColor(backgroundColor);
+            }
+            if(backgroundImage != null) {
+                backgroundImage(backgroundImage);
+            }
             for(int i = 0; i < numAnchors; i++) {
                 panel(cardAnchorLayout.slotBuilder(componentName + " card slot" + i));
             }
@@ -45,11 +56,19 @@ public abstract class AbstractGameComponent {
         height = h;
     }
     
-    public void setX(String x) {
-        xPos = x;
+    public void attachFilters(Screen s, String filterId) {
+        DroppableDropFilter ddf = new CardDropFilter(filterId); 
+        for(int i = 0; i < numAnchors; i++) {
+            System.out.println(componentName + " Attaching filter");
+            s.findNiftyControl(
+                    componentName + " card slot" + i, 
+                    DroppableControl.class).addFilter(ddf);
+        }
+        System.out.println(componentName + " Card filter attached");
     }
     
-    public void setY(String y) {
-        yPos = y;
+    public void removeFilters(Screen s, String filterId) {
+        
     }
+  
 }

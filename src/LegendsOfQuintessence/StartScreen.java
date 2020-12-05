@@ -74,42 +74,37 @@ public class StartScreen implements ScreenController{
         final CardGameScreen cgs = new CardGameScreen(nifty, gameState);
         
  
-       Screen s = new ScreenBuilder("Hello Nifty Screen"){{
-            controller(new DefaultScreenController());
-            
-            layer(new LayerBuilder("boardLayer") {{ 
-                childLayoutAbsolute();
-                
-                // <panel>
-                panel(new PanelBuilder("player1-board") {{
-                    childLayoutHorizontal(); // panel properties, add more...
-                    height("175px");
-                    x("200px");
-                    width("700px");
-                    backgroundColor("#2eb82e");
-                    
-                    
-                    for(int i = 0; i < 5; i++){
-                        control(defenseCard1.cardBuilder());
-                    }
-//                   controller(new DroppableControl());
-                       
-               //.. add more GUI elements here
-
-               }});
-                
-              // <panel>
-                panel(p2Board.gameComponentBuilder());
-                
-            }});
-            
-        }}.build(nifty);
-       
-       DroppableDropFilter ddf = new CardDropFilter("p1-card");
-       
-       for(int i = 0; i < 5; i++) {
-        s.findControl("player 2 board card slot" + i, DroppableControl.class).addFilter(ddf);
-       }
+       Screen s = cgs.gameScreenBuilder();
+//               new ScreenBuilder("Hello Nifty Screen"){{
+//            controller(new DefaultScreenController());
+//            
+//            layer(new LayerBuilder("boardLayer") {{ 
+//                childLayoutAbsolute();
+//                
+//                // <panel>
+//                panel(new PanelBuilder("player1-board") {{
+//                    childLayoutHorizontal(); // panel properties, add more...
+//                    height("175px");
+//                    x("200px");
+//                    width("700px");
+//                    backgroundColor("#2eb82e");
+//                    
+//                    
+//                    for(int i = 0; i < 5; i++){
+//                        control(defenseCard1.cardBuilder());
+//                    }
+////                   controller(new DroppableControl());
+//                       
+//               //.. add more GUI elements here
+//
+//               }});
+//                
+//              // <panel>
+//                panel(p2Board.gameComponentBuilder());
+//                
+//            }});
+//            
+//        }}.build(nifty);
         
         nifty.addScreen("game_screen", s);
         

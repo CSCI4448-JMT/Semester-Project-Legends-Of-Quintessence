@@ -13,6 +13,7 @@ import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.Controller;
 import de.lessvoid.nifty.controls.Parameters;
+import de.lessvoid.nifty.controls.dragndrop.DraggableControl;
 import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dynamic.TextCreator;
 import de.lessvoid.nifty.elements.Element;
@@ -33,6 +34,10 @@ public abstract class AbstractCard {
     protected Integer defense_power;
     protected Integer resource_req;
     protected String cardAbstractId;
+    private Nifty nifty;
+    private Screen screen;
+    private Element parent;
+    
     
     private Element card_element; // card element to be stored here, whenever it is built in Nifty screen.
     protected String image_file;
@@ -47,11 +52,12 @@ public abstract class AbstractCard {
         }
     }
     
-    public ControlBuilder cardBuilder() {
+    public DraggableBuilder cardBuilder(String concreteId) {
         final Color color = Color.randomColor();
         
-        DraggableBuilder DB = new DraggableBuilder(cardAbstractId) {{
+        DraggableBuilder DB = new DraggableBuilder(cardAbstractId + concreteId) {{
             valignCenter();
+            alignCenter();
             height("150px");
             width("85px");
             //backgroundColor("#f00f");
@@ -169,6 +175,10 @@ public abstract class AbstractCard {
     
     public final void setElement(Element card_element) {
         this.card_element = card_element;
+    }
+    
+    public void setNifty(Nifty n) {
+        nifty = n;
     }
     
 }

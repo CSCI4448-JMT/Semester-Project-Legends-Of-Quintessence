@@ -5,6 +5,8 @@
  */
 package LegendsOfQuintessence.gameComponents;
 
+import LegendsOfQuintessence.card.CardSlot;
+
 /**
  *
  * @author JMT
@@ -12,11 +14,11 @@ package LegendsOfQuintessence.gameComponents;
 public class Player1Board extends AbstractGameComponent {
     
     public Player1Board() {
-        width = "700px";
-        height = "175px";
-        xPos = "200px";
-        yPos = "0px";
+        width = "50%";
+        height = "100%";
         componentName = "player 1 board";
         numAnchors = 5;
+        cardAnchorLayout = new CardSlot("20%");
+        backgroundImage = "Textures/cartoon_wood_texture.jpg";
     }
 }

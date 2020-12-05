@@ -5,6 +5,8 @@
  */
 package LegendsOfQuintessence.card;
 
+import de.lessvoid.nifty.Nifty;
+
 /**
  *
  * @author JMT
