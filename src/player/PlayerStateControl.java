@@ -6,7 +6,14 @@ import gameplay.Game;
 *  */
 public class PlayerStateControl {
     private Game game;
-
+    
+    private Player player;
+    private Player current_player;
+    
+    public PlayerStateControl(Player player) {
+        this.player = player;
+    }
+    
     private Player attack_player;
     private Player defend_player;
     private boolean attack_occurred;
@@ -18,5 +25,12 @@ public class PlayerStateControl {
     /* TODO: make sure these are necessary */
     private boolean skip_action_state;          // ????
     private boolean skip_defense_action_state;  // ????
+    
+    public void update() {
+        attack_occurred = game.getRound().attack_occurred;
+        current_player = game.getRound().current_player;
+        
+        
+    }
 
 }
