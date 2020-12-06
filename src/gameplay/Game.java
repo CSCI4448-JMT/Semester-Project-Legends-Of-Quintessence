@@ -4,13 +4,11 @@ import java.lang.Math;
 import player.Player;
 
 public class Game {
-    // players of the game
     Player player1;
     Player player2;
 
-    // current round in the game
-    Round round;
-    Integer round_number;
+    Round round;            // the current round
+    Integer round_number;   // the current round number
 
     // in any given round, a player is either be attacking or defending
     private Player attack_player;
@@ -47,8 +45,7 @@ public class Game {
         round_number = 1;
 
         // start a new round
-        round = new Round(attack_player, defend_player, this);
-        round.startRound();
+        startRound();
     }
 
     /* --------------- PACKAGE FUNCTIONS ------------------ */
@@ -70,8 +67,7 @@ public class Game {
 
             // TODO : remove bound on number of rounds
             if (round_number < 5) {
-                round = new Round(attack_player, defend_player, this);
-                round.startRound();
+                startRound();
             } else {
                 endGame();
             }
@@ -99,6 +95,12 @@ public class Game {
         return player1.getBaseHealth() == 0 || player2.getBaseHealth() == 0;
     }
 
+    
+    public void startRound() {
+        round = new Round(attack_player, defend_player, this);
+        round.startRound();
+    }
+    
     /* ----------------- Getters and Setters --------------------- */
 
     public Round getRound() {return round; }

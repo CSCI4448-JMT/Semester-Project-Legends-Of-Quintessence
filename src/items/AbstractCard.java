@@ -10,7 +10,7 @@ package items;
  * @author Rashed
  */
 public class AbstractCard {
-    protected AbstractGameComponent card_component;
+    protected AbstractGameComponent game_component;
     
     protected Integer attack_power;
     protected Integer defense_power;
@@ -69,6 +69,10 @@ public class AbstractCard {
         }
     }
     
+    public final void setGameComponent(AbstractGameComponent agc) {
+        this.game_component = agc;
+    }
+    
     /*
     public final void moveTo(AbstractGameComponent component) {
         card_component.removeCard(attack_power);
@@ -76,7 +80,9 @@ public class AbstractCard {
     }*/
     
     public final void destroy() {
-        /* TO DO: remove GUI element from field */
+        
+        /* TO DO: remove GUI card element*/
+        
     }
     
     //public final void setElement(Element card_element) {

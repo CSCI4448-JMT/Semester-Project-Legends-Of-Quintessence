@@ -8,19 +8,20 @@ import player.Player;
 /*  Responsibility: take care of the round-related aspects of the game */
 public class Round {
     private final Game game;
-    private final Integer round_number;
+    private final Integer round_number; // round number, used for resource allocation
 
     // round-related dynamics
-    private Integer skip_counter;
-    public Boolean attack_occurred;
-    private Boolean end_round_request;
+    private Integer skip_counter;       // the number of consecutive skips in round
+    public Boolean combat_started;      // has the attacker initiated combat
+    public Boolean combat_resolved;     // has the combat been resolved
+    private Boolean end_round_request;  // has the player requested to end the round
 
     // the players identified by their role
     public final Player attack_player;
     public final Player defend_player;
 
-    private Turn turn;             // current turn
-    public Player current_player; // player currently in turn
+    private Turn turn;            // current turn
+    public Player current_player; // player with current turn
 
     // TODO : REMOVE THIS
     Integer temp_count = 0;
@@ -31,9 +32,9 @@ public class Round {
         this.game = game;
         this.round_number = game.getRoundNumber();
 
-        this.skip_counter = 0;
-        this.attack_occurred = false;
-        this.end_round_request = false;
+        this.skip_counter = 0;          
+        this.combat_started = false;
+        this.end_round_request = false; 
 
         this.attack_player = attack_player;
         this.defend_player = defend_player;
@@ -56,15 +57,15 @@ public class Round {
         }
 
         // start a new turn
-        turn = new Turn(current_player, this);
-        turn.start();
+        startTurn();
     }
 
     void nextTurn() {
         if (checkRoundEnd()) {
             endRound();
-        } else if (attack_occurred && current_player == defend_player) {
-            resolveCombat();
+        } else if (combat_started && !combat_resolved && current_player == defend_player) {
+            attack_player.attack(defend_player);
+            combat_resolved = true;
         } else {
             // TODO : REMOVE THIS TEMP COUNT STUFF, USED TO LIMIT TURN COUNT WHEN TESTING
             temp_count += 1;
@@ -78,19 +79,14 @@ public class Round {
                 }
 
                 // start a new turn
-                turn = new Turn(current_player, this);
-                turn.start();
+                startTurn();
             } else {
                 endRound();
             }
         }
     }
 
-    void endRound() {
-        // TODO : REMOVE THIS!
-        defend_player.decrementBaseHealth(5);
-        
-        
+    void endRound() {        
         System.out.println("========== ROUND " + round_number + " HAS ENDED ===========");
         game.nextRound();
     }
@@ -99,6 +95,7 @@ public class Round {
         end_round_request = true;
         turn.endTurn();
     }
+    
     void endTurnRequest() {
         turn.endTurn();
     }
@@ -111,12 +108,12 @@ public class Round {
 
         // Case 2. Attack action has been completed by the attacking player and both players
         // have less resources than all of the resource costs of cards in their hand.
-        if (attack_occurred && current_player == defend_player) {
-            // TODO: get player resources and smallest resource cost of card in hand
-            /* if (attack_player.getNumResources() < SMALLESTRESOURCECOST
-                    && defend_player.getNumResources() < SMALLESTRESOURCECOST) {
+        if (combat_started && current_player == defend_player) {
+            
+            if (attack_player.getHand().getAffordableCards().isEmpty() &&
+                    defend_player.getHand().getAffordableCards().isEmpty()) {
                 return true;
-            } */
+            }
         }
 
         // Case 3: Match ends.
@@ -126,53 +123,18 @@ public class Round {
 
         return false;
     }
-
+    
+  
+    void startTurn() {
+        turn = new Turn(current_player, this);
+        turn.startTurn();
+    }
+    
     void resetSkipCounter()      { skip_counter = 0; }
     void incrementSkipCounter()  { skip_counter += 1; }
-
-    /* TODO: finish this (see TODO below) */
-    void resolveCombat() {        
-        Field attack_field = attack_player.getField();
-        Field defend_field = defend_player.getField();    
-        
-        // deal with damage-oriented aspects of combat 
-        for (int i = 0; i < 5; i++) {
-            AbstractCard attack_card = attack_field.getCardAt(i);
-            AbstractCard defend_card = defend_field.getCardAt(i);
-            
-            if (attack_card != null) {
-                Integer attack_damage = attack_card.getAttackPower();
-                
-                if (defend_card == null) {
-                    // no defending card, subtract damage from base health
-                    defend_player.decrementBaseHealth(attack_damage);
-                } else {
-                    Integer defend_damage = defend_card.getAttackPower();
-                    
-                    // the opposing cards reduce each other's defense power
-                    attack_card.decrementDefensePower(defend_damage);
-                    defend_card.decrementDefensePower(attack_damage);
-                    
-                    // remove cards with zero defense power left
-                    if (attack_card.getDefensePower() == 0) {
-                        attack_field.removeCard(i);
-                    }
-                    if (defend_card.getDefensePower() == 0) {
-                        defend_field.removeCard(i);
-                    }                    
-                }
-               
-            } 
-        }
-        
-        /* TO DO: move cards back to their corresponding boards, after damage has been dealt */
-        Board attack_board = attack_player.getBoard();
-        Board defend_board = defend_player.getBoard();
-
-    }
 
     /* ----------------- Getters and Setters --------------------- */
 
     public Turn getTurn() {return turn; }
-
+    public Integer getSkipCounter() {return skip_counter;}
 }

@@ -31,10 +31,21 @@ public abstract class AbstractGameComponent {
      
     public void addCard(Integer position, AbstractCard card) {
         cards.put(position, card);
+        card.setGameComponent(this);
     }
     
     public void removeCard(Integer position) {
-        cards.remove(position);
+        AbstractCard card = cards.remove(position);
+        
+        if (card != null) {
+            card.setGameComponent(null);
+        }
+    }
+    
+    public void destroyCard(Integer position) {
+        AbstractCard card = getCardAt(position);
+        card.destroy();
+        removeCard(position);
     }
     
     public Integer getNumCards() {

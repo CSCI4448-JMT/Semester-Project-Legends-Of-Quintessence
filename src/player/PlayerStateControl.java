@@ -27,7 +27,7 @@ public class PlayerStateControl {
     private boolean skip_defense_action_state;  // ????
     
     public void update() {
-        attack_occurred = game.getRound().attack_occurred;
+        attack_occurred = game.getRound().combat_started;
         current_player = game.getRound().current_player;
         
         
