@@ -6,12 +6,16 @@
 package LegendsOfQuintessence;
 
 import LegendsOfQuintessence.card.CardDropFilter;
-import LegendsOfQuintessence.gameComponents.Player2Board;
+
 import LegendsOfQuintessence.gameComponents.Player1Board;
 import LegendsOfQuintessence.gameComponents.Player1InPlay;
 import LegendsOfQuintessence.gameComponents.Player1Hand;
+
+import LegendsOfQuintessence.gameComponents.Player2Board;
 import LegendsOfQuintessence.gameComponents.Player2Hand;
 import LegendsOfQuintessence.gameComponents.Player2InPlay;
+import LegendsOfQuintessence.gameComponents.Player2Base;
+
 import LegendsOfQuintessence.gameComponents.Divider;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
@@ -64,8 +68,8 @@ public class StartScreen implements ScreenController{
     
     @NiftyEventSubscriber(id="StartButton")
     public void onClick(String id, NiftyMousePrimaryClickedEvent event) {
-//        nifty.fromXml("Interface/card.xml", "GScreen0", this);
-//        nifty.gotoScreen("GScreen0"); 
+        nifty.fromXml("Interface/Board.xml", "Board", this);
+        nifty.gotoScreen("Board"); 
         //final AbstractCard defenseCard1 = new ConcreteCard("p1-card");
         //final AbstractCard defenseCard2 = new ConcreteCard("p2-card");
         
@@ -80,11 +84,12 @@ public class StartScreen implements ScreenController{
         final Player2Board p2Board = new Player2Board();
         final Player2Hand p2Hand = new Player2Hand();
         final Player2InPlay p2InPlay = new Player2InPlay();
+        final Player2Base p2Base = new Player2Base();
         
         
         final CardGameScreen cgs = new CardGameScreen(nifty, gameState);
         
- 
+ /* 
        Screen s = new ScreenBuilder("Hello Nifty Screen"){{
             controller(new DefaultScreenController());
             
@@ -99,8 +104,8 @@ public class StartScreen implements ScreenController{
                     x("200px");
                     width("700px");
                     backgroundColor("#2eb82e");
-*/                
- /*
+               
+
                     for(int i = 0; i < 5; i++){
                         control(defenseCard1.cardBuilder());
                     }
@@ -110,7 +115,7 @@ public class StartScreen implements ScreenController{
                //.. add more GUI elements here
 
                }});
-*/
+
               // <panel>
               //Player 1 Panel Components
                 panel(p1Board.gameComponentBuilder());
@@ -124,6 +129,7 @@ public class StartScreen implements ScreenController{
                 panel(p2Board.gameComponentBuilder());
                 panel(p2Hand.gameComponentBuilder());
                 panel(p2InPlay.gameComponentBuilder());
+                panel(p2Base.gameComponentBuilder());
                 
             }});
             
@@ -143,6 +149,7 @@ public class StartScreen implements ScreenController{
         nifty.addScreen("game_screen", s);
 
         nifty.gotoScreen("game_screen");
+        */
     }
     
 }

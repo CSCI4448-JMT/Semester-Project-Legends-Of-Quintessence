@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
+    <useStyles filename="nifty-default-styles.xml"/>
+    <useControls filename="nifty-default-controls.xml"/>
+    
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Board -->
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
+    <screen id="Board" controller="LegendsOfQuintessence.Board">
+        <layer id="background" childLayout="vertical" align="center">
+              <image filename="Interface/Player1Forest.jpg" height="50%" width="100%"></image>
+              <image filename="Interface/Player2Forest.jpg" height="50%" width="100%"></image>
+        </layer>
+
+        <layer id="foreground" childLayout="vertical">      
+            <panel id="Player1_Portion" height="50%" width="100%" align="center" childLayout="vertical">
+                <panel id="Player1_BaseHand_Portion" height="30%" width="100%" align="center" childLayout="horizontal">                
+                    <panel id="Player1_baseInfo" height="100%" width="20%" align="center" childLayout="vertical">
+                        <text id ="Player1_baseInfo_label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" 
+                              text="\#ff9900#Player 1 Base Info" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+                    </panel>
+                    
+                    <panel id="Player1_inHand" height="100%" width="80%" align="center" childLayout="horizontal" visibleToMouse="true">
+                        
+                        <control id="MyDraggable1" name="draggable1" backgroundColor="#f60f" padding="10%" height="50%" width="20%" align="center" childLayout="center" visibleToMouse="true">
+                            <text text="Drag Me!" color="#2eef" valign="center" height= "30%" width="100%" />
+                        </control>
+                        <!--
+                        <text id ="Player1_inHand_label" style = "nifty-label" backgroundColor="#000f" height="100%" width="100%" 
+                            text="\#ff9900#Player 1 InHand" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+
+                        <control id="MyDraggable2" name="draggable2" backgroundColor="#f60f" padding="10%" height="50%" width="20%" align="center" childLayout="center" visibleToMouse="true">
+                            <text text="Drag Me!" color="#eeef" valign="center" height= "30%" width="100%" />
+                        </control>
+                        <control id="MyDraggable3" name="draggable3" backgroundColor="#f60f" padding="10%" height="50%" width="20%" align="center" childLayout="center" visibleToMouse="true">
+                            <text text="Drag Me!" color="#eeef" valign="center" height= "30%" width="100%" />
+                        </control>
+                        <control id="MyDraggable4" name="draggable4" backgroundColor="#f60f" padding="10%" height="50%" width="20%" align="center" childLayout="center" visibleToMouse="true">
+                            <text text="Drag Me!" color="#eeef" valign="center" height= "30%" width="500%" />
+                        </control>
+                        <control id="MyDraggable5" name="draggable5" backgroundColor="#f60f" padding="10%" height="50%" width="20%" align="center" childLayout="center" visibleToMouse="true">
+                            <text text="Drag Me!" color="#eeef" valign="center" height= "30%" width="100%" />
+                        </control>
+                        -->
+
+                    </panel>
+                </panel> 
+                
+                <panel id="Player1_inPlay" height="70%" width="100%" valign="center" childLayout="horizontal" visibleToMouse="true">
+                    <!--
+                    <text id ="player_1_inPlay_label" style = "nifty-label" backgroundColor="#000f" height="60%" width="75%" 
+                          text="\#ff9900#Player 1 InPlay" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+                    -->
+                     <control id="MyDroppable1" name="droppable" padding="10%" height="20%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                     <control id="MyDroppable2" name="droppable" padding="10%" height="20%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                    <control id="MyDroppable3" name="droppable" padding="10%" height="20%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                     <control id="MyDroppable4" name="droppable" padding="10%" height="20%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                     <control id="MyDroppable5" name="droppable" padding="10%" height="20%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                </panel>  
+                
+            </panel>
+            
+            <panel id="Player2_Portion" height="50%" width="100%" align="center" childLayout="vertical">
+                
+                <panel id="Player2_inPlay" height="70%" width="100%" align="center" childLayout="vertical" visibleToMouse="true">
+                    <text id ="player_2_inPlay_label" style = "nifty-label" backgroundColor="#000f" height="60%" width="75%" 
+                          text="\#ff9900#Player 2 InPlay" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+                </panel>
+
+                <panel id="Player2_BaseHand_Portion" height="30%" width="100%" align="center" childLayout="horizontal">                
+                    
+                    <panel id="Player2_baseInfo" height="100%" width="20%" align="center" childLayout="vertical">
+                        <text id ="Player2_baseInfo_label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" 
+                              text="\#ff9900#Player 2 Base Info" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+                    </panel>
+                    
+                    <panel id="Player2_inHand" height="100%" width="80%" align="center" childLayout="vertical" visibleToMouse="true" >
+                        <text id ="Player2_inHand_label" style = "nifty-label" backgroundColor="#000f" height="100%" width="100%" 
+                              text="\#ff9900#Player 2 InHand" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+                    </panel>
+                </panel>  
+            </panel>
+        </layer>
+    </screen> 
+</nifty>
+

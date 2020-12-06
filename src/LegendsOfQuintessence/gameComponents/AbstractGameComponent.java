@@ -76,7 +76,7 @@ public abstract class AbstractGameComponent {
     public void setColor(String c) {
         color = c;
     }
-    
+    /* Static Text Boxes to display Player1 Hand, Board, In-play etc.
     public void setTextBox(String t){
         textBox = t;
     }
@@ -88,4 +88,5 @@ public abstract class AbstractGameComponent {
     public void setTextYPos(String typ){
         textYPos = typ;
     }
+*/
 }
