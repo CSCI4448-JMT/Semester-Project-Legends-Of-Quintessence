@@ -74,8 +74,8 @@ public class LegendsOfQuintessence extends SimpleApplication {
         this.setDisplayStatView(false); //gets rid of StatView box
         this.setDisplayFps(false); //gets rid of FPS onscreen
 
-        Player p1 = new Player("Jack");
-        Player p2 = new Player("Jill");
+        Player p1 = new Player("p1","Jack");
+        Player p2 = new Player("p2","Jill");
 
         Game g = new Game(p1, p2);
         g.start();
