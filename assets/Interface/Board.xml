@@ -6,7 +6,7 @@
     <!-- +++++++++++++++++++++++++++++++++++++++ -->
     <!-- Board -->
     <!-- +++++++++++++++++++++++++++++++++++++++ -->
-    <screen id="Board" controller="LegendsOfQuintessence.CardGameScreen">
+    <screen id="Board" controller="LegendsOfQuintessence.GameScreen">
         <layer id="background" childLayout="vertical" align="center">
               <image filename="Interface/Player1Forest.jpg" height="50%" width="100%"></image>
               <image filename="Interface/Player2Forest.jpg" height="50%" width="100%"></image>
@@ -23,60 +23,65 @@
                             </control> 
                         </panel>
                         
-                        <panel id="Player1_baseInfo" height="80%" width="100%" padding="5px" align="center" childLayout="vertical">
+                        <panel id="Player1_baseInfo" height="60%" width="100%" padding="5px" align="center" childLayout="vertical">
                             <text id ="Player1_baseInfo_label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" 
                                   text="\#ff9900#Player 1 Base Info" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
                         </panel>
                     </panel>
 
-                    <panel id="Player1_inHand" height="100%" width="80%" childLayout="horizontal" >
-                        <interact onClickMouseMove="drag()" onRelease="dragStop()"/>
-
-                            <control id="MyDraggable1" name="draggable1" backgroundColor="#CD5C5C" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#000000" valign="center" height= "50%" width="20%" />
-                            </control>
-
-                            <control id="MyDraggable2" name="draggable2" backgroundColor="#F08080" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
-                            </control>
-                            <control id="MyDraggable3" name="draggable3" backgroundColor="#FA8072" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
-                            </control>
-                            <control id="MyDraggable4" name="draggable4" backgroundColor="#E9967A" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
-                            </control>
-                            <control id="MyDraggable5" name="draggable5" backgroundColor="#FFA07A" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
-                            </control>
+                    <panel id="Player1_board" height="100%" width="60%" childLayout="horizontal" >
+                        <control id="Player1-board1" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">                               
+                        </control>
+                        <control id="Player1-board2" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">                               
+                        </control>
+                        <control id="Player1-board3" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">                                
+                        </control>
+                        <control id="Player1-board4" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">                               
+                        </control>
+                        <control id="Player1-board5" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">
+                        </control>
+                    </panel>
+                    
+                    <panel height="100%" width="20%" childLayout="vertical" >
+                        <panel id="Player1_deck_panel" heigt="100%" 
+                                   width="75%" align="center"
+                                childLayout="center">
+                                <control id="Player1-deck" name="droppable" 
+                                         backgroundImage="Textures/deck-bg.jpg" 
+                                         padding="5px" height="80%" 
+                                         width="100%" childlayout="center"
+                                        align="center">                               
+                                </control>
+                            </panel>
                     </panel>
                 </panel> 
                 
                 <panel id="Player1_inPlay" height="100%" width="100%" padding="10px" valign="center" childLayout="horizontal" visibleToMouse="true">
-                     <control id="MyDroppable1-p1" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                     <control id="Player1-inPlay1" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
                             <effect>
                             <onActive name="border" post="true" color="#222f" border="1px" />
                             </effect>
                             <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
-                     <control id="MyDroppable2-p1" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                     <control id="Player1-inPlay2" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
                             <effect>
                                 <onActive name="border" post="true" color="#222f" border="1px" />
                             </effect>
                             <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
-                    <control id="MyDroppable3" name="droppable" padding="10%" height="60%" align="center" valign="top" visibleToMouse="true">
+                    <control id="Player1-inPlay2" name="droppable" padding="10%" height="60%" align="center" valign="top" visibleToMouse="true">
                             <effect>
                                 <onActive name="border" post="true" color="#222f" border="1px" />
                             </effect>
                             <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
-                     <control id="MyDroppable4" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                     <control id="Player1-inPlay3" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
                             <effect>
                                 <onActive name="border" post="true" color="#222f" border="1px" />
                             </effect>
                             <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
-                     <control id="MyDroppable5" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                     <control id="Player1-inPlay4" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
                             <effect>
                                 <onActive name="border" post="true" color="#222f" border="1px" />
                             </effect>
@@ -89,35 +94,35 @@
             <panel id="Player2_Portion" height="50%" width="100%" align="center" childLayout="vertical">
                 
                 <panel id="Player2_inPlay" height="60%" width="100%" padding="10px" valign="center" childLayout="horizontal" visibleToMouse="true">
-                    <control id="MyDroppable1" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
+                    <control id="Player2-inPlay1" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
                         <effect>
                             <onActive name="border" post="true" color="#222f" border="1px" />
                         </effect>
                         <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
                     
-                    <control id="MyDroppable2" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
+                    <control id="Player2-inPlay2" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
                         <effect>
                             <onActive name="border" post="true" color="#222f" border="1px" />
                         </effect>
                         <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
                     
-                    <control id="MyDroppable3" name="droppable" padding="10%" height="100%" align="center" valign="top" visibleToMouse="true">
+                    <control id="Player2-inPlay3" name="droppable" padding="10%" height="100%" align="center" valign="top" visibleToMouse="true">
                         <effect>
                             <onActive name="border" post="true" color="#222f" border="1px" />
                         </effect>
                         <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
                     
-                     <control id="MyDroppable4" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
+                     <control id="Player2-inPlay4" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
                         <effect>
                             <onActive name="border" post="true" color="#222f" border="1px" />
                         </effect>
                         <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
                     
-                     <control id="MyDroppable5" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
+                     <control id="Player2-inPlay5" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
                         <effect>
                             <onActive name="border" post="true" color="#222f" border="1px" />
                         </effect>
@@ -138,30 +143,32 @@
                             <control name="button" label="EndTurn2" id="EndTurnButton2" align="center" valign="center">
                             </control> 
                         </panel>
-                        
-                        
-                        
                     </panel>
-
-                    <panel id="Player2_inHand" height="100%" width="80%" childLayout="horizontal" >
-                        <interact onClickMouseMove="drag()" onRelease="dragStop()"/>
-
-                            <control id="MyDraggable1" name="draggable1" backgroundColor="#CD5C5C" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#000000" valign="center" height= "50%" width="20%" />
+                        
+                    <panel id="Player2_board" height="100%" width="60%" childLayout="horizontal" >
+                        <control id="Player2-board1" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">                               
+                        </control>
+                        <control id="Player2-board2" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">                               
+                        </control>
+                        <control id="Player2-board3" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">                                
+                        </control>
+                        <control id="Player2-board4" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">                               
+                        </control>
+                        <control id="Player2-board5" name="droppable" backgroundImage="Textures/stone-wall.jpg" padding="5px" height="80%" width="20%" childlayout="center">
+                        </control>
+                    </panel>
+                        
+                    <panel height="100%" width="20%" childLayout="vertical" >
+                        <panel id="Player2_deck_panel" heigt="100%" 
+                               width="75%" align="center"
+                            childLayout="center">
+                            <control id="Player2-deck" name="droppable" 
+                                     backgroundImage="Textures/deck-bg.jpg" 
+                                     padding="5px" height="80%" 
+                                     width="100%" childlayout="center"
+                                    align="center">                               
                             </control>
-
-                            <control id="MyDraggable2" name="draggable2" backgroundColor="#F08080" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
-                            </control>
-                            <control id="MyDraggable3" name="draggable3" backgroundColor="#FA8072" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
-                            </control>
-                            <control id="MyDraggable4" name="draggable4" backgroundColor="#E9967A" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
-                            </control>
-                            <control id="MyDraggable5" name="draggable5" backgroundColor="#FFA07A" padding="5px" height="80%" width="20%" childlayout="center">
-                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
-                            </control>
+                        </panel>
                     </panel>
                 </panel> 
 

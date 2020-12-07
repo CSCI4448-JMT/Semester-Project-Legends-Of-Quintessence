@@ -6,6 +6,7 @@
 package LegendsOfQuintessence;
 
 import LegendsOfQuintessence.card.ConcreteCard;
+import LegendsOfQuintessence.gameComponents.PlayerElementBuilder;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.builder.ElementBuilder;
@@ -33,6 +34,8 @@ import java.util.List;
 public class GameScreen implements ScreenController{
     private Nifty nifty;
     private GameState gameState;
+    private final Player player1 = new Player1();
+    private final Player player2 = new Player2();
     
     public GameScreen(Nifty n) {
         nifty = n;
@@ -56,18 +59,13 @@ public class GameScreen implements ScreenController{
         
         Screen screen = nifty.getCurrentScreen();
         
-        ConcreteCard c = new ConcreteCard("p1-card");
-        DraggableBuilder eb = (DraggableBuilder) c.cardBuilder();
+        PlayerElementBuilder p1Builder = new PlayerElementBuilder(nifty, screen, player1);
+        p1Builder.attachElements();
+        p1Builder.buildCardsAndAttach();
         
-        Element card_element = eb.build(nifty, screen, screen.findElementById("MyDroppable1-p1")); 
-        
-        eb = c.cardBuilder();    
-        Element card_element2 = eb.build(nifty, screen, screen.findElementById("MyDroppable1-p1"));
-        
-        card_element.hide();
-        
-        c.setElement(card_element);
-        c.setDefensePower(7);
+        PlayerElementBuilder p2Builder = new PlayerElementBuilder(nifty, screen, player2);
+        p2Builder.attachElements();
+        p2Builder.buildCardsAndAttach();
     }
 
     @Override
@@ -82,42 +80,6 @@ public class GameScreen implements ScreenController{
     
     public void setGameState(GameState gameState){
         this.gameState = gameState;
-    }
-    
-    /* 
-    create the game screen with the following layers:
-    - background
-    - game component layer
-    */
-    public Screen gameScreenBuilder() {
-        
-        return new ScreenBuilder("game screen") {{
-            controller(new DefaultScreenController());
-            
-            layer(new LayerBuilder("background") {{
-                childLayoutVertical();
-            }});
-            
-            layer(new LayerBuilder("game component layer") {{ 
-                childLayoutVertical();
-                
-                panel(new PanelBuilder("player 1 panel") {{
-                    childLayoutVertical();
-                    width("100%");
-                    height("50%");
-                    backgroundColor("#ff8080");
-                }});
-
-                panel(new PanelBuilder("player 2 panel") {{
-                    childLayoutVertical();
-                    width("100%");
-                    height("50%");
-                    backgroundColor("#4da6ff");
-                }});
-               
-            }});
-            
-        }}.build(nifty);
     }
     
 }
