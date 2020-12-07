@@ -54,7 +54,7 @@ public abstract class AbstractCard {
         
         final Color color = Color.randomColor();
         
-        DraggableBuilder DB = new DraggableBuilder(id.toString()) {{
+        DraggableBuilder DB = new DraggableBuilder(cardAbstractId + id.toString()) {{
             valignCenter();
             height("150px");
             width("85px");

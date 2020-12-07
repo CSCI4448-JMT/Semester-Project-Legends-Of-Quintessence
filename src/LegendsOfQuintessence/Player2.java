@@ -10,20 +10,20 @@ import java.util.List;
 
 /**
  *
- * @author timothylenahan
+ * @author JMT
  */
-public class Player1 extends Player {
+public class Player2 extends Player{
     private int baseHealth;
     private int resources;
     private List<AbstractGameComponent> components;
     
-    public Player1() {
-        elementBaseName = "Player1";
-        name = "Player1";
+    public Player2() {
+        elementBaseName = "Player2";
+        name = "Player2";
     }
     
-    public Player1(String n) {
-        elementBaseName = "Player1";
+    public Player2(String n) {
+        elementBaseName = "Player2";
         name = n;
     }
 }
