@@ -5,6 +5,7 @@
  */
 package LegendsOfQuintessence;
 
+import LegendsOfQuintessence.card.ConcreteCard;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.builder.ElementBuilder;

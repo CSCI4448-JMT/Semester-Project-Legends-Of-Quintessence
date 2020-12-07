@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LegendsOfQuintessence;
+package LegendsOfQuintessence.card;
 
+import LegendsOfQuintessence.card.AbstractCard;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Parameters;
 import de.lessvoid.nifty.elements.Element;
@@ -16,7 +17,7 @@ import de.lessvoid.nifty.screen.Screen;
  * @author JMT
  */
 public class ConcreteCard extends AbstractCard{
-    ConcreteCard() {
+    public ConcreteCard() {
         attack_power = 5;
         defense_power = 3;
         resource_req = 4;

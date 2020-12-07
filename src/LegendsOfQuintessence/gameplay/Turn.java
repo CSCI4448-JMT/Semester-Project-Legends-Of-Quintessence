@@ -1,6 +1,6 @@
-package gameplay;
+package LegendsOfQuintessence.gameplay;
 
-import player.Player;
+import LegendsOfQuintessence.player.Player;
 
 public class Turn {
     private final Round round;

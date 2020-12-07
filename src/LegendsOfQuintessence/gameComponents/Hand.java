@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package items;
+package LegendsOfQuintessence.gameComponents;
 
+import LegendsOfQuintessence.card.AbstractCard;
 import java.util.HashMap;
-import player.Player;
+import LegendsOfQuintessence.player.Player;
 
 /** The player's Hand is used to store cards that have not yet been purchased 
  *  with player resources, and are updated with cards from the player's Deck

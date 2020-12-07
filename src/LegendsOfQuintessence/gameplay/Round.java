@@ -1,9 +1,9 @@
-package gameplay;
+package LegendsOfQuintessence.gameplay;
 
-import items.AbstractCard;
-import items.Board;
-import items.Field;
-import player.Player;
+import LegendsOfQuintessence.card.AbstractCard;
+import LegendsOfQuintessence.gameComponents.Board;
+import LegendsOfQuintessence.gameComponents.Field;
+import LegendsOfQuintessence.player.Player;
 
 /*  Responsibility: take care of the round-related aspects of the game */
 public class Round {

@@ -32,8 +32,8 @@ import de.lessvoid.nifty.controls.dynamic.PanelCreator;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
-import gameplay.Game;
-import player.Player;
+import LegendsOfQuintessence.gameplay.Game;
+import LegendsOfQuintessence.player.Player;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.

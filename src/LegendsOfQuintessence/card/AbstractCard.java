@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LegendsOfQuintessence;
+package LegendsOfQuintessence.card;
+
+import LegendsOfQuintessence.gameComponents.AbstractGameComponent;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.ElementBuilder;
@@ -25,9 +27,11 @@ import java.util.jar.Attributes;
 
 /**
  *
- * @author JMT
+ * @author Rashed
  */
-public abstract class AbstractCard {
+public class AbstractCard {
+    protected AbstractGameComponent game_component;
+    
     protected Integer attack_power;
     protected Integer defense_power;
     protected Integer resource_req;
@@ -136,7 +140,6 @@ public abstract class AbstractCard {
         return DB;
     }
     
-    
     // ----------- GETTERS / SETTERS ------------- //
     
     public final Integer getAttackPower() {
@@ -164,8 +167,36 @@ public abstract class AbstractCard {
         this.resource_req = resource_req;
     } 
     
+    public final void decrementDefensePower(Integer decrement) {
+        this.defense_power = this.defense_power - decrement;
+        if (this.defense_power < 0) {
+            this.defense_power = 0;
+        }
+        
+        if (this.defense_power != 0) { 
+            updateDefensePower();
+        } else {
+            // TODO: destroy card gui
+        }
+    }
+    
+    public final void setGameComponent(AbstractGameComponent agc) {
+        this.game_component = agc;
+    }
+    
+    /*
+    public final void moveTo(AbstractGameComponent component) {
+        card_component.removeCard(attack_power);
+        
+    }*/
+    
+    public final void destroy() {
+        
+        /* TO DO: remove GUI card element*/
+        
+    }
+    
     public final void setElement(Element card_element) {
         this.card_element = card_element;
     }
-    
 }

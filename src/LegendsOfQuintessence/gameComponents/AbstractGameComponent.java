@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package items;
+package LegendsOfQuintessence.gameComponents;
 
+import LegendsOfQuintessence.card.AbstractCard;
 import java.util.HashMap;
 import java.util.Map;
-import player.Player;
+import LegendsOfQuintessence.player.Player;
 
 /** A gener
  *

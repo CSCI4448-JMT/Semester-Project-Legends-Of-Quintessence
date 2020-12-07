@@ -1,10 +1,10 @@
-package player;
+package LegendsOfQuintessence.player;
 
-import gameplay.Game;
-import items.AbstractCard;
-import items.Board;
-import items.Field;
-import items.Hand;
+import LegendsOfQuintessence.gameplay.Game;
+import LegendsOfQuintessence.card.AbstractCard;
+import LegendsOfQuintessence.gameComponents.Board;
+import LegendsOfQuintessence.gameComponents.Field;
+import LegendsOfQuintessence.gameComponents.Hand;
 
 public class Player {
     private String id;              // player id (GUI-related)

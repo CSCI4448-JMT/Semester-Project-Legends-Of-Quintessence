@@ -1,6 +1,6 @@
-package player;
+package LegendsOfQuintessence.player;
 
-import gameplay.Game;
+import LegendsOfQuintessence.gameplay.Game;
 
 /*
 *  */

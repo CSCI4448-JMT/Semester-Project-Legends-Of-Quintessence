@@ -1,7 +1,7 @@
-package gameplay;
+package LegendsOfQuintessence.gameplay;
 
 import java.lang.Math;
-import player.Player;
+import LegendsOfQuintessence.player.Player;
 
 public class Game {
     Player player1;
