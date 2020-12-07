@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
+    <useStyles filename="nifty-default-styles.xml"/>
+    <useControls filename="nifty-default-controls.xml"/>
+    
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Board -->
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
+    <screen id="Board" controller="LegendsOfQuintessence.Board">
+        <layer id="background" childLayout="vertical" align="center">
+              <image filename="Interface/Player1Forest.jpg" height="50%" width="100%"></image>
+              <image filename="Interface/Player2Forest.jpg" height="50%" width="100%"></image>
+        </layer>
+
+        <layer id="foreground" childLayout="vertical">      
+            <panel id="Player1_Portion" height="50%" width="100%" align="center" childLayout="vertical">
+                <panel id="Player1_BaseHand_Portion" height="40%" width="100%" padding="10px" align="center" childLayout="horizontal">                
+                    
+                    <panel id = "Player1_Stats_Left" height="100%" width="20%" padding="5px" align="center" childLayout="vertical">
+                        
+                        <panel id="Player1_EndTurn" height="20%" width="20%" padding="5px" align="center" childLayout="vertical">
+                            <control name="button" label="EndTurn" id="EndTurnButton" align="center" valign="center">
+                            </control> 
+                        </panel>
+                        
+                        <panel id="Player1_baseInfo" height="80%" width="100%" padding="5px" align="center" childLayout="vertical">
+                            <text id ="Player1_baseInfo_label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" 
+                                  text="\#ff9900#Player 1 Base Info" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+                        </panel>
+                    </panel>
+
+                    <panel id="Player1_inHand" height="100%" width="80%" childLayout="horizontal" >
+                        <interact onClickMouseMove="drag()" onRelease="dragStop()"/>
+
+                            <control id="MyDraggable1" name="draggable1" backgroundColor="#CD5C5C" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#000000" valign="center" height= "50%" width="20%" />
+                            </control>
+
+                            <control id="MyDraggable2" name="draggable2" backgroundColor="#F08080" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
+                            </control>
+                            <control id="MyDraggable3" name="draggable3" backgroundColor="#FA8072" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
+                            </control>
+                            <control id="MyDraggable4" name="draggable4" backgroundColor="#E9967A" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
+                            </control>
+                            <control id="MyDraggable5" name="draggable5" backgroundColor="#FFA07A" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
+                            </control>
+                    </panel>
+                </panel> 
+                
+                <panel id="Player1_inPlay" height="100%" width="100%" padding="10px" valign="center" childLayout="horizontal" visibleToMouse="true">
+                     <control id="MyDroppable1" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                     <control id="MyDroppable2" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                    <control id="MyDroppable3" name="droppable" padding="10%" height="60%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                     <control id="MyDroppable4" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                     <control id="MyDroppable5" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                </panel>  
+                
+            </panel>
+            
+            <panel id="Player2_Portion" height="50%" width="100%" align="center" childLayout="vertical">
+                
+                <panel id="Player2_inPlay" height="60%" width="100%" padding="10px" valign="center" childLayout="horizontal" visibleToMouse="true">
+                    <control id="MyDroppable1" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
+                        <effect>
+                            <onActive name="border" post="true" color="#222f" border="1px" />
+                        </effect>
+                        <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                    
+                    <control id="MyDroppable2" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
+                        <effect>
+                            <onActive name="border" post="true" color="#222f" border="1px" />
+                        </effect>
+                        <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                    
+                    <control id="MyDroppable3" name="droppable" padding="10%" height="100%" align="center" valign="top" visibleToMouse="true">
+                        <effect>
+                            <onActive name="border" post="true" color="#222f" border="1px" />
+                        </effect>
+                        <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                    
+                     <control id="MyDroppable4" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
+                        <effect>
+                            <onActive name="border" post="true" color="#222f" border="1px" />
+                        </effect>
+                        <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                    
+                     <control id="MyDroppable5" name="droppable" padding="10%" height="100%" width="20%" align="center" valign="top" visibleToMouse="true">
+                        <effect>
+                            <onActive name="border" post="true" color="#222f" border="1px" />
+                        </effect>
+                        <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                    
+                </panel>  
+                
+                <panel id="Player2_BaseHand_Portion" height="40%" width="100%" padding="10px" align="center" childLayout="horizontal">                
+                    
+                    <panel id = "Player2_Stats_Left" height="100%" width="20%" padding="5px" align="center" childLayout="vertical">
+                        <panel id="Player2_baseInfo" height="80%" width="100%" padding="5px" align="center" childLayout="vertical">
+                            <text id ="Player2_baseInfo_label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" 
+                                  text="\#ff9900#Player 2 Base Info" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+                        </panel>
+                        
+                        <panel id="Player2_EndTurn" height="20%" width="20%" padding="5px" align="center" childLayout="vertical">
+                            <control name="button" label="EndTurn2" id="EndTurnButton2" align="center" valign="center">
+                            </control> 
+                        </panel>
+                        
+                        
+                        
+                    </panel>
+
+                    <panel id="Player2_inHand" height="100%" width="80%" childLayout="horizontal" >
+                        <interact onClickMouseMove="drag()" onRelease="dragStop()"/>
+
+                            <control id="MyDraggable1" name="draggable1" backgroundColor="#CD5C5C" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#000000" valign="center" height= "50%" width="20%" />
+                            </control>
+
+                            <control id="MyDraggable2" name="draggable2" backgroundColor="#F08080" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
+                            </control>
+                            <control id="MyDraggable3" name="draggable3" backgroundColor="#FA8072" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
+                            </control>
+                            <control id="MyDraggable4" name="draggable4" backgroundColor="#E9967A" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
+                            </control>
+                            <control id="MyDraggable5" name="draggable5" backgroundColor="#FFA07A" padding="5px" height="80%" width="20%" childlayout="center">
+                                <text text="Drag Me!" color="#eeef" valign="center" height= "50%" width="20%" />
+                            </control>
+                    </panel>
+                </panel> 
+
+            </panel>
+        </layer>
+    </screen> 
+</nifty>
+

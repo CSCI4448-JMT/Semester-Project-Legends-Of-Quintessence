@@ -1,6 +1,8 @@
 package LegendsOfQuintessence;
 
+
 import com.jme3.app.SimpleApplication;
+import com.jme3.system.AppSettings;
 import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.KeyInput;
@@ -24,15 +26,33 @@ import com.jme3.scene.shape.Box;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jme3.niftygui.NiftyJmeDisplay;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.dynamic.PanelCreator;
+import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.screen.Screen;
+import de.lessvoid.nifty.screen.ScreenController;
+
 /**
  * This is the Main Class of your Game. You should only do initialization here.
  * Move your Logic into AppStates or Controls
  * @author normenhansen
  */
 public class LegendsOfQuintessence extends SimpleApplication {
-
+    
+    private Nifty nifty;
+    private StartScreen startScreen = new StartScreen();
+    
     public static void main(String[] args) {
+        //Needed to change the Window Title to LoQ & get rid of the JMonkey pop-up
+        AppSettings settings = new AppSettings(true);
+        settings.setTitle("Legends Of Quintessence");
+        settings.setWidth(1024);
+        settings.setHeight(768);
+        
         LegendsOfQuintessence app = new LegendsOfQuintessence();
+        app.setShowSettings(false); //Needed to change the Window Title to LoQ & get rid of the JMonkey pop-up
+        app.setSettings(settings); //Needed to change the Window Title to LoQ
         app.start();
     }
             
@@ -40,38 +60,25 @@ public class LegendsOfQuintessence extends SimpleApplication {
     protected Spatial card2;
     protected Spatial card3;
     
-    @Override
+    //@Override
     public void simpleInitApp() {
         initScene();
-       
-        DragControlManager dragController = new DragControlManager(this.inputManager, this.cam, this.rootNode);
-       
-        List<DropContainer> board_row = makeRow(0);
-        List<DropContainer> field_row = makeRow(7);
-                
-        card = makeCard(0,-7,0);
-        card2 = makeCard(5,-7,0);
-        card3 = makeCard(-5,-7,0);
         
-        DragDropControl c = new DragDropControl(dragController);
-        c.addDropContainers(board_row);
-        c.addDropContainers(field_row);
-        //c.removeDropContainers();
-        //c.addDropContainers(board_row);
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(this.assetManager, this.inputManager, this.audioRenderer, this.guiViewPort);
+        this.nifty = niftyDisplay.getNifty();
+        this.nifty.fromXml("Interface/StartScreen.xml", "start", new ScreenController[]{this.startScreen});
+        this.startScreen.setGameState(new GameState());
+        this.guiViewPort.addProcessor(niftyDisplay);
+        this.inputManager.setCursorVisible(true);
+        this.flyCam.setEnabled(false); //enables mouse movement on screen
+        this.setDisplayStatView(false); //gets rid of StatView box
+        this.setDisplayFps(false); //gets rid of FPS onscreen
         
-        DragDropControl c2 = c.clone();
-        DragDropControl c3 = c.clone();
-        
-        card.addControl(c);
-        card2.addControl(c2);
-        card3.addControl(c3);
     }
 
     private void initScene() {
         viewPort.setBackgroundColor(ColorRGBA.White);
-        flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
-        inputManager.setCursorVisible(true); // show cursor
-        
+       
         cam.setLocation(new Vector3f(0f, 0f, 40f));
         
         DirectionalLight sun = new DirectionalLight();
@@ -137,7 +144,6 @@ public class LegendsOfQuintessence extends SimpleApplication {
         
         return dc;
     }
-    
     
     
     @Override
