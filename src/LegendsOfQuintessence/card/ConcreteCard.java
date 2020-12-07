@@ -5,6 +5,14 @@
  */
 package LegendsOfQuintessence.card;
 
+
+import LegendsOfQuintessence.card.AbstractCard;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.Parameters;
+import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.input.NiftyInputEvent;
+import de.lessvoid.nifty.screen.Screen;
+
 /**
  *
  * @author JMT

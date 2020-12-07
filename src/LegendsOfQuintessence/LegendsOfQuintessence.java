@@ -32,6 +32,8 @@ import de.lessvoid.nifty.controls.dynamic.PanelCreator;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import LegendsOfQuintessence.gameplay.Game;
+import LegendsOfQuintessence.player.Player;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -91,59 +93,6 @@ public class LegendsOfQuintessence extends SimpleApplication {
         rootNode.addLight(al);
     }
  
-    // USE FOR TESTING ONLY
-    private Spatial makeCard(float x, float y, float z) {
-        Box b = new Box(2, 3, 0.1f);
-        Geometry geom = new Geometry("Box", b);
-
-        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        mat.setBoolean("UseMaterialColors", true);
-        ColorRGBA color = ColorRGBA.randomColor();
-        
-        mat.setColor("Ambient", color);
-        mat.setColor("Diffuse", color);
-        geom.setMaterial(mat);
-        
-        geom.setLocalTranslation(x,y,z);
-        rootNode.attachChild(geom);
-        
-        return geom;
-    }
-    
-    // USE FOR TESTING ONLY
-    private List<DropContainer> makeRow (float y) {
-        float width = 5;
-        
-        ArrayList slots = new ArrayList(); 
-        
-        for(int i = -2; i <=2; i++) {
-            DropContainer slot = makeSlot(i * width, y, 0);
-            slots.add(slot);
-        }
-        
-        return slots;
-    }
-    
-    // USE FOR TESTING ONLY
-    private DropContainer makeSlot(float x, float y, float z) {
-        Box b = new Box(2, 3, 0.01f);
-        Geometry geom = new Geometry("Box", b);
-
-        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
-        mat.setBoolean("UseMaterialColors", true);
-        ColorRGBA color = ColorRGBA.Gray;
-        
-        mat.setColor("Ambient", color);
-        mat.setColor("Diffuse", color);
-        geom.setMaterial(mat);
-        
-        geom.setLocalTranslation(x,y,z);
-        
-        DropContainer dc = new DropContainer(geom);
-        rootNode.attachChild(geom);
-        
-        return dc;
-    }
     
     
     @Override
