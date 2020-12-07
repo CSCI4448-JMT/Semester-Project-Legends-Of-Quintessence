@@ -14,7 +14,7 @@ import LegendsOfQuintessence.player.Player;
  *
  * @author JMT
  */
-public abstract class AbstractGameComponent {
+public abstract class AbstractGameComponent2 {
     protected String name;
     
     protected Player player;

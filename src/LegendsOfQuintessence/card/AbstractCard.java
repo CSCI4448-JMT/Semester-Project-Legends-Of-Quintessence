@@ -5,7 +5,7 @@
  */
 package LegendsOfQuintessence.card;
 
-import LegendsOfQuintessence.gameComponents.AbstractGameComponent;
+import LegendsOfQuintessence.gameComponents.AbstractGameComponent2;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.ElementBuilder;
@@ -30,7 +30,7 @@ import java.util.jar.Attributes;
  * @author Rashed
  */
 public class AbstractCard {
-    protected AbstractGameComponent game_component;
+    protected AbstractGameComponent2 game_component;
     
     protected Integer attack_power;
     protected Integer defense_power;
@@ -180,7 +180,7 @@ public class AbstractCard {
         }
     }
     
-    public final void setGameComponent(AbstractGameComponent agc) {
+    public final void setGameComponent(AbstractGameComponent2 agc) {
         this.game_component = agc;
     }
     

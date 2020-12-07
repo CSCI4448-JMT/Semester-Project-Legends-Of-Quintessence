@@ -13,7 +13,7 @@ import LegendsOfQuintessence.player.Player;
  *
  * @author JMT
  */
-public class Board extends AbstractGameComponent {
+public class Board extends AbstractGameComponent2 {
     
     public Board(Player player) {
         this.name = player.getId() + "-board";

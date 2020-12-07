@@ -12,7 +12,7 @@ import LegendsOfQuintessence.player.Player;
  *
  * @author JMT
  */
-public class Field extends AbstractGameComponent {
+public class Field extends AbstractGameComponent2 {
     
     public Field(Player player) {
         this.name = player.getId() + "-field";

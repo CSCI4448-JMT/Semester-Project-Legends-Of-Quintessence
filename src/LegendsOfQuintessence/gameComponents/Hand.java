@@ -13,7 +13,7 @@ import LegendsOfQuintessence.player.Player;
  *  with player resources, and are updated with cards from the player's Deck
  * @author JMT
  */
-public class Hand extends AbstractGameComponent {
+public class Hand extends AbstractGameComponent2 {
     
     public Hand(Player player) {
         this.name = player.getId() + "-hand";
