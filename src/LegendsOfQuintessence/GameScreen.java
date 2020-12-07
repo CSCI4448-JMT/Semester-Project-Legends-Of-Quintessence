@@ -59,11 +59,13 @@ public class GameScreen implements ScreenController{
         
         Screen screen = nifty.getCurrentScreen();
         
-        PlayerElementBuilder p1Builder = new PlayerElementBuilder(nifty, screen, player1);
+        PlayerElementBuilder p1Builder = new PlayerElementBuilder(
+                nifty, screen, player1, "Player2");
         p1Builder.attachElements();
         p1Builder.buildCardsAndAttach();
         
-        PlayerElementBuilder p2Builder = new PlayerElementBuilder(nifty, screen, player2);
+        PlayerElementBuilder p2Builder = new PlayerElementBuilder(
+                nifty, screen, player2, "Player1");
         p2Builder.attachElements();
         p2Builder.buildCardsAndAttach();
     }

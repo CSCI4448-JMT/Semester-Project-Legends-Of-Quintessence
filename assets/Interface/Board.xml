@@ -46,12 +46,12 @@
                         <panel id="Player1_deck_panel" heigt="100%" 
                                    width="75%" align="center"
                                 childLayout="center">
-                                <control id="Player1-deck" name="droppable" 
+<!--                                <control id="Player1-deck" name="droppable" 
                                          backgroundImage="Textures/deck-bg.jpg" 
                                          padding="5px" height="80%" 
                                          width="100%" childlayout="center"
                                         align="center">                               
-                                </control>
+                                </control>-->
                             </panel>
                     </panel>
                 </panel> 
@@ -69,19 +69,19 @@
                             </effect>
                             <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
-                    <control id="Player1-inPlay2" name="droppable" padding="10%" height="60%" align="center" valign="top" visibleToMouse="true">
-                            <effect>
-                                <onActive name="border" post="true" color="#222f" border="1px" />
-                            </effect>
-                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
-                    </control>
-                     <control id="Player1-inPlay3" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                    <control id="Player1-inPlay3" name="droppable" padding="10%" height="60%" align="center" valign="top" visibleToMouse="true">
                             <effect>
                                 <onActive name="border" post="true" color="#222f" border="1px" />
                             </effect>
                             <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
                      <control id="Player1-inPlay4" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                            <effect>
+                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            </effect>
+                            <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
+                    </control>
+                     <control id="Player1-inPlay5" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
                             <effect>
                                 <onActive name="border" post="true" color="#222f" border="1px" />
                             </effect>
@@ -162,12 +162,12 @@
                         <panel id="Player2_deck_panel" heigt="100%" 
                                width="75%" align="center"
                             childLayout="center">
-                            <control id="Player2-deck" name="droppable" 
+<!--                            <control id="Player2-deck" name="droppable" 
                                      backgroundImage="Textures/deck-bg.jpg" 
                                      padding="5px" height="80%" 
                                      width="100%" childlayout="center"
                                     align="center">                               
-                            </control>
+                            </control>-->
                         </panel>
                     </panel>
                 </panel> 

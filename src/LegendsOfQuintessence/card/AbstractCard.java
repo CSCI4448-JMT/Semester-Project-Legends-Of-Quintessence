@@ -39,7 +39,7 @@ public class AbstractCard {
     protected Integer resource_req;
     protected String cardAbstractId;
     
-    protected static Integer id = 0;
+    private Integer id = 0;
     
     private Element card_element; // card element to be stored here, whenever it is built in Nifty screen.
     protected String image_file;
