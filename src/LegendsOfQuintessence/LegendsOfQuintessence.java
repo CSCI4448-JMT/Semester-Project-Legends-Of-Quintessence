@@ -49,6 +49,8 @@ public class LegendsOfQuintessence extends SimpleApplication {
         //Needed to change the Window Title to LoQ & get rid of the JMonkey pop-up
         AppSettings settings = new AppSettings(true);
         settings.setTitle("Legends Of Quintessence");
+        settings.setWidth(1024);
+        settings.setHeight(768);
         
         LegendsOfQuintessence app = new LegendsOfQuintessence();
         app.setShowSettings(false); //Needed to change the Window Title to LoQ & get rid of the JMonkey pop-up
@@ -73,20 +75,12 @@ public class LegendsOfQuintessence extends SimpleApplication {
         this.flyCam.setEnabled(false); //enables mouse movement on screen
         this.setDisplayStatView(false); //gets rid of StatView box
         this.setDisplayFps(false); //gets rid of FPS onscreen
-
-        Player p1 = new Player("p1","Jack");
-        Player p2 = new Player("p2","Jill");
-
-        Game g = new Game(p1, p2);
-        g.start();
         
     }
 
     private void initScene() {
         viewPort.setBackgroundColor(ColorRGBA.White);
-        //flyCam.setEnabled(false);            // turn off fly cam (issue with drag and drop)
-        //inputManager.setCursorVisible(true); // show cursor
-        
+       
         cam.setLocation(new Vector3f(0f, 0f, 40f));
         
         DirectionalLight sun = new DirectionalLight();

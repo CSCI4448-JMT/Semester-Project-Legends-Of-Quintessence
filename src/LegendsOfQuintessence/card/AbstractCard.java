@@ -7,7 +7,9 @@ package LegendsOfQuintessence.card;
 
 import LegendsOfQuintessence.gameComponents.AbstractGameComponent2;
 
+
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.ControlBuilder;
 import de.lessvoid.nifty.builder.ElementBuilder;
 import de.lessvoid.nifty.builder.ImageBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
@@ -35,6 +37,9 @@ public class AbstractCard {
     protected Integer attack_power;
     protected Integer defense_power;
     protected Integer resource_req;
+    protected String cardAbstractId;
+    
+    protected static Integer id = 0;
     
     private Element card_element; // card element to be stored here, whenever it is built in Nifty screen.
     protected String image_file;
@@ -49,12 +54,15 @@ public class AbstractCard {
         }
     }
     
-    public ElementBuilder getCardBuilder() {
+    public DraggableBuilder cardBuilder() {
+        id += 1;
+        
         final Color color = Color.randomColor();
         
-        DraggableBuilder DB = new DraggableBuilder() {{
-            height("400px");
-            width("250px");
+        DraggableBuilder DB = new DraggableBuilder(id.toString()) {{
+            valignCenter();
+            height("150px");
+            width("85px");
             //backgroundColor("#f00f");
             style("nifty-panel-simple");
             childLayoutVertical();

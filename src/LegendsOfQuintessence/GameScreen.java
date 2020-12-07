@@ -9,14 +9,18 @@ import LegendsOfQuintessence.card.ConcreteCard;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.builder.ElementBuilder;
+import de.lessvoid.nifty.builder.LayerBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
+import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
+import de.lessvoid.nifty.controls.dragndrop.DraggableControl;
 import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dynamic.PanelCreator;
 import de.lessvoid.nifty.controls.dynamic.TextCreator;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.events.NiftyMousePrimaryClickedEvent;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
+import de.lessvoid.nifty.screen.DefaultScreenController;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.Color;
@@ -30,6 +34,15 @@ public class GameScreen implements ScreenController{
     private Nifty nifty;
     private GameState gameState;
     
+    public GameScreen(Nifty n) {
+        nifty = n;
+    }
+    
+    public GameScreen(Nifty n, GameState gs) {
+        nifty = n;
+        gameState = gs;
+    }
+    
 //Binds this ScreenController to a screen,
     @Override
     public void bind(Nifty nifty, Screen screen) {
@@ -42,9 +55,16 @@ public class GameScreen implements ScreenController{
         System.out.println("Entering game screen");
         
         Screen screen = nifty.getCurrentScreen();
-        ConcreteCard c = new ConcreteCard();
-        ElementBuilder eb = c.getCardBuilder();
-        Element card_element = eb.build(nifty, screen, screen.findElementById("GLayer0") );    
+        
+        ConcreteCard c = new ConcreteCard("p1-card");
+        DraggableBuilder eb = (DraggableBuilder) c.cardBuilder();
+        
+        Element card_element = eb.build(nifty, screen, screen.findElementById("MyDroppable1-p1")); 
+        
+        eb = c.cardBuilder();    
+        Element card_element2 = eb.build(nifty, screen, screen.findElementById("MyDroppable1-p1"));
+        
+        card_element.hide();
         
         c.setElement(card_element);
         c.setDefensePower(7);
@@ -62,6 +82,42 @@ public class GameScreen implements ScreenController{
     
     public void setGameState(GameState gameState){
         this.gameState = gameState;
+    }
+    
+    /* 
+    create the game screen with the following layers:
+    - background
+    - game component layer
+    */
+    public Screen gameScreenBuilder() {
+        
+        return new ScreenBuilder("game screen") {{
+            controller(new DefaultScreenController());
+            
+            layer(new LayerBuilder("background") {{
+                childLayoutVertical();
+            }});
+            
+            layer(new LayerBuilder("game component layer") {{ 
+                childLayoutVertical();
+                
+                panel(new PanelBuilder("player 1 panel") {{
+                    childLayoutVertical();
+                    width("100%");
+                    height("50%");
+                    backgroundColor("#ff8080");
+                }});
+
+                panel(new PanelBuilder("player 2 panel") {{
+                    childLayoutVertical();
+                    width("100%");
+                    height("50%");
+                    backgroundColor("#4da6ff");
+                }});
+               
+            }});
+            
+        }}.build(nifty);
     }
     
 }
