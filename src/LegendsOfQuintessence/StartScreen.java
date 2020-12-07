@@ -5,7 +5,9 @@
  */
 package LegendsOfQuintessence;
 
+import LegendsOfQuintessence.card.AbstractCard;
 import LegendsOfQuintessence.card.CardDropFilter;
+import LegendsOfQuintessence.card.ConcreteCard;
 
 import LegendsOfQuintessence.gameComponents.Player1Board;
 import LegendsOfQuintessence.gameComponents.Player1InPlay;
@@ -23,6 +25,7 @@ import de.lessvoid.nifty.builder.LayerBuilder;
 import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.controls.DroppableDropFilter;
 import de.lessvoid.nifty.controls.dragndrop.DroppableControl;
+import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.events.NiftyMousePrimaryClickedEvent;
 import de.lessvoid.nifty.screen.DefaultScreenController;
 import de.lessvoid.nifty.screen.Screen;
@@ -68,9 +71,10 @@ public class StartScreen implements ScreenController{
     
     @NiftyEventSubscriber(id="StartButton")
     public void onClick(String id, NiftyMousePrimaryClickedEvent event) {
-        nifty.fromXml("Interface/Board.xml", "Board", this);
+        nifty.fromXml("Interface/Board.xml", "Board", new ScreenController[]{new GameScreen(nifty)});
         nifty.gotoScreen("Board"); 
-        //final AbstractCard defenseCard1 = new ConcreteCard("p1-card");
+        
+        final AbstractCard defenseCard1 = new ConcreteCard("p1-card");
         //final AbstractCard defenseCard2 = new ConcreteCard("p2-card");
         
         // Player 1 Set-up
@@ -87,7 +91,7 @@ public class StartScreen implements ScreenController{
         final Player2Base p2Base = new Player2Base();
         
         
-        final CardGameScreen cgs = new CardGameScreen(nifty, gameState);
+        final GameScreen cgs = new GameScreen(nifty, gameState);
         
  /* 
        Screen s = new ScreenBuilder("Hello Nifty Screen"){{

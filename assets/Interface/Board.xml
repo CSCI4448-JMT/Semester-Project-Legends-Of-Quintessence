@@ -6,7 +6,7 @@
     <!-- +++++++++++++++++++++++++++++++++++++++ -->
     <!-- Board -->
     <!-- +++++++++++++++++++++++++++++++++++++++ -->
-    <screen id="Board" controller="LegendsOfQuintessence.Board">
+    <screen id="Board" controller="LegendsOfQuintessence.CardGameScreen">
         <layer id="background" childLayout="vertical" align="center">
               <image filename="Interface/Player1Forest.jpg" height="50%" width="100%"></image>
               <image filename="Interface/Player2Forest.jpg" height="50%" width="100%"></image>
@@ -52,13 +52,13 @@
                 </panel> 
                 
                 <panel id="Player1_inPlay" height="100%" width="100%" padding="10px" valign="center" childLayout="horizontal" visibleToMouse="true">
-                     <control id="MyDroppable1" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                     <control id="MyDroppable1-p1" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
                             <effect>
-                                <onActive name="border" post="true" color="#222f" border="1px" />
+                            <onActive name="border" post="true" color="#222f" border="1px" />
                             </effect>
                             <text text="Drop Here!" color="#eeef" valign="center" height= "30%" width="100%" />
                     </control>
-                     <control id="MyDroppable2" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
+                     <control id="MyDroppable2-p1" name="droppable" padding="10%" height="60%" width="20%" align="center" valign="top" visibleToMouse="true">
                             <effect>
                                 <onActive name="border" post="true" color="#222f" border="1px" />
                             </effect>

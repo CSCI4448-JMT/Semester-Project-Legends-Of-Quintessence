@@ -34,6 +34,8 @@ public abstract class AbstractCard {
     protected Integer resource_req;
     protected String cardAbstractId;
     
+    protected static Integer id = 0;
+    
     private Element card_element; // card element to be stored here, whenever it is built in Nifty screen.
     protected String image_file;
     
@@ -47,10 +49,12 @@ public abstract class AbstractCard {
         }
     }
     
-    public ControlBuilder cardBuilder() {
+    public DraggableBuilder cardBuilder() {
+        id += 1;
+        
         final Color color = Color.randomColor();
         
-        DraggableBuilder DB = new DraggableBuilder(cardAbstractId) {{
+        DraggableBuilder DB = new DraggableBuilder(id.toString()) {{
             valignCenter();
             height("150px");
             width("85px");
