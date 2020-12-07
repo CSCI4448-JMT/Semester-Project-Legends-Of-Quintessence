@@ -13,6 +13,7 @@ import de.lessvoid.nifty.builder.LayerBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
+import de.lessvoid.nifty.controls.dragndrop.DraggableControl;
 import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dynamic.PanelCreator;
 import de.lessvoid.nifty.controls.dynamic.TextCreator;
@@ -29,11 +30,15 @@ import java.util.List;
  *
  * @author JMT
  */
-public class CardGameScreen implements ScreenController{
+public class GameScreen implements ScreenController{
     private Nifty nifty;
     private GameState gameState;
     
-    public CardGameScreen(Nifty n, GameState gs) {
+    public GameScreen(Nifty n) {
+        nifty = n;
+    }
+    
+    public GameScreen(Nifty n, GameState gs) {
         nifty = n;
         gameState = gs;
     }
@@ -50,9 +55,16 @@ public class CardGameScreen implements ScreenController{
         System.out.println("Entering game screen");
         
         Screen screen = nifty.getCurrentScreen();
+        
         ConcreteCard c = new ConcreteCard("p1-card");
-        ElementBuilder eb = c.cardBuilder();
-        Element card_element = eb.build(nifty, screen, screen.findElementById("GLayer0") );    
+        DraggableBuilder eb = (DraggableBuilder) c.cardBuilder();
+        
+        Element card_element = eb.build(nifty, screen, screen.findElementById("MyDroppable1-p1")); 
+        
+        eb = c.cardBuilder();    
+        Element card_element2 = eb.build(nifty, screen, screen.findElementById("MyDroppable1-p1"));
+        
+        card_element.hide();
         
         c.setElement(card_element);
         c.setDefensePower(7);
