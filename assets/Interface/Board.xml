@@ -23,9 +23,12 @@
                             </control> 
                         </panel>
                         
-                        <panel id="Player1_baseInfo" height="60%" width="100%" padding="5px" align="center" childLayout="vertical">
-                            <text id ="Player1_baseInfo_label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" 
-                                  text="\#ff9900#Player 1 Base Info" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+                        <panel id="Player1_baseInfo" height="30%" width="100%" padding="5px" align="center" childLayout="vertical">
+                            <control id ="Player1_baseHealth" name ="label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" />
+                        </panel>
+                        
+                        <panel id="Player1_ResourceInfo" height="30%" width="100%" padding="5px" align="center" childLayout="vertical">
+                            <control id ="Player1_numResources" name ="label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" />
                         </panel>
                     </panel>
 
@@ -134,9 +137,12 @@
                 <panel id="Player2_BaseHand_Portion" height="40%" width="100%" padding="10px" align="center" childLayout="horizontal">                
                     
                     <panel id = "Player2_Stats_Left" height="100%" width="20%" padding="5px" align="center" childLayout="vertical">
-                        <panel id="Player2_baseInfo" height="80%" width="100%" padding="5px" align="center" childLayout="vertical">
-                            <text id ="Player2_baseInfo_label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" 
-                                  text="\#ff9900#Player 2 Base Info" font="Interface/Fonts/Default.fnt" textHAlign="center" textVAlign="center" />
+                        <panel id="Player2_baseInfo" height="30%" width="100%" padding="5px" align="center" childLayout="vertical">
+                            <control id ="Player2_baseHealth" name ="label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" />
+                        </panel>
+                        
+                        <panel id="Player2_ResourceInfo" height="30%" width="100%" padding="5px" align="center" childLayout="vertical">
+                            <control id ="Player2_numResources" name ="label" style = "nifty-label" backgroundColor="#000f" height="100%" width="70%" />
                         </panel>
                         
                         <panel id="Player2_EndTurn" height="20%" width="20%" padding="5px" align="center" childLayout="vertical">
