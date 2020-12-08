@@ -105,36 +105,143 @@ public class Player {
         /* TODO: update the base health graphic here. */
     }
 
+    
+    // return card element in field at given position    
+    public Element getFieldCardAt(Integer position) {
+        List<DroppableControl> inPlay = this.player_elements.getInPlay();
+        
+        DraggableControl cardControl = null;
+        
+        // retrieve the draggable control at given position
+        int num = 0;        
+        for (DroppableControl slot : inPlay) {
+            if (num == position) {
+                cardControl = slot.getDraggable();
+            }
+            num++;
+        }
+        
+        // get the element associated to the control
+        Element card = null;
+        if (cardControl != null) {
+            card = cardControl.getElement();
+        }
+        
+        return card;
+    }
+    
+    // return card element in board at given position
+    public Element getBoardCardAt(Integer position) {
+        List<DroppableControl> inPlay = this.player_elements.getBoard();
+        
+        DraggableControl cardControl = null;
+        
+        // retrieve the draggable control at given position
+        int num = 0;
+        for (DroppableControl slot : inPlay) {
+            if (num == position) {
+                cardControl = slot.getDraggable();
+            }
+            num++;
+        }
+        
+        // get the element associated to the control
+        Element card = null;
+        if (cardControl != null) {
+            card = cardControl.getElement();
+        }
+        
+        return card;
+    }
+    
+    // return slot element in board at given position
+    public Element getBoardSlotAt(Integer position) {
+        
+        List<DroppableControl> board = this.player_elements.getBoard();
+        
+        Element droppable_element = null;
+        
+        int num = 0;
+        for (DroppableControl slot : board) {
+            if (num == position) {
+                droppable_element = slot.getElement();
+            }
+            num++;    
+        }
+        
+        return droppable_element;
+    }
+    
+    // get the attack power from the card element
+    private Integer getAttackPower(Element card_element) {
+        Element text_element = card_element.findElementById("attack-power-text");
+        
+        String attack_power_text = "-1";
+        if (text_element != null) {
+            attack_power_text = text_element.getRenderer(TextRenderer.class).getOriginalText();
+        }
+        
+        return Integer.parseInt(attack_power_text);
+    }
+    
+    // get the defend power from the card element
+    private Integer getDefendPower(Element card_element) {
+        Element text_element = card_element.findElementById("defend-power-text");
+        
+        String defend_power_text = "-1";
+        if (text_element != null) {
+            defend_power_text = text_element.getRenderer(TextRenderer.class).getOriginalText();
+        }
+        
+        return Integer.parseInt(defend_power_text);
+    }
+    
+    private void decrementDefensePower(Element card_element, Integer decrement) {
+        Element text_element = card_element.findElementById("defend-power-text");
+        
+        if (text_element != null) {
+            Integer defend_power = getDefendPower(card_element);
+            
+            if (defend_power != -1) {
+                defend_power -= decrement;
+
+                // set defend power to 0, if decrmenting makes it goes below 0
+                if (defend_power < 0) { defend_power = 0; }
+
+                // update the text on the card
+                text_element.getRenderer(TextRenderer.class).setText(defend_power.toString());       
+            }
+        }   
+    }
+    
     // player can combat(i.e. attack) another player
-    public void attack(Player defend_player) {
-        Field attack_field = this.field;
-        Field defend_field = defend_player.getField();    
+    public void attack(Player defend_player) { 
         
         // deal with damage-oriented aspects of combat 
         for (int i = 0; i < 5; i++) {
-            AbstractCard attack_card = attack_field.getCardAt(i);
-            AbstractCard defend_card = defend_field.getCardAt(i);
+            Element attack_card = this.getFieldCardAt(i);
+            Element defend_card = defend_player.getFieldCardAt(i);
             
             if (attack_card != null) {
-                Integer attack_damage = attack_card.getAttackPower();
+                Integer attacker_attack_power = getAttackPower(attack_card);
                 
                 
                 if (defend_card == null) {
                     // no defending card, subtract damage from base health
-                    defend_player.decrementBaseHealth(attack_damage);
+                    defend_player.decrementBaseHealth(attacker_attack_power);
                 } else {
                     // defending card, subtract damage from both cards
                  
-                    Integer defend_damage = defend_card.getAttackPower();
-                    attack_card.decrementDefensePower(defend_damage);
-                    defend_card.decrementDefensePower(attack_damage);
+                    Integer defender_attack_power = getAttackPower(defend_card);
+                    decrementDefensePower(attack_card, defender_attack_power);
+                    decrementDefensePower(defend_card, attacker_attack_power);
                     
                     // destroy cards with zero defense power left
-                    if (attack_card.getDefensePower() == 0) {
-                        attack_card.destroy();
+                    if (getDefendPower(attack_card) == 0) {
+                        attack_card.markForRemoval();
                     }
-                    if (defend_card.getDefensePower() == 0) {
-                        defend_card.destroy();
+                    if (getDefendPower(defend_card) == 0) {
+                        defend_card.markForRemoval();
                     }                    
                 }
                
@@ -150,15 +257,19 @@ public class Player {
     // move all cards from field to board
     public void resetField() {
         for (int i = 0; i < 5; i++) {
-            AbstractCard card = this.field.getCardAt(i);
+            Element card = this.getFieldCardAt(i);
             
             if (card != null) {
-                Integer empty_pos = this.board.getEmptyPosition();
-                
-                if (empty_pos != null) {
-                    this.field.removeCard(i);
-                    this.board.addCard(empty_pos, card);
-                }   
+                for (int j = 0; j < 5; j++) {
+                    // check for a conflicting card at board slot
+                    Element conflict_card = this.getBoardCardAt(j);
+                    
+                    if (conflict_card == null) { // there is no conflicting card
+                        Element board_slot = this.getBoardSlotAt(j);
+                        conflict_card.markForMove(board_slot);
+                        break;
+                    }   
+                }
             }
         }
     }
@@ -185,15 +296,7 @@ public class Player {
     public Integer getNumResources() { return this.num_resources; }
     public Integer getBaseHealth() { return this.base_health; }
     
-    public Board getBoard() {return this.board;}
-    public Field getField() {return this.field;}
-    public Hand getHand() {return this.hand;}    
-    
     public void setId(String id) {this.id = id;}
-    
-    public void setBoard(Board board) {this.board = board;}
-    public void setField(Field field) {this.field = field;}
-    public void setHand(Hand hand)    {this.hand  = hand;}
     
     public void setGame(Game game) {this.game = game;}
 }
