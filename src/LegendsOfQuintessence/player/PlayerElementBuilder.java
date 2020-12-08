@@ -50,7 +50,9 @@ public class PlayerElementBuilder {
         
         for(int i = 1; i <= 15; i++) {
             Element card = eb.build(nifty, screen, player.getDeck());
+            c.setDefensePower(10);
             eb = c.cardBuilder();
+            
             /* 
             add to player cards attribute to 
             keep track of cards active on the board

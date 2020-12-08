@@ -3,7 +3,10 @@ package LegendsOfQuintessence.player;
 import LegendsOfQuintessence.gameplay.Game;
 import LegendsOfQuintessence.card.AbstractCard;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.dragndrop.DraggableControl;
+import de.lessvoid.nifty.controls.dragndrop.DroppableControl;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
 import java.util.List;
 
@@ -61,6 +64,9 @@ public class Player {
         /* TODO: enable GUI interactions for player here and possibly show player's hand. */
         // enable all cards
         List<Element> cards = player_elements.getCards();
+        for(Element c: cards){
+            c.enable();
+        }
         
         List<Element> buttons = player_elements.getButtons();
         
@@ -181,23 +187,25 @@ public class Player {
             attack_power_text = text_element.getRenderer(TextRenderer.class).getOriginalText();
         }
         
+//        System.out.println(attack_power_text);
         return Integer.parseInt(attack_power_text);
     }
     
     // get the defend power from the card element
     private Integer getDefendPower(Element card_element) {
-        Element text_element = card_element.findElementById("defend-power-text");
+        Element text_element = card_element.findElementById("defense-power-text");
         
         String defend_power_text = "-1";
         if (text_element != null) {
             defend_power_text = text_element.getRenderer(TextRenderer.class).getOriginalText();
         }
         
+        System.out.println(defend_power_text);
         return Integer.parseInt(defend_power_text);
     }
     
     private void decrementDefensePower(Element card_element, Integer decrement) {
-        Element text_element = card_element.findElementById("defend-power-text");
+        Element text_element = card_element.findElementById("defense-power-text");
         
         if (text_element != null) {
             Integer defend_power = getDefendPower(card_element);
@@ -216,12 +224,12 @@ public class Player {
     
     // player can combat(i.e. attack) another player
     public void attack(Player defend_player) { 
+        System.out.println("resolving combat");
         
         // deal with damage-oriented aspects of combat 
         for (int i = 0; i < 5; i++) {
             Element attack_card = this.getFieldCardAt(i);
             Element defend_card = defend_player.getFieldCardAt(i);
-            
             if (attack_card != null) {
                 Integer attacker_attack_power = getAttackPower(attack_card);
                 
@@ -266,7 +274,7 @@ public class Player {
                     
                     if (conflict_card == null) { // there is no conflicting card
                         Element board_slot = this.getBoardSlotAt(j);
-                        conflict_card.markForMove(board_slot);
+                        card.markForMove(board_slot);
                         break;
                     }   
                 }
@@ -280,8 +288,15 @@ public class Player {
     }
 
     public Integer getNumFieldCards() {
-        //TODO: get field cards
-        return 1;
+        List<DroppableControl> field = player_elements.getInPlay();
+        int count = 0;
+        for(DroppableControl e: field){
+            if(e.getDraggable() != null){
+                count += 1;
+            }
+        }
+        System.out.println(count);
+        return count;
     }
     
     public Integer getNumAffordableCards() {

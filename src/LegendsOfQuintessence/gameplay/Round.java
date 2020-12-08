@@ -32,6 +32,7 @@ public class Round {
 
         this.skip_counter = 0;          
         this.combat_started = false;
+        this.combat_resolved = false;
         this.end_round_request = false; 
 
         this.attack_player = attack_player;
@@ -59,11 +60,13 @@ public class Round {
     }
 
     void nextTurn() {
-        if (checkRoundEnd()) {
-            endRound();
-        } else if (combat_started && !combat_resolved && current_player == defend_player) {
+        if (combat_started && !combat_resolved && current_player == defend_player) {
             attack_player.attack(defend_player);
             combat_resolved = true;
+        }
+        
+        if (checkRoundEnd()) {
+            endRound();
         } else {
             // TODO : REMOVE THIS TEMP COUNT STUFF, USED TO LIMIT TURN COUNT WHEN TESTING
             temp_count += 1;

@@ -68,6 +68,7 @@ public class GameScreen implements ScreenController{
         player1.buildGUI();
         player2.buildGUI();
         
+        game.start();
 //        PlayerElementBuilder p1Builder = new PlayerElementBuilder(
 //                nifty, screen, player1, "Player2");
 //        p1Builder.attachElements();
@@ -89,12 +90,12 @@ public class GameScreen implements ScreenController{
         nifty.gotoScreen("end");
     }
     
-    @NiftyEventSubscriber(id="EndTurnButton1")
+    @NiftyEventSubscriber(id="Player1-EndTurnButton")
     public void onEndTurn1(String id, NiftyMousePrimaryClickedEvent event) {
         game.endTurnRequest();
     }
     
-    @NiftyEventSubscriber(id="EndTurnButton2")
+    @NiftyEventSubscriber(id="Player2-EndTurnButton")
     public void onEndTurn2(String id, NiftyMousePrimaryClickedEvent event) {
         game.endTurnRequest();
     }

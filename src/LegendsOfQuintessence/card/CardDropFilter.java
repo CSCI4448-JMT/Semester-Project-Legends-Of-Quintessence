@@ -44,8 +44,6 @@ public class CardDropFilter implements DroppableDropFilter {
         // check if the card being dropped is opponent's card
         for(int j = 1; j <= 15; j++) {
             String curCardName = playerOpponentBaseName + "-card" + j;
-            System.out.println(draggable.getId());
-            System.out.println(curCardName);
             if(draggable.getId().equals(curCardName)){
                 canDrop = false;
             }
