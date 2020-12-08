@@ -69,6 +69,9 @@ public class GameScreen implements ScreenController{
         player1.buildGUI();
         player2.buildGUI();
         
+        tl/getfieldcards
+        game.start();
+
         //Player 1 Display Stats
         Element baseHealth1 = screen.findElementByName("Player1_baseHealth");
         LabelControl control1 = baseHealth1.getControl(LabelControl.class);
@@ -87,7 +90,7 @@ public class GameScreen implements ScreenController{
         LabelControl control4 = numResources2.getControl(LabelControl.class);
         control4.setText("# of Resources: "+ player2.getNumResources().toString());
         
-        
+       
 //        PlayerElementBuilder p1Builder = new PlayerElementBuilder(
 //                nifty, screen, player1, "Player2");
 //        p1Builder.attachElements();
@@ -109,12 +112,12 @@ public class GameScreen implements ScreenController{
         nifty.gotoScreen("end");
     }
     
-    @NiftyEventSubscriber(id="EndTurnButton1")
+    @NiftyEventSubscriber(id="Player1-EndTurnButton")
     public void onEndTurn1(String id, NiftyMousePrimaryClickedEvent event) {
         game.endTurnRequest();
     }
     
-    @NiftyEventSubscriber(id="EndTurnButton2")
+    @NiftyEventSubscriber(id="Player2-EndTurnButton")
     public void onEndTurn2(String id, NiftyMousePrimaryClickedEvent event) {
         game.endTurnRequest();
     }

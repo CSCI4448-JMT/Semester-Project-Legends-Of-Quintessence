@@ -33,6 +33,10 @@ public class Game {
     public void start() {
         System.out.printf("Player %s and %s have started the game.\n", player1.getName(), player2.getName());
 
+        //disable players by default
+        player1.disable();
+        player2.disable();
+        
         // choose attacking player randomly at start of game
         if (Math.random() < 0.5) {
             attack_player = player1;
