@@ -19,7 +19,7 @@
                     <panel id = "Player1_Stats_Left" height="100%" width="20%" padding="5px" align="center" childLayout="vertical">
                         
                         <panel id="Player1_EndTurn" height="20%" width="20%" padding="5px" align="center" childLayout="vertical">
-                            <control name="button" label="EndTurn" id="EndTurnButton" align="center" valign="center">
+                            <control name="button" label="EndTurn" id="Player1-EndTurnButton" align="center" valign="center">
                             </control> 
                         </panel>
                         
@@ -140,7 +140,7 @@
                         </panel>
                         
                         <panel id="Player2_EndTurn" height="20%" width="20%" padding="5px" align="center" childLayout="vertical">
-                            <control name="button" label="EndTurn2" id="EndTurnButton2" align="center" valign="center">
+                            <control name="button" label="EndTurn2" id="Player2-EndTurnButton" align="center" valign="center">
                             </control> 
                         </panel>
                     </panel>

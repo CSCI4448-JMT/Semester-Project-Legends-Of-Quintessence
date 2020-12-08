@@ -92,6 +92,9 @@ public class PlayerElementBuilder {
             
             player.addInPlaySlot(dc);
         }
+        
+        // get player endTurn button
+        player.addButton(screen.findElementById(player.getElementBaseName() + "-EndTurnButton"));
        
     }  
     
