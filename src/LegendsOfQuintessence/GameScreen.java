@@ -19,6 +19,7 @@ import de.lessvoid.nifty.builder.LayerBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.builder.TextBuilder;
+import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.controls.dragndrop.DraggableControl;
 import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dynamic.PanelCreator;
@@ -73,21 +74,21 @@ public class GameScreen implements ScreenController{
         game.start();
 
         //Player 1 Display Stats
-        Element baseHealth1 = screen.findElementByName("Player1_baseHealth");
-        LabelControl control1 = baseHealth1.getControl(LabelControl.class);
+        Element baseHealth1 = screen.findElementById("Player1_baseHealth");
+        Label control1 = baseHealth1.getControl(LabelControl.class);
         control1.setText("Base Health: "+ player1.getBaseHealth().toString());
         
-        Element numResources1 = screen.findElementByName("Player1_numResources");
-        LabelControl control2 = numResources1.getControl(LabelControl.class);
+        Element numResources1 = screen.findElementById("Player1_numResources");
+        Label control2 = numResources1.getControl(LabelControl.class);
         control2.setText("# of Resources: "+ player1.getNumResources().toString());
         
         //Player 2 Display Stats
-        Element baseHealth2 = screen.findElementByName("Player2_baseHealth");
-        LabelControl control3 = baseHealth2.getControl(LabelControl.class);
+        Element baseHealth2 = screen.findElementById("Player2_baseHealth");
+        Label control3 = baseHealth2.getControl(LabelControl.class);
         control3.setText("Base Health: "+ player2.getBaseHealth().toString());
         
-        Element numResources2 = screen.findElementByName("Player2_numResources");
-        LabelControl control4 = numResources2.getControl(LabelControl.class);
+        Element numResources2 = screen.findElementById("Player2_numResources");
+        Label control4 = numResources2.getControl(LabelControl.class);
         control4.setText("# of Resources: "+ player2.getNumResources().toString());
         
        
