@@ -2,12 +2,14 @@ package LegendsOfQuintessence.player;
 
 import LegendsOfQuintessence.gameplay.Game;
 import LegendsOfQuintessence.card.AbstractCard;
+import de.lessvoid.nifty.EndNotify;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.dragndrop.DraggableControl;
 import de.lessvoid.nifty.controls.dragndrop.DroppableControl;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.screen.Screen;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -21,6 +23,7 @@ public class Player {
     // Nifty GUI and Elements
     private Nifty nifty;
     private final PlayerElements player_elements;
+    static List<Element> destroyed_cards = new ArrayList();;
     
     private Game game; // player game
 
@@ -129,7 +132,7 @@ public class Player {
         
         // get the element associated to the control
         Element card = null;
-        if (cardControl != null) {
+        if (cardControl != null && !destroyed_cards.contains(card)) {
             card = cardControl.getElement();
         }
         
@@ -161,6 +164,24 @@ public class Player {
     }
     
     // return slot element in board at given position
+    public Element getFieldSlotAt(Integer position) {
+        
+        List<DroppableControl> field = this.player_elements.getInPlay();
+        
+        Element droppable_element = null;
+        
+        int num = 0;
+        for (DroppableControl slot : field) {
+            if (num == position) {
+                droppable_element = slot.getElement();
+            }
+            num++;    
+        }
+        
+        return droppable_element;
+    }
+    
+    // return slot element in board at given position
     public Element getBoardSlotAt(Integer position) {
         
         List<DroppableControl> board = this.player_elements.getBoard();
@@ -186,8 +207,6 @@ public class Player {
         if (text_element != null) {
             attack_power_text = text_element.getRenderer(TextRenderer.class).getOriginalText();
         }
-        
-//        System.out.println(attack_power_text);
         return Integer.parseInt(attack_power_text);
     }
     
@@ -200,7 +219,7 @@ public class Player {
             defend_power_text = text_element.getRenderer(TextRenderer.class).getOriginalText();
         }
         
-        System.out.println(defend_power_text);
+        System.out.printf("Defend Power: %s\n", defend_power_text);
         return Integer.parseInt(defend_power_text);
     }
     
@@ -230,40 +249,54 @@ public class Player {
         for (int i = 0; i < 5; i++) {
             Element attack_card = this.getFieldCardAt(i);
             Element defend_card = defend_player.getFieldCardAt(i);
-            if (attack_card != null) {
+            if (attack_card != null && !destroyed_cards.contains(attack_card)) {
                 Integer attacker_attack_power = getAttackPower(attack_card);
                 
+                System.out.printf("Attacker Attack Power: %d\n", attacker_attack_power);
+
                 
-                if (defend_card == null) {
+                if (defend_card == null || destroyed_cards.contains(defend_card)) {
                     // no defending card, subtract damage from base health
                     defend_player.decrementBaseHealth(attacker_attack_power);
                 } else {
                     // defending card, subtract damage from both cards
                  
                     Integer defender_attack_power = getAttackPower(defend_card);
+                    
+                    System.out.printf("Defender Attack Power: %d\n", defender_attack_power);
+
+                    System.out.println(this.getFieldSlotAt(i).getChildren());
+                    System.out.println(attack_card.getParent());
+ 
+                    System.out.println(defend_player.getFieldSlotAt(i).getChildren());
+                    System.out.println(defend_card.getParent());
+                    
                     decrementDefensePower(attack_card, defender_attack_power);
                     decrementDefensePower(defend_card, attacker_attack_power);
                     
                     // destroy cards with zero defense power left
                     if (getDefendPower(attack_card) == 0) {
                         attack_card.markForRemoval();
+                        destroyed_cards.add(attack_card);
                     }
                     if (getDefendPower(defend_card) == 0) {
                         defend_card.markForRemoval();
-                    }                    
-                }
-               
+                        destroyed_cards.add(defend_card);
+                    }
+                }              
             } 
         }
         
         // the cards left in the field must be returned to the board
-        this.resetField();
-        defend_player.resetField();
+        this.resetField(destroyed_cards);
+        defend_player.resetField(destroyed_cards);
         
     }
     
     // move all cards from field to board
-    public void resetField() {
+    public void resetField(List<Element> destroyed_cards) {
+        
+        
         for (int i = 0; i < 5; i++) {
             Element card = this.getFieldCardAt(i);
             
@@ -273,9 +306,12 @@ public class Player {
                     Element conflict_card = this.getBoardCardAt(j);
                     
                     if (conflict_card == null) { // there is no conflicting card
-                        Element board_slot = this.getBoardSlotAt(j);
-                        card.markForMove(board_slot);
-                        break;
+                        if (!destroyed_cards.contains(card)) {
+                            Element board_slot = this.getBoardSlotAt(j);
+                            
+                            card.markForMove(board_slot);
+                            break;
+                        }
                     }   
                 }
             }
@@ -292,10 +328,12 @@ public class Player {
         int count = 0;
         for(DroppableControl e: field){
             if(e.getDraggable() != null){
-                count += 1;
+                if (!destroyed_cards.contains(e.getDraggable().getElement())) {
+                    count += 1;
+                }
             }
         }
-        System.out.println(count);
+        //System.out.println(count);
         return count;
     }
     
