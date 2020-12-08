@@ -23,6 +23,7 @@ import de.lessvoid.nifty.controls.dragndrop.DraggableControl;
 import de.lessvoid.nifty.controls.dragndrop.builder.DraggableBuilder;
 import de.lessvoid.nifty.controls.dynamic.PanelCreator;
 import de.lessvoid.nifty.controls.dynamic.TextCreator;
+import de.lessvoid.nifty.controls.label.LabelControl;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.events.NiftyMousePrimaryClickedEvent;
 import de.lessvoid.nifty.elements.render.PanelRenderer;
@@ -67,6 +68,25 @@ public class GameScreen implements ScreenController{
         
         player1.buildGUI();
         player2.buildGUI();
+        
+        //Player 1 Display Stats
+        Element baseHealth1 = screen.findElementByName("Player1_baseHealth");
+        LabelControl control1 = baseHealth1.getControl(LabelControl.class);
+        control1.setText("Base Health: "+ player1.getBaseHealth().toString());
+        
+        Element numResources1 = screen.findElementByName("Player1_numResources");
+        LabelControl control2 = numResources1.getControl(LabelControl.class);
+        control2.setText("# of Resources: "+ player1.getNumResources().toString());
+        
+        //Player 2 Display Stats
+        Element baseHealth2 = screen.findElementByName("Player2_baseHealth");
+        LabelControl control3 = baseHealth2.getControl(LabelControl.class);
+        control3.setText("Base Health: "+ player2.getBaseHealth().toString());
+        
+        Element numResources2 = screen.findElementByName("Player2_numResources");
+        LabelControl control4 = numResources2.getControl(LabelControl.class);
+        control4.setText("# of Resources: "+ player2.getNumResources().toString());
+        
         
 //        PlayerElementBuilder p1Builder = new PlayerElementBuilder(
 //                nifty, screen, player1, "Player2");
