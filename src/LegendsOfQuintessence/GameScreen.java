@@ -89,5 +89,14 @@ public class GameScreen implements ScreenController{
         nifty.gotoScreen("end");
     }
     
+    @NiftyEventSubscriber(id="EndTurnButton1")
+    public void onEndTurn1(String id, NiftyMousePrimaryClickedEvent event) {
+        game.endTurnRequest();
+    }
+    
+    @NiftyEventSubscriber(id="EndTurnButton2")
+    public void onEndTurn2(String id, NiftyMousePrimaryClickedEvent event) {
+        game.endTurnRequest();
+    }
     
 }
