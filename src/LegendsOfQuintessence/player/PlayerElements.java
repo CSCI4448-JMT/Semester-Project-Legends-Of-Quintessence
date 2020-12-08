@@ -26,6 +26,7 @@ public abstract class PlayerElements {
     private List<DroppableControl> hand = new ArrayList();
     private List<DroppableControl> board = new ArrayList();
     private List<DroppableControl> inPlay = new ArrayList();
+    private List<Element> buttons = new ArrayList();
     
     
     public List<DroppableControl> getHand() {
@@ -64,6 +65,10 @@ public abstract class PlayerElements {
         deck = d;
     }
     
+    public List<Element> getCards() {
+        return cards;
+    }
+    
     public void addCard(Element card) {
         cards.add(card);
     }
@@ -78,6 +83,14 @@ public abstract class PlayerElements {
     
     public void addInPlaySlot(DroppableControl slot) {
         inPlay.add(slot);
+    }
+    
+    public List<Element> getButtons() {
+        return buttons;
+    }
+    
+    public void addButton(Element b) {
+        buttons.add(b);
     }
     
 }

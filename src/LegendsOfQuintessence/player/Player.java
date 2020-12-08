@@ -3,7 +3,9 @@ package LegendsOfQuintessence.player;
 import LegendsOfQuintessence.gameplay.Game;
 import LegendsOfQuintessence.card.AbstractCard;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
+import java.util.List;
 
 public class Player {
     private String id;              // player id (GUI-related)
@@ -58,6 +60,13 @@ public class Player {
 
         /* TODO: enable GUI interactions for player here and possibly show player's hand. */
         // enable all cards
+        List<Element> cards = player_elements.getCards();
+        
+        List<Element> buttons = player_elements.getButtons();
+        
+        for(Element b: buttons) {
+            b.enable();
+        }
     }
 
     // disable the player
@@ -66,6 +75,17 @@ public class Player {
 
         /* TODO: disable GUI interactions for player here and possibly hide player's hand. */
         // disable all cards
+        List<Element> cards = player_elements.getCards();
+        
+        for(Element c: cards){
+            c.disable();
+        }
+        
+        List<Element> buttons = player_elements.getButtons();
+        
+        for(Element b: buttons) {
+            b.disable();
+        }
     }
 
     public void incrementResources(Integer increment) {
