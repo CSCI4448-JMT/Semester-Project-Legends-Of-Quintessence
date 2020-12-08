@@ -16,12 +16,11 @@ public class Game {
     private Player attack_player;
     private Player defend_player;
 
-    public Game(Nifty n) {
+    public Game(Nifty n, Player p1, Player p2) {
+        player1 = p1;
+        player2 = p2;
         System.out.printf("Players" +
                 " %s and  %s have created a new game.\n", player1.getName(), player2.getName());
-
-        player1.setId("Player1");
-        player2.setId("Player2");
         
         this.nifty = n;
         this.player1.setGame(this);

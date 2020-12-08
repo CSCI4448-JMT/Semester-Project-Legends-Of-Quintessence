@@ -65,7 +65,7 @@ public class StartScreen implements ScreenController{
         nifty.gotoScreen("Board"); 
         
         
-        final GameScreen cgs = new GameScreen(nifty, gameState);
+        final GameScreen cgs = new GameScreen(nifty);
     }
     
 }

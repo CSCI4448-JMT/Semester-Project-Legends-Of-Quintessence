@@ -5,9 +5,13 @@
  */
 package LegendsOfQuintessence;
 
+import LegendsOfQuintessence.player.PlayerElements;
+import LegendsOfQuintessence.player.Player2;
+import LegendsOfQuintessence.player.Player1;
 import LegendsOfQuintessence.card.ConcreteCard;
-import LegendsOfQuintessence.gameComponents.PlayerElementBuilder;
+import LegendsOfQuintessence.player.PlayerElementBuilder;
 import LegendsOfQuintessence.gameplay.Game;
+import LegendsOfQuintessence.player.Player;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.builder.ElementBuilder;
@@ -35,13 +39,12 @@ import java.util.List;
 public class GameScreen implements ScreenController{
     private Nifty nifty;
     private Game game;
-    
-    private final PlayerElements player1 = new Player1();
-    private final PlayerElements player2 = new Player2();
+    private final Player player1 = new Player("1", "Player1");
+    private final Player player2 = new Player("2", "Player2");
     
     public GameScreen(Nifty n) {
         nifty = n;
-        game = new Game(n);
+        game = new Game(n, player1, player2);
     }
     
     public GameScreen(Nifty n, Game gs) {
@@ -62,15 +65,18 @@ public class GameScreen implements ScreenController{
         
         Screen screen = nifty.getCurrentScreen();
         
-        PlayerElementBuilder p1Builder = new PlayerElementBuilder(
-                nifty, screen, player1, "Player2");
-        p1Builder.attachElements();
-        p1Builder.buildCardsAndAttach();
+        player1.buildGUI();
+        player2.buildGUI();
         
-        PlayerElementBuilder p2Builder = new PlayerElementBuilder(
-                nifty, screen, player2, "Player1");
-        p2Builder.attachElements();
-        p2Builder.buildCardsAndAttach();
+//        PlayerElementBuilder p1Builder = new PlayerElementBuilder(
+//                nifty, screen, player1, "Player2");
+//        p1Builder.attachElements();
+//        p1Builder.buildCardsAndAttach();
+//        
+//        PlayerElementBuilder p2Builder = new PlayerElementBuilder(
+//                nifty, screen, player2, "Player1");
+//        p2Builder.attachElements();
+//        p2Builder.buildCardsAndAttach();
     }
 
     @Override

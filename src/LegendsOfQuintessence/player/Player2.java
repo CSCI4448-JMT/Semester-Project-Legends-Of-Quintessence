@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LegendsOfQuintessence;
+package LegendsOfQuintessence.player;
 
-import LegendsOfQuintessence.gameComponents.AbstractGameComponent;
 import java.util.List;
 
 /**
@@ -13,9 +12,7 @@ import java.util.List;
  * @author JMT
  */
 public class Player2 extends PlayerElements{
-    private int baseHealth;
-    private int resources;
-    private List<AbstractGameComponent> components;
+    protected final int playerId = 2;
     
     public Player2() {
         elementBaseName = "Player2";

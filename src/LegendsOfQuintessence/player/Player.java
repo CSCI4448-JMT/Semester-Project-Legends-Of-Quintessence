@@ -1,10 +1,7 @@
 package LegendsOfQuintessence.player;
 
-import LegendsOfQuintessence.Player1;
-import LegendsOfQuintessence.PlayerElements;
 import LegendsOfQuintessence.gameplay.Game;
 import LegendsOfQuintessence.card.AbstractCard;
-import LegendsOfQuintessence.gameComponents.PlayerElementBuilder;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.screen.Screen;
 
@@ -13,6 +10,8 @@ public class Player {
     private String name;            // player's name
     private Integer base_health;    // current health of player's base
     private Integer num_resources;  // current number of resources for player
+    private final SimpleElementsFactory playerElementsGetter;
+    
     
     // Nifty GUI and Elements
     private Nifty nifty;
@@ -21,12 +20,13 @@ public class Player {
     private Game game; // player game
 
     public Player(String id, String name) {
+        playerElementsGetter = new SimpleElementsFactory();
         this.id = id;
         this.name = name;
         this.base_health = 10;
         this.num_resources = 2;
         
-        this.player_elements = new Player1();
+        this.player_elements = playerElementsGetter.getPlayerElements(id);
     }
     
     public void buildGUI() {
@@ -34,11 +34,11 @@ public class Player {
         Nifty nifty = game.getNifty();
         Screen screen = nifty.getCurrentScreen();
         
-        PlayerElementBuilder p1Builder = new PlayerElementBuilder(
-                nifty, screen, player_elements, "Player2");
+        PlayerElementBuilder playerBuilder = new PlayerElementBuilder(
+                nifty, screen, player_elements, id);
         
-        p1Builder.attachElements();
-        p1Builder.buildCardsAndAttach();
+        playerBuilder.attachElements();
+        playerBuilder.buildCardsAndAttach();
         
     }
 

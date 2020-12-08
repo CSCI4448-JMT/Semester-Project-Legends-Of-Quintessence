@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LegendsOfQuintessence;
+package LegendsOfQuintessence.player;
 
 import de.lessvoid.nifty.controls.dragndrop.DroppableControl;
 import de.lessvoid.nifty.elements.Element;

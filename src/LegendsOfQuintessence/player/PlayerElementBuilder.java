@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package LegendsOfQuintessence.gameComponents;
+package LegendsOfQuintessence.player;
 
-import LegendsOfQuintessence.PlayerElements;
 import LegendsOfQuintessence.card.CardDropFilter;
 import LegendsOfQuintessence.card.ConcreteCard;
 import de.lessvoid.nifty.Nifty;
@@ -27,10 +26,16 @@ public class PlayerElementBuilder {
     private final DroppableDropFilter cardSlotFilter;
     
     public PlayerElementBuilder(Nifty n, Screen s, 
-            PlayerElements p, String opponent) {
+            PlayerElements p, String playerId) {
         nifty = n;
         screen = s;
         player = p;
+        String opponent;
+        if("1".equals(playerId)) {
+            opponent = "Player2";
+        }else{
+            opponent = "Player1";
+        }
         opponentBaseElementName = opponent;
         // create dropfilter for player card slots
         cardSlotFilter = new CardDropFilter(
