@@ -20,7 +20,7 @@ public class Turn {
     void startTurn() {
         System.out.println("\nPlayer " + player.getName() + " has started their turn.");
         
-        start_board_num = player.getBoard().getNumCards();
+        start_board_num = player.getNumBoardCards();
         
         if (round.getSkipCounter() >= 2) {
             /* TODO: display end round button */
@@ -50,7 +50,7 @@ public class Turn {
     }
 
     boolean checkForCombat() {
-        if (player.getField().getNumCards() > 0) {
+        if (player.getNumFieldCards() > 0) {
             return true;
         }
         return false;
@@ -59,8 +59,8 @@ public class Turn {
     boolean checkForSkip() {
         // to detect skip, check that there are no cards on the field, and
         // that the number of cards on the board hasn't changed:
-        if (player.getField().getNumCards() == 0 && 
-                player.getBoard().getNumCards() == start_board_num) {
+        if (player.getNumFieldCards() == 0 && 
+                player.getNumBoardCards() == start_board_num) {
             return true;
         }
         return false;

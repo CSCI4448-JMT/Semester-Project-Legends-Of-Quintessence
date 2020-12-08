@@ -1,8 +1,6 @@
 package LegendsOfQuintessence.gameplay;
 
 import LegendsOfQuintessence.card.AbstractCard;
-import LegendsOfQuintessence.gameComponents.Board;
-import LegendsOfQuintessence.gameComponents.Field;
 import LegendsOfQuintessence.player.Player;
 
 /*  Responsibility: take care of the round-related aspects of the game */
@@ -110,8 +108,8 @@ public class Round {
         // have less resources than all of the resource costs of cards in their hand.
         if (combat_started && current_player == defend_player) {
             
-            if (attack_player.getHand().getAffordableCards().isEmpty() &&
-                    defend_player.getHand().getAffordableCards().isEmpty()) {
+            if (attack_player.getNumAffordableCards() > 0 &&
+                    defend_player.getNumAffordableCards() > 0) {
                 return true;
             }
         }

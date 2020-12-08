@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author timothylenahan
  */
-public class Player1 extends Player {
+public class Player1 extends PlayerElements {
     private int baseHealth;
     private int resources;
     private List<AbstractGameComponent> components;

@@ -5,7 +5,7 @@
  */
 package LegendsOfQuintessence.gameComponents;
 
-import LegendsOfQuintessence.Player;
+import LegendsOfQuintessence.PlayerElements;
 import LegendsOfQuintessence.card.CardDropFilter;
 import LegendsOfQuintessence.card.ConcreteCard;
 import de.lessvoid.nifty.Nifty;
@@ -22,12 +22,12 @@ import de.lessvoid.nifty.screen.Screen;
 public class PlayerElementBuilder {
     private Nifty nifty;
     private Screen screen;
-    private Player player;
+    private PlayerElements player;
     private String opponentBaseElementName;
     private final DroppableDropFilter cardSlotFilter;
     
     public PlayerElementBuilder(Nifty n, Screen s, 
-            Player p, String opponent) {
+            PlayerElements p, String opponent) {
         nifty = n;
         screen = s;
         player = p;
@@ -39,7 +39,6 @@ public class PlayerElementBuilder {
     }
     
     
-
     public void buildCardsAndAttach() {
         ConcreteCard c = new ConcreteCard(player.getElementBaseName()+"-card");
         DraggableBuilder eb = (DraggableBuilder) c.cardBuilder();

@@ -1,10 +1,12 @@
 package LegendsOfQuintessence.player;
 
+import LegendsOfQuintessence.Player1;
+import LegendsOfQuintessence.PlayerElements;
 import LegendsOfQuintessence.gameplay.Game;
 import LegendsOfQuintessence.card.AbstractCard;
-import LegendsOfQuintessence.gameComponents.Board;
-import LegendsOfQuintessence.gameComponents.Field;
-import LegendsOfQuintessence.gameComponents.Hand;
+import LegendsOfQuintessence.gameComponents.PlayerElementBuilder;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.screen.Screen;
 
 public class Player {
     private String id;              // player id (GUI-related)
@@ -12,19 +14,32 @@ public class Player {
     private Integer base_health;    // current health of player's base
     private Integer num_resources;  // current number of resources for player
     
-    // player game components
-    private Board board;
-    private Field field;
-    private Hand hand;
+    // Nifty GUI and Elements
+    private Nifty nifty;
+    private final PlayerElements player_elements;
     
     private Game game; // player game
 
-   
     public Player(String id, String name) {
         this.id = id;
         this.name = name;
         this.base_health = 10;
         this.num_resources = 2;
+        
+        this.player_elements = new Player1();
+    }
+    
+    public void buildGUI() {
+        
+        Nifty nifty = game.getNifty();
+        Screen screen = nifty.getCurrentScreen();
+        
+        PlayerElementBuilder p1Builder = new PlayerElementBuilder(
+                nifty, screen, player_elements, "Player2");
+        
+        p1Builder.attachElements();
+        p1Builder.buildCardsAndAttach();
+        
     }
 
     public void endTurn() {
@@ -42,6 +57,7 @@ public class Player {
         System.out.println("TO DO: notify player GUI action controls from here.");
 
         /* TODO: enable GUI interactions for player here and possibly show player's hand. */
+        // enable all cards
     }
 
     // disable the player
@@ -49,6 +65,7 @@ public class Player {
         System.out.println("Player " + name + "'s GUI interactions have been disabled.");
 
         /* TODO: disable GUI interactions for player here and possibly hide player's hand. */
+        // disable all cards
     }
 
     public void incrementResources(Integer increment) {
@@ -126,6 +143,21 @@ public class Player {
         }
     }
     
+    public Integer getNumBoardCards() {
+        //TODO: get board cards
+        return 1;
+    }
+
+    public Integer getNumFieldCards() {
+        //TODO: get field cards
+        return 1;
+    }
+    
+    public Integer getNumAffordableCards() {
+        // TODO: get affordable cards
+        return 1;
+    }
+    
     /* ----------------- Getters and Setters --------------------- */
 
     public String getId() {return this.id; }
@@ -137,6 +169,7 @@ public class Player {
     public Field getField() {return this.field;}
     public Hand getHand() {return this.hand;}    
     
+    public void setId(String id) {this.id = id;}
     
     public void setBoard(Board board) {this.board = board;}
     public void setField(Field field) {this.field = field;}

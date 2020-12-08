@@ -15,13 +15,11 @@ import java.util.List;
  *
  * @author JMT
  */
-public abstract class Player {
+public abstract class PlayerElements {
     // name for identifying xml elements
     protected String elementBaseName;
     // name for rendering
     protected String name;
-    private int resources = 1;
-    private int baseHealth = 10;
     private Element base;
     private Element deck;
     private List<Element> cards = new ArrayList();
@@ -29,28 +27,25 @@ public abstract class Player {
     private List<DroppableControl> board = new ArrayList();
     private List<DroppableControl> inPlay = new ArrayList();
     
+    
+    public List<DroppableControl> getHand() {
+        return hand;
+    }
+    
+    public List<DroppableControl> getBoard() {
+        return board;
+    }
+    
+    public List<DroppableControl> getInPlay() {
+        return inPlay;
+    }
+    
     public String getElementBaseName() {
         return elementBaseName;
     }
     
     public void setName(String n) {
         name = n;
-    }
-    
-    public int getResources() {
-        return resources;
-    }
-    
-    public void setResources(int r) {
-        resources = r;
-    }
-    
-    public int getBaseHealth() {
-        return baseHealth;
-    }
-    
-    public void setBaseHealth(int bh) {
-        baseHealth = bh;
     }
     
     public Element getBase() {

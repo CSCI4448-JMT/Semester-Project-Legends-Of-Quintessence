@@ -7,6 +7,7 @@ package LegendsOfQuintessence;
 
 import LegendsOfQuintessence.card.ConcreteCard;
 import LegendsOfQuintessence.gameComponents.PlayerElementBuilder;
+import LegendsOfQuintessence.gameplay.Game;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.builder.ElementBuilder;
@@ -33,17 +34,19 @@ import java.util.List;
  */
 public class GameScreen implements ScreenController{
     private Nifty nifty;
-    private GameState gameState;
-    private final Player player1 = new Player1();
-    private final Player player2 = new Player2();
+    private Game game;
+    
+    private final PlayerElements player1 = new Player1();
+    private final PlayerElements player2 = new Player2();
     
     public GameScreen(Nifty n) {
         nifty = n;
+        game = new Game(n);
     }
     
-    public GameScreen(Nifty n, GameState gs) {
+    public GameScreen(Nifty n, Game gs) {
         nifty = n;
-        gameState = gs;
+        game = gs;
     }
     
 //Binds this ScreenController to a screen,
@@ -80,8 +83,5 @@ public class GameScreen implements ScreenController{
         nifty.gotoScreen("end");
     }
     
-    public void setGameState(GameState gameState){
-        this.gameState = gameState;
-    }
     
 }

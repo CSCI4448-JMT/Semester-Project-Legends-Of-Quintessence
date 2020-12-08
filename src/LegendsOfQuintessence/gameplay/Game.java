@@ -2,8 +2,10 @@ package LegendsOfQuintessence.gameplay;
 
 import java.lang.Math;
 import LegendsOfQuintessence.player.Player;
+import de.lessvoid.nifty.Nifty;
 
 public class Game {
+    Nifty nifty;
     Player player1;
     Player player2;
 
@@ -14,15 +16,16 @@ public class Game {
     private Player attack_player;
     private Player defend_player;
 
-    public Game(Player player1, Player player2) {
+    public Game(Nifty n) {
         System.out.printf("Players" +
                 " %s and  %s have created a new game.\n", player1.getName(), player2.getName());
 
-        this.player1 = player1;
-        this.player2 = player2;
-
+        player1.setId("Player1");
+        player2.setId("Player2");
+        
+        this.nifty = n;
         this.player1.setGame(this);
-        this.player2.setGame(this);
+        this.player2.setGame(this);       
     }
 
     public void endRoundRequest() {round.endRoundRequest();}
@@ -105,5 +108,5 @@ public class Game {
 
     public Round getRound() {return round; }
     public Integer getRoundNumber() { return round_number; }
-
+    public Nifty getNifty() {return nifty;}
 }
